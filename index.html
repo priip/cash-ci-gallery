@@ -1,0 +1,2622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cash CI Gallery</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Arcade Semantic Colors */
+            --arcade-green-primary: #00D632;
+            --arcade-green-dark: #00B028;
+            --arcade-green-light: #E5F8EC;
+            --arcade-text-primary: #000000;
+            --arcade-text-secondary: #666666;
+            --arcade-text-tertiary: #999999;
+            --arcade-bg-primary: #F7F7F7;
+            --arcade-bg-secondary: #FFFFFF;
+            --arcade-bg-tertiary: #FAFAFA;
+            --arcade-border-primary: #E5E5E5;
+            --arcade-border-secondary: #F0F0F0;
+            
+            /* Arcade Elevation Shadows */
+            --arcade-elevation-1: 0 1px 2px rgba(0, 0, 0, 0.06);
+            --arcade-elevation-2: 0 2px 4px rgba(0, 0, 0, 0.08);
+            --arcade-elevation-3: 0 4px 8px rgba(0, 0, 0, 0.10);
+            --arcade-elevation-4: 0 8px 16px rgba(0, 0, 0, 0.12);
+            
+            /* Arcade Spacing (8px base) */
+            --arcade-space-xxs: 2px;
+            --arcade-space-xs: 4px;
+            --arcade-space-sm: 8px;
+            --arcade-space-md: 12px;
+            --arcade-space-lg: 16px;
+            --arcade-space-xl: 24px;
+            --arcade-space-xxl: 32px;
+            --arcade-space-xxxl: 48px;
+            
+            /* Arcade Border Radius */
+            --arcade-radius-sm: 8px;
+            --arcade-radius-md: 12px;
+            --arcade-radius-lg: 16px;
+            --arcade-radius-xl: 20px;
+            
+            /* Arcade Status Colors */
+            --arcade-success: #00D632;
+            --arcade-error: #FF3B30;
+            --arcade-warning: #FF9500;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;
+            background: var(--arcade-bg-primary);
+            color: var(--arcade-text-primary);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: var(--arcade-space-xxl);
+        }
+
+        /* Page Header */
+        .page-header {
+            text-align: center;
+            margin-bottom: var(--arcade-space-xxxl);
+            padding-top: var(--arcade-space-xl);
+        }
+
+        .page-header-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto var(--arcade-space-lg);
+        }
+
+        .page-header h1 {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--arcade-text-primary);
+            letter-spacing: -0.5px;
+            margin-bottom: var(--arcade-space-sm);
+        }
+
+        .page-header p {
+            font-size: 17px;
+            color: var(--arcade-text-secondary);
+            font-weight: 400;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Input Section - Minimal */
+        .input-section {
+            text-align: center;
+            margin-bottom: var(--arcade-space-xxl);
+        }
+
+        /* Arcade Button - CTA Style */
+        .btn {
+            padding: var(--arcade-space-md) var(--arcade-space-xxl);
+            background: var(--arcade-green-primary);
+            color: #FFFFFF;
+            border: none;
+            border-radius: var(--arcade-radius-md);
+            font-size: 17px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.15s ease-out;
+            box-shadow: var(--arcade-elevation-2);
+            letter-spacing: -0.2px;
+        }
+
+        .btn:hover {
+            background: var(--arcade-green-dark);
+            box-shadow: var(--arcade-elevation-3);
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+            box-shadow: var(--arcade-elevation-1);
+        }
+
+        .btn:disabled {
+            background: var(--arcade-border-primary);
+            color: var(--arcade-text-tertiary);
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        /* Arcade Inline Message Style */
+        .instructions {
+            background: var(--arcade-green-light);
+            border-left: 3px solid var(--arcade-green-primary);
+            padding: var(--arcade-space-lg);
+            border-radius: var(--arcade-radius-sm);
+            margin-top: var(--arcade-space-lg);
+        }
+
+        .instructions h3 {
+            color: var(--arcade-text-primary);
+            margin-bottom: var(--arcade-space-sm);
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .instructions ol {
+            margin-left: var(--arcade-space-xl);
+            color: var(--arcade-text-secondary);
+            font-size: 15px;
+        }
+
+        .instructions li {
+            margin-bottom: var(--arcade-space-xs);
+            line-height: 1.5;
+        }
+
+        /* Loading State */
+        .loading {
+            text-align: center;
+            padding: var(--arcade-space-xxxl);
+            display: none;
+        }
+
+        .loading.active {
+            display: block;
+        }
+
+        .spinner {
+            border: 3px solid var(--arcade-border-primary);
+            border-top: 3px solid var(--arcade-green-primary);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto var(--arcade-space-lg);
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Platform Selector - Future Feature */
+        .platform-selector {
+            background: var(--arcade-bg-secondary);
+            border-radius: var(--arcade-radius-lg);
+            padding: var(--arcade-space-xl);
+            margin-bottom: var(--arcade-space-xl);
+            box-shadow: var(--arcade-elevation-2);
+            border: 1px solid var(--arcade-border-secondary);
+            display: none;
+        }
+
+        .platform-selector.active {
+            display: block;
+        }
+
+        .platform-selector-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: var(--arcade-space-lg);
+        }
+
+        .platform-selector-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--arcade-text-primary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .platform-badge {
+            background: var(--arcade-green-light);
+            color: var(--arcade-green-dark);
+            padding: var(--arcade-space-xs) var(--arcade-space-md);
+            border-radius: var(--arcade-radius-xl);
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .platform-buttons {
+            display: flex;
+            gap: var(--arcade-space-sm);
+        }
+
+        .platform-btn {
+            flex: 1;
+            padding: var(--arcade-space-lg) var(--arcade-space-xl);
+            border: 2px solid var(--arcade-border-primary);
+            border-radius: var(--arcade-radius-md);
+            background: var(--arcade-bg-secondary);
+            color: var(--arcade-text-secondary);
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.15s ease-out;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--arcade-space-xs);
+        }
+
+        .platform-btn:hover:not(.active):not(:disabled) {
+            border-color: var(--arcade-text-tertiary);
+            background: var(--arcade-bg-tertiary);
+        }
+
+        .platform-btn.active {
+            background: var(--arcade-text-primary);
+            color: var(--arcade-bg-secondary);
+            border-color: var(--arcade-text-primary);
+        }
+
+        .platform-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .platform-btn-icon {
+            font-size: 24px;
+        }
+
+        .platform-btn-label {
+            font-size: 13px;
+        }
+
+        /* Version Selector - Future Feature */
+        .version-selector {
+            background: var(--arcade-bg-secondary);
+            border-radius: var(--arcade-radius-lg);
+            padding: var(--arcade-space-xl);
+            margin-bottom: var(--arcade-space-xl);
+            box-shadow: var(--arcade-elevation-2);
+            border: 1px solid var(--arcade-border-secondary);
+            display: none;
+        }
+
+        .version-selector.active {
+            display: block;
+        }
+
+        .version-selector-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: var(--arcade-space-lg);
+        }
+
+        .version-selector-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--arcade-text-primary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .version-controls {
+            display: flex;
+            gap: var(--arcade-space-md);
+            align-items: center;
+        }
+
+        .version-nav-btn {
+            background: var(--arcade-bg-tertiary);
+            border: 2px solid var(--arcade-border-primary);
+            border-radius: var(--arcade-radius-md);
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.15s ease-out;
+        }
+
+        .version-nav-btn:hover:not(:disabled) {
+            border-color: var(--arcade-text-tertiary);
+            background: var(--arcade-bg-secondary);
+        }
+
+        .version-nav-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .version-nav-btn svg {
+            width: 16px;
+            height: 16px;
+            stroke: var(--arcade-text-secondary);
+            fill: none;
+            stroke-width: 2.5;
+        }
+
+        .version-display {
+            padding: var(--arcade-space-md) var(--arcade-space-xl);
+            background: var(--arcade-bg-tertiary);
+            border: 2px solid var(--arcade-border-primary);
+            border-radius: var(--arcade-radius-md);
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--arcade-text-primary);
+            min-width: 200px;
+            text-align: center;
+        }
+
+        .version-date {
+            font-size: 13px;
+            color: var(--arcade-text-secondary);
+            margin-top: var(--arcade-space-xs);
+        }
+
+        /* Arcade Statistics Dashboard */
+        .stats-dashboard {
+            background: var(--arcade-bg-secondary);
+            border-radius: var(--arcade-radius-lg);
+            padding: var(--arcade-space-xl) var(--arcade-space-xxl);
+            margin-bottom: var(--arcade-space-xxl);
+            box-shadow: var(--arcade-elevation-2);
+            border: 1px solid var(--arcade-border-secondary);
+            display: none;
+        }
+
+        .stats-dashboard.active {
+            display: block;
+        }
+
+        .stats-summary {
+            display: flex;
+            align-items: center;
+            gap: var(--arcade-space-xxl);
+            flex-wrap: wrap;
+            font-size: 15px;
+            color: var(--arcade-text-secondary);
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: baseline;
+            gap: var(--arcade-space-sm);
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 600;
+            color: var(--arcade-text-primary);
+            letter-spacing: -0.5px;
+        }
+
+        .stat-label {
+            font-size: 15px;
+            color: var(--arcade-text-secondary);
+            font-weight: 400;
+        }
+
+        .stat-item.pass .stat-value {
+            color: var(--arcade-success);
+        }
+
+        .stat-item.fail .stat-value {
+            color: var(--arcade-error);
+        }
+
+        .stat-separator {
+            color: var(--arcade-border-primary);
+            font-weight: 300;
+        }
+
+        .build-info-banner {
+            background: var(--arcade-green-light);
+            border-left: 3px solid var(--arcade-green-primary);
+            border-radius: var(--arcade-radius-sm);
+            padding: var(--arcade-space-lg) var(--arcade-space-xl);
+            margin-top: var(--arcade-space-xl);
+        }
+
+        .build-info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--arcade-space-lg);
+        }
+
+        .build-info-item {
+            display: flex;
+            flex-direction: column;
+            gap: var(--arcade-space-xs);
+        }
+
+        .build-info-label {
+            font-size: 11px;
+            color: var(--arcade-text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            font-weight: 600;
+        }
+
+        .build-info-value {
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--arcade-text-primary);
+            word-break: break-word;
+        }
+
+        .build-info-value a {
+            color: var(--arcade-green-dark);
+            text-decoration: none;
+            transition: color 0.15s ease-out;
+        }
+
+        .build-info-value a:hover {
+            color: var(--arcade-green-primary);
+        }
+
+        /* Arcade Filters - Improved Layout */
+        .filters-section {
+            background: var(--arcade-bg-secondary);
+            padding: var(--arcade-space-xl);
+            border-radius: var(--arcade-radius-lg);
+            margin-bottom: var(--arcade-space-xxl);
+            box-shadow: var(--arcade-elevation-2);
+            border: 1px solid var(--arcade-border-secondary);
+            display: none;
+        }
+
+        .filters-section.active {
+            display: block;
+        }
+
+        .filters-container {
+            display: flex;
+            flex-direction: column;
+            gap: var(--arcade-space-xl);
+        }
+
+        /* Search Bar - Full Width */
+        .search-container {
+            width: 100%;
+            position: relative;
+        }
+
+        .search-container input {
+            width: 100%;
+            padding: var(--arcade-space-lg) var(--arcade-space-xl);
+            padding-right: 48px; /* Make room for clear button */
+            border: 2px solid var(--arcade-border-primary);
+            border-radius: var(--arcade-radius-md);
+            font-size: 17px;
+            background: var(--arcade-bg-secondary);
+            color: var(--arcade-text-primary);
+            transition: all 0.15s ease-out;
+            font-family: inherit;
+        }
+
+        .search-container input::placeholder {
+            color: var(--arcade-text-tertiary);
+        }
+
+        .search-container input:hover {
+            border-color: var(--arcade-text-tertiary);
+        }
+
+        .search-container input:focus {
+            outline: none;
+            border-color: var(--arcade-green-primary);
+            box-shadow: 0 0 0 4px rgba(0, 214, 50, 0.1);
+        }
+        
+        /* Clear Search Button */
+        .search-clear-btn {
+            position: absolute;
+            right: var(--arcade-space-md);
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--arcade-text-tertiary);
+            border: none;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.15s ease-out;
+            padding: 0;
+        }
+        
+        .search-clear-btn:hover {
+            background: var(--arcade-text-secondary);
+        }
+        
+        .search-clear-btn:active {
+            transform: translateY(-50%) scale(0.9);
+        }
+        
+        .search-clear-btn.visible {
+            display: flex;
+        }
+        
+        .search-clear-btn svg {
+            width: 10px;
+            height: 10px;
+            stroke: white;
+            stroke-width: 2.5;
+            stroke-linecap: round;
+        }
+
+        /* Filter Pills Row - Full Width Layout */
+        .filters-row {
+            display: flex;
+            gap: var(--arcade-space-lg);
+            width: 100%;
+        }
+
+        .filter-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--arcade-text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Type Toggle Buttons - Web Native Style */
+        .type-toggle {
+            display: flex;
+            gap: var(--arcade-space-xs);
+            width: 100%;
+        }
+
+        .type-btn {
+            padding: var(--arcade-space-sm) var(--arcade-space-lg);
+            border: 2px solid var(--arcade-border-primary);
+            border-radius: var(--arcade-radius-md);
+            background: var(--arcade-bg-secondary);
+            color: var(--arcade-text-secondary);
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.15s ease-out;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            flex: 1;
+            white-space: nowrap;
+        }
+
+        .type-btn:hover:not(.active) {
+            border-color: var(--arcade-text-tertiary);
+            background: var(--arcade-bg-tertiary);
+        }
+
+        .type-btn.active {
+            background: var(--arcade-text-primary);
+            color: var(--arcade-bg-secondary);
+            border-color: var(--arcade-text-primary);
+        }
+
+        /* Dropdown Filters - Full Width */
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: var(--arcade-space-md);
+            flex: 1;
+            min-width: 0;
+        }
+        
+        /* Type filter group should not expand */
+        .filter-group:has(.type-toggle) {
+            flex: 0 0 auto;
+        }
+
+        .filter-group label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--arcade-text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .filter-group select {
+            padding: var(--arcade-space-sm) var(--arcade-space-lg);
+            padding-right: var(--arcade-space-xxl);
+            border: 2px solid var(--arcade-border-primary);
+            border-radius: var(--arcade-radius-md);
+            font-size: 14px;
+            background: var(--arcade-bg-secondary);
+            color: var(--arcade-text-primary);
+            transition: all 0.15s ease-out;
+            font-family: inherit;
+            font-weight: 500;
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%23666666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right var(--arcade-space-md) center;
+            flex: 1;
+            min-width: 0;
+            width: 100%;
+        }
+
+        .filter-group select:hover {
+            border-color: var(--arcade-text-tertiary);
+            background-color: var(--arcade-bg-tertiary);
+        }
+
+        .filter-group select:focus {
+            outline: none;
+            border-color: var(--arcade-green-primary);
+            box-shadow: 0 0 0 3px rgba(0, 214, 50, 0.1);
+        }
+
+        /* Gallery */
+        .gallery-section {
+            display: none;
+        }
+
+        .gallery-section.active {
+            display: block;
+        }
+
+        /* Arcade Section Header */
+        .category-section {
+            margin-bottom: var(--arcade-space-xxxl);
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: var(--arcade-space-xl);
+            padding: var(--arcade-space-lg) var(--arcade-space-xl);
+            background: var(--arcade-bg-secondary);
+            border-radius: var(--arcade-radius-md);
+            box-shadow: var(--arcade-elevation-1);
+            cursor: pointer;
+            user-select: none;
+            transition: all 0.2s ease-out;
+        }
+
+        .category-header:hover {
+            background: var(--arcade-bg-tertiary);
+            box-shadow: var(--arcade-elevation-2);
+        }
+
+        .category-header:active {
+            transform: scale(0.995);
+        }
+
+        .category-header-content {
+            display: flex;
+            align-items: center;
+            flex: 1;
+        }
+
+        .category-header h2 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-right: var(--arcade-space-lg);
+            color: var(--arcade-text-primary);
+            letter-spacing: -0.3px;
+        }
+
+        .category-count {
+            background: var(--arcade-text-primary);
+            color: var(--arcade-bg-secondary);
+            padding: var(--arcade-space-xs) var(--arcade-space-md);
+            border-radius: var(--arcade-radius-xl);
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .category-chevron {
+            margin-left: auto;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s ease-out;
+        }
+
+        .category-chevron svg {
+            width: 16px;
+            height: 16px;
+            stroke: var(--arcade-text-secondary);
+            stroke-width: 2.5;
+            fill: none;
+        }
+
+        .category-section.collapsed .category-chevron {
+            transform: rotate(-90deg);
+        }
+
+        .category-section.collapsed .category-header {
+            margin-bottom: 0;
+        }
+
+        /* Test Grid */
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: var(--arcade-space-xl);
+        }
+
+        @media (min-width: 1400px) {
+            .test-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        /* Arcade Card Style - Test Card */
+        .test-card {
+            background: var(--arcade-bg-secondary);
+            border-radius: var(--arcade-radius-lg);
+            overflow: hidden;
+            box-shadow: var(--arcade-elevation-2);
+            border: 1px solid var(--arcade-border-secondary);
+            transition: all 0.2s ease-out;
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+        }
+        
+        .test-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--arcade-elevation-4);
+            border-color: var(--arcade-border-primary);
+        }
+
+        .gif-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: var(--arcade-space-xl) var(--arcade-space-lg);
+            background: var(--arcade-bg-tertiary);
+            flex-shrink: 0;
+        }
+
+        /* iPhone Frame */
+        .iphone-frame {
+            position: relative;
+            width: 100%;
+            max-width: 280px;
+            margin: 0 auto;
+            background: #000;
+            border-radius: 36px;
+            padding: 3px;
+            box-shadow: 
+                0 0 0 2px #000,
+                0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .iphone-screen {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 375 / 812;
+            background: #000;
+            border-radius: 33px;
+            overflow: hidden;
+        }
+
+        .gif-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: crisp-edges;
+        }
+
+        .test-details {
+            padding: var(--arcade-space-xl);
+            display: flex;
+            flex-direction: column;
+            gap: var(--arcade-space-lg);
+            flex: 1;
+        }
+
+        /* Module - Hero Element */
+        .module-header {
+            display: flex;
+            flex-direction: column;
+            gap: var(--arcade-space-sm);
+            padding-bottom: var(--arcade-space-md);
+            border-bottom: 1px solid var(--arcade-border-secondary);
+        }
+
+        .module-name {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--arcade-text-primary);
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+        }
+
+        .team-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--arcade-text-secondary);
+            letter-spacing: 0.1px;
+            text-transform: uppercase;
+        }
+
+        /* Test Info Section */
+        .test-info-section {
+            display: flex;
+            flex-direction: column;
+            gap: var(--arcade-space-xs);
+        }
+
+        .test-info-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--arcade-text-tertiary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Code Box Container */
+        .code-box-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: var(--arcade-space-sm);
+        }
+
+        /* Test Class - Code Style */
+        .test-class {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--arcade-text-secondary);
+            line-height: 1.4;
+            font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+            background: var(--arcade-bg-tertiary);
+            padding: var(--arcade-space-sm) var(--arcade-space-md);
+            border-radius: var(--arcade-radius-sm);
+            word-break: break-word;
+            flex: 1;
+        }
+
+        /* Test Method - Code Style */
+        .test-method {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--arcade-text-secondary);
+            line-height: 1.4;
+            font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+            background: var(--arcade-bg-tertiary);
+            padding: var(--arcade-space-sm) var(--arcade-space-md);
+            border-radius: var(--arcade-radius-sm);
+            word-break: break-word;
+            flex: 1;
+        }
+
+        /* Copy Button */
+        .copy-btn {
+            background: var(--arcade-bg-secondary);
+            border: 1px solid var(--arcade-border-primary);
+            border-radius: var(--arcade-radius-sm);
+            padding: var(--arcade-space-xs);
+            cursor: pointer;
+            transition: all 0.15s ease-out;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            flex-shrink: 0;
+        }
+
+        .copy-btn:hover {
+            background: var(--arcade-bg-tertiary);
+            border-color: var(--arcade-text-tertiary);
+        }
+
+        .copy-btn:active {
+            transform: scale(0.95);
+        }
+
+        .copy-btn.copied {
+            background: var(--arcade-green-light);
+            border-color: var(--arcade-green-primary);
+        }
+
+        .copy-btn svg {
+            width: 14px;
+            height: 14px;
+            stroke: var(--arcade-text-secondary);
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .copy-btn.copied svg {
+            stroke: var(--arcade-green-dark);
+        }
+
+        /* Metadata Pills */
+        .metadata-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--arcade-space-sm);
+            margin-top: auto;
+        }
+
+        .metadata-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--arcade-space-xs);
+            padding: var(--arcade-space-xs) var(--arcade-space-md);
+            background: var(--arcade-text-primary);
+            border-radius: var(--arcade-radius-xl);
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--arcade-bg-secondary);
+            letter-spacing: 0.3px;
+            text-transform: uppercase;
+        }
+
+        .metadata-pill.status-fail {
+            background: var(--arcade-error);
+            color: white;
+        }
+
+        .metadata-pill.status-pass {
+            background: var(--arcade-success);
+            color: white;
+        }
+
+        /* Divider */
+        .card-divider {
+            height: 1px;
+            background: var(--arcade-border-secondary);
+        }
+
+        /* Arcade Empty State */
+        .empty-state {
+            text-align: center;
+            padding: var(--arcade-space-xxxl) var(--arcade-space-xxl);
+            color: var(--arcade-text-secondary);
+        }
+
+        .empty-state svg {
+            width: 100px;
+            height: 100px;
+            margin-bottom: var(--arcade-space-lg);
+            opacity: 0.3;
+        }
+
+        /* Arcade Inline Message - Error */
+        .error-message {
+            background: rgba(255, 59, 48, 0.1);
+            border-left: 3px solid var(--arcade-error);
+            color: var(--arcade-error);
+            padding: var(--arcade-space-lg);
+            border-radius: var(--arcade-radius-sm);
+            margin-top: var(--arcade-space-lg);
+            font-size: 15px;
+            display: none;
+        }
+
+        .error-message.active {
+            display: block;
+        }
+
+        /* GIF Viewer Modal */
+        .frame-viewer-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            align-items: center;
+            justify-content: center;
+            padding: var(--arcade-space-xxl);
+        }
+
+        .frame-viewer-modal.active {
+            display: flex;
+            animation: fadeIn 0.2s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .frame-viewer-content {
+            max-width: 90vw;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--arcade-space-xl);
+        }
+
+        .frame-viewer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            gap: var(--arcade-space-xl);
+        }
+
+        .frame-viewer-title {
+            flex: 1;
+            text-align: left;
+        }
+
+        .frame-viewer-title h2 {
+            font-size: 24px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: var(--arcade-space-sm);
+            letter-spacing: -0.5px;
+        }
+
+        .frame-viewer-subtitle {
+            font-size: 15px;
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 500;
+        }
+
+        /* Arcade-styled close button with X icon */
+        .close-modal {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease-out;
+            flex-shrink: 0;
+            padding: 0;
+        }
+
+        .close-modal:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: scale(1.05);
+        }
+
+        .close-modal:active {
+            transform: scale(0.95);
+        }
+
+        .close-modal svg {
+            width: 20px;
+            height: 20px;
+            stroke: white;
+            stroke-width: 2.5;
+            stroke-linecap: round;
+        }
+
+        /* GIF container in modal */
+        .modal-gif-container {
+            position: relative;
+            max-width: 100%;
+            max-height: calc(90vh - 120px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-iphone-frame {
+            position: relative;
+            background: #000;
+            border-radius: 48px;
+            padding: 4px;
+            box-shadow: 
+                0 0 0 3px #000,
+                0 20px 60px rgba(0, 0, 0, 0.5);
+            max-height: calc(90vh - 120px);
+        }
+
+        .modal-iphone-screen {
+            position: relative;
+            aspect-ratio: 375 / 812;
+            background: #000;
+            border-radius: 44px;
+            overflow: hidden;
+            max-height: calc(90vh - 128px);
+        }
+
+        .modal-iphone-screen img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .frame-viewer-info {
+            background: rgba(255, 255, 255, 0.1);
+            padding: var(--arcade-space-lg) var(--arcade-space-xl);
+            border-radius: var(--arcade-radius-md);
+            margin-bottom: var(--arcade-space-xxl);
+            color: white;
+            text-align: center;
+            font-size: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .frames-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: var(--arcade-space-lg);
+        }
+
+        .frame-item {
+            background: white;
+            border-radius: var(--arcade-radius-md);
+            overflow: hidden;
+            box-shadow: var(--arcade-elevation-3);
+            transition: all 0.2s ease-out;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .frame-item:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--arcade-elevation-4);
+        }
+
+        .frame-item:active {
+            transform: translateY(-2px);
+        }
+
+        .frame-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            background: #f0f0f0;
+        }
+
+        .frame-number {
+            padding: var(--arcade-space-sm) var(--arcade-space-md);
+            text-align: center;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--arcade-text-secondary);
+            background: var(--arcade-bg-primary);
+            border-top: 1px solid var(--arcade-border-primary);
+        }
+
+        .loading-frames {
+            text-align: center;
+            padding: var(--arcade-space-xxxl);
+            color: white;
+        }
+
+        .loading-frames .spinner {
+            border-color: rgba(255, 255, 255, 0.2);
+            border-top-color: var(--arcade-green-primary);
+            margin: 0 auto var(--arcade-space-xl);
+        }
+
+        .loading-frames p {
+            font-size: 17px;
+            font-weight: 500;
+            margin-top: var(--arcade-space-lg);
+        }
+
+        /* Full Screen Frame View */
+        .frame-fullscreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.98);
+            z-index: 1001;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: var(--arcade-space-xxl);
+        }
+
+        .frame-fullscreen.active {
+            display: flex;
+        }
+
+        .frame-fullscreen img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: var(--arcade-radius-lg);
+            box-shadow: var(--arcade-elevation-4);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1>Cash CI Gallery</h1>
+            <p>A web viewer for UI and E2E test artifacts generated by Cash iOS Buildkite builds.</p>
+        </div>
+        
+        <!-- Loading State -->
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Processing test results...</p>
+            <p id="loading-status" style="color: var(--text-secondary); font-size: 0.9rem;"></p>
+        </div>
+
+        <!-- Error Message -->
+        <div class="error-message" id="error-message"></div>
+
+        <!-- Statistics Dashboard -->
+        <div class="stats-dashboard" id="stats-dashboard">
+            <!-- Stats will be populated here -->
+        </div>
+
+        <!-- Filters Section -->
+        <div class="filters-section" id="filters-section">
+            <div class="filters-container">
+                <!-- Search Bar - Full Width -->
+                <div class="search-container">
+                    <input type="text" id="search-input" placeholder="Search tests, modules, teams..." oninput="handleSearchInput()">
+                    <button class="search-clear-btn" id="search-clear-btn" onclick="clearSearch()" title="Clear search">
+                        <svg viewBox="0 0 24 24">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+                
+                <!-- Filters Row -->
+                <div class="filters-row">
+                    <!-- Test Type Toggle Buttons -->
+                    <div class="filter-group">
+                        <label class="filter-label">Type</label>
+                        <div class="type-toggle">
+                            <button class="type-btn type-all active" onclick="setTypeFilter('all')">All</button>
+                            <button class="type-btn type-e2e" onclick="setTypeFilter('E2E Tests')">E2E</button>
+                            <button class="type-btn type-ui" onclick="setTypeFilter('UI Tests')">UI</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Module Dropdown -->
+                    <div class="filter-group">
+                        <label>Module</label>
+                        <select id="module-filter" onchange="applyFilters()">
+                            <option value="all">All</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Team Dropdown -->
+                    <div class="filter-group">
+                        <label>Team</label>
+                        <select id="team-filter" onchange="applyFilters()">
+                            <option value="all">All</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Status Dropdown -->
+                    <div class="filter-group">
+                        <label>Status</label>
+                        <select id="status-filter" onchange="applyFilters()">
+                            <option value="all">All</option>
+                            <option value="pass">Passed</option>
+                            <option value="fail">Failed</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gallery Section -->
+        <div class="gallery-section" id="gallery-section">
+            <!-- Test cards will be populated here -->
+        </div>
+    </div>
+
+    <!-- GIF Viewer Modal -->
+    <div class="frame-viewer-modal" id="frame-viewer-modal" onclick="closeFrameViewer()">
+        <div class="frame-viewer-content" onclick="event.stopPropagation()">
+            <div class="frame-viewer-header">
+                <div class="frame-viewer-title">
+                    <h2 id="frame-viewer-test-name">Test Name</h2>
+                    <div class="frame-viewer-subtitle" id="frame-viewer-test-info">Module • Team</div>
+                </div>
+                <button class="close-modal" onclick="closeFrameViewer()" title="Close (Esc)">
+                    <svg viewBox="0 0 24 24">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            
+            <!-- Enlarged GIF -->
+            <div class="modal-gif-container" id="modal-gif-container">
+                <!-- GIF will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global state
+        let allTests = [];
+        let filteredTests = [];
+
+        // Load BuildKite results
+        async function loadBuildKiteResults() {
+            const urlInput = document.getElementById('buildkite-url');
+            const buildkiteUrl = urlInput.value.trim();
+            
+            if (!buildkiteUrl) {
+                showError('Please enter a BuildKite URL');
+                return;
+            }
+
+            // Validate URL format
+            if (!buildkiteUrl.includes('buildkite.com')) {
+                showError('Invalid BuildKite URL. Please use a URL like: https://buildkite.com/runway/cash-ios/builds/32159');
+                return;
+            }
+
+            // Show loading state
+            document.getElementById('loading').classList.add('active');
+            document.getElementById('error-message').classList.remove('active');
+            document.getElementById('load-btn').disabled = true;
+
+            try {
+                // TODO: Implement BuildKite API integration
+                // For now, show instructions for manual processing
+                updateLoadingStatus('This feature requires backend processing...');
+                
+                setTimeout(() => {
+                    showError('This is a demo interface. To process actual BuildKite results, you need to:\n\n1. Download xcresult.zip artifacts from BuildKite\n2. Run the processing script locally\n3. Upload the generated gallery\n\nWould you like to see a demo with sample data?');
+                    document.getElementById('loading').classList.remove('active');
+                    document.getElementById('load-btn').disabled = false;
+                }, 2000);
+                
+            } catch (error) {
+                showError('Error loading BuildKite results: ' + error.message);
+                document.getElementById('loading').classList.remove('active');
+                document.getElementById('load-btn').disabled = false;
+            }
+        }
+
+        function updateLoadingStatus(message) {
+            document.getElementById('loading-status').textContent = message;
+        }
+
+        function showError(message) {
+            const errorEl = document.getElementById('error-message');
+            errorEl.textContent = message;
+            errorEl.classList.add('active');
+        }
+
+        // Process test data
+        function processTestData(manifestData) {
+            // Extract all tests with comprehensive metadata
+            const tests = [];
+            
+            // TODO: Parse manifest.json structure
+            // This will extract ALL available metadata fields
+            
+            return tests;
+        }
+
+        // Render statistics dashboard
+        function renderStats(tests, manifestData) {
+            const statsContainer = document.getElementById('stats-dashboard');
+            
+            // Calculate comprehensive stats
+            const totalTests = tests.length;
+            const passedTests = tests.filter(t => !t.failed).length;
+            const failedTests = tests.filter(t => t.failed).length;
+            const uniqueTestCases = [...new Set(tests.map(t => t.testClass))].length;
+            
+            // UI vs E2E breakdown
+            const uiTests = tests.filter(t => t.category === 'UI Tests').length;
+            const e2eTests = tests.filter(t => t.category === 'E2E Tests').length;
+            
+            // Get build info from manifest
+            const buildInfo = manifestData?.buildkite || {};
+            const summary = manifestData?.summary || {};
+            const branch = buildInfo.branch || 'Unknown';
+            const buildNumbers = buildInfo.buildNumbers || [];
+            const buildURLs = buildInfo.buildURLs || [];
+            const totalBuilds = summary.totalBuilds || buildNumbers.length;
+            const generatedAt = manifestData?.generatedAt || '';
+            
+            // Format build links
+            const buildLinksHTML = buildNumbers.map((num, idx) => {
+                const url = buildURLs[idx];
+                if (url) {
+                    return `<a href="${url}" target="_blank">#${num}</a>`;
+                }
+                return `#${num}`;
+            }).join(', ');
+            
+            // Format generated date
+            const formattedDate = generatedAt ? new Date(generatedAt).toLocaleString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                timeZoneName: 'short'
+            }) : 'Unknown';
+            
+            // Build the stats HTML with lowkey styling
+            statsContainer.innerHTML = `
+                <!-- Test Statistics -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: var(--arcade-space-lg); margin-bottom: var(--arcade-space-xl);">
+                    <div>
+                        <div style="font-size: 11px; font-weight: 600; color: var(--arcade-text-tertiary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: var(--arcade-space-xs);">Test Videos</div>
+                        <div style="font-size: 28px; font-weight: 600; color: var(--arcade-text-primary); letter-spacing: -0.5px;">${totalTests}</div>
+                    </div>
+                    
+                    <div>
+                        <div style="font-size: 11px; font-weight: 600; color: var(--arcade-text-tertiary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: var(--arcade-space-xs);">Passed</div>
+                        <div style="font-size: 28px; font-weight: 600; color: var(--arcade-success); letter-spacing: -0.5px;">${passedTests}</div>
+                    </div>
+                    
+                    <div>
+                        <div style="font-size: 11px; font-weight: 600; color: var(--arcade-text-tertiary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: var(--arcade-space-xs);">Failed</div>
+                        <div style="font-size: 28px; font-weight: 600; color: ${failedTests > 0 ? 'var(--arcade-error)' : 'var(--arcade-text-tertiary)'}; letter-spacing: -0.5px;">${failedTests}</div>
+                    </div>
+                    
+                    <div>
+                        <div style="font-size: 11px; font-weight: 600; color: var(--arcade-text-tertiary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: var(--arcade-space-xs);">E2E Tests</div>
+                        <div style="font-size: 28px; font-weight: 600; color: var(--arcade-text-primary); letter-spacing: -0.5px;">${e2eTests}</div>
+                    </div>
+                    
+                    <div>
+                        <div style="font-size: 11px; font-weight: 600; color: var(--arcade-text-tertiary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: var(--arcade-space-xs);">UI Tests</div>
+                        <div style="font-size: 28px; font-weight: 600; color: var(--arcade-text-primary); letter-spacing: -0.5px;">${uiTests}</div>
+                    </div>
+                </div>
+                
+                ${branch !== 'Unknown' || buildNumbers.length > 0 || generatedAt ? `
+                    <!-- Divider -->
+                    <div style="height: 1px; background: var(--arcade-border-secondary); margin: var(--arcade-space-xl) 0;"></div>
+                    
+                    <!-- BuildKite Information -->
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: var(--arcade-space-lg);">
+                        ${branch && branch !== 'Unknown' ? `
+                            <div>
+                                <div style="font-size: 11px; font-weight: 600; color: var(--arcade-text-tertiary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: var(--arcade-space-xs);">Branch</div>
+                                <div style="font-size: 13px; font-weight: 500; color: var(--arcade-text-primary); font-family: 'SF Mono', Monaco, monospace;">${branch}</div>
+                            </div>
+                        ` : ''}
+                        
+                        ${buildNumbers.length > 0 ? `
+                            <div>
+                                <div style="font-size: 11px; font-weight: 600; color: var(--arcade-text-tertiary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: var(--arcade-space-xs);">Build</div>
+                                <div style="font-size: 13px; font-weight: 500; color: var(--arcade-text-primary);">${buildLinksHTML || 'N/A'}</div>
+                            </div>
+                        ` : ''}
+                        
+                        ${generatedAt ? `
+                            <div>
+                                <div style="font-size: 11px; font-weight: 600; color: var(--arcade-text-tertiary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: var(--arcade-space-xs);">Generated</div>
+                                <div style="font-size: 13px; font-weight: 500; color: var(--arcade-text-primary);">${formattedDate}</div>
+                            </div>
+                        ` : ''}
+                    </div>
+                ` : ''}
+            `;
+            
+            statsContainer.classList.add('active');
+        }
+
+        // Populate filter dropdowns
+        function populateFilters(tests) {
+            const teams = [...new Set(tests.map(t => t.team).filter(Boolean))].sort();
+            const modules = [...new Set(tests.map(t => t.module).filter(Boolean))].sort();
+            
+            const teamFilter = document.getElementById('team-filter');
+            const moduleFilter = document.getElementById('module-filter');
+            
+            // Clear existing options (except "All")
+            teamFilter.innerHTML = '<option value="all">All</option>';
+            moduleFilter.innerHTML = '<option value="all">All</option>';
+            
+            teams.forEach(team => {
+                const option = document.createElement('option');
+                option.value = team;
+                option.textContent = team;
+                teamFilter.appendChild(option);
+            });
+            
+            modules.forEach(module => {
+                const option = document.createElement('option');
+                option.value = module;
+                option.textContent = module;
+                moduleFilter.appendChild(option);
+            });
+            
+            document.getElementById('filters-section').classList.add('active');
+        }
+
+        // Global state for current type filter
+        let currentTypeFilter = 'all';
+        let searchTimeout = null;
+        let searchIndex = []; // Pre-built search index
+        let allCards = []; // Cache of DOM card elements
+        
+        // Build search index once when data loads - MUCH faster than rebuilding on every keystroke
+        function buildSearchIndex() {
+            searchIndex = allTests.map(test => ({
+                searchText: [
+                    test.name || '',
+                    test.testMethod || '',
+                    test.testClass || '',
+                    test.module || '',
+                    test.team || '',
+                    test.category || ''
+                ].join(' ').toLowerCase(),
+                team: test.team,
+                module: test.module,
+                category: test.category,
+                failed: test.failed
+            }));
+            
+            console.log('🔍 Search index built:', searchIndex.length, 'tests');
+            console.log('📊 Sample test:', searchIndex[0]);
+        }
+        
+        // Search handler - NO debounce, instant filtering
+        function handleSearchInput() {
+            const searchInput = document.getElementById('search-input');
+            const clearBtn = document.getElementById('search-clear-btn');
+            
+            // Show/hide clear button instantly
+            if (searchInput.value.trim().length > 0) {
+                clearBtn.classList.add('visible');
+            } else {
+                clearBtn.classList.remove('visible');
+            }
+            
+            // Apply filters immediately - it's fast enough now!
+            applyFiltersOptimized();
+        }
+        
+        // Clear search input
+        function clearSearch() {
+            const searchInput = document.getElementById('search-input');
+            const clearBtn = document.getElementById('search-clear-btn');
+            
+            // Hide button and clear input instantly
+            clearBtn.classList.remove('visible');
+            searchInput.value = '';
+            
+            // Apply filters immediately
+            applyFiltersOptimized();
+        }
+        
+        // Set type filter from toggle buttons
+        function setTypeFilter(type) {
+            currentTypeFilter = type;
+            
+            // Update button states
+            document.querySelectorAll('.type-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            if (type === 'all') {
+                document.querySelector('.type-btn.type-all').classList.add('active');
+            } else if (type === 'UI Tests') {
+                document.querySelector('.type-btn.type-ui').classList.add('active');
+            } else if (type === 'E2E Tests') {
+                document.querySelector('.type-btn.type-e2e').classList.add('active');
+            }
+            
+            applyFiltersOptimized();
+        }
+        
+        // OPTIMIZED: Uses pre-built search index and cached DOM elements
+        function applyFiltersOptimized() {
+            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+            const teamFilter = document.getElementById('team-filter').value;
+            const moduleFilter = document.getElementById('module-filter').value;
+            const statusFilter = document.getElementById('status-filter').value;
+            
+            // Track visible cards per category
+            const categoryCounts = {};
+            
+            // Fast filtering using pre-built search index
+            for (let i = 0; i < searchIndex.length; i++) {
+                const indexed = searchIndex[i];
+                let visible = true;
+                
+                // Search filter - uses pre-built lowercase string
+                if (searchTerm && !indexed.searchText.includes(searchTerm)) {
+                    visible = false;
+                }
+                
+                // Test type filter
+                if (visible && currentTypeFilter !== 'all' && indexed.category !== currentTypeFilter) {
+                    visible = false;
+                }
+                
+                // Team filter
+                if (visible && teamFilter !== 'all' && indexed.team !== teamFilter) {
+                    visible = false;
+                }
+                
+                // Module filter
+                if (visible && moduleFilter !== 'all' && indexed.module !== moduleFilter) {
+                    visible = false;
+                }
+                
+                // Status filter
+                if (visible && statusFilter !== 'all') {
+                    if (statusFilter === 'pass' && indexed.failed) visible = false;
+                    if (statusFilter === 'fail' && !indexed.failed) visible = false;
+                }
+                
+                // Toggle card visibility using cached DOM reference
+                if (allCards[i]) {
+                    allCards[i].style.display = visible ? '' : 'none';
+                    
+                    // Track visible count per category
+                    if (visible) {
+                        const category = indexed.category || 'Other';
+                        categoryCounts[category] = (categoryCounts[category] || 0) + 1;
+                    }
+                }
+            }
+            
+            // Hide/show category sections based on whether they have visible cards
+            const categorySections = document.querySelectorAll('.category-section');
+            categorySections.forEach(section => {
+                const header = section.querySelector('.category-header h2');
+                if (header) {
+                    const categoryName = header.textContent;
+                    const visibleCount = categoryCounts[categoryName] || 0;
+                    
+                    if (visibleCount === 0) {
+                        // Hide entire section if no visible cards
+                        section.style.display = 'none';
+                    } else {
+                        // Show section and update count badge
+                        section.style.display = '';
+                        const countBadge = section.querySelector('.category-count');
+                        if (countBadge) {
+                            countBadge.textContent = `${visibleCount} test${visibleCount !== 1 ? 's' : ''}`;
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Legacy function for compatibility - redirects to optimized version
+        function applyFilters() {
+            applyFiltersOptimized();
+        }
+
+        // Global state for collapsed categories
+        const collapsedCategories = new Set();
+        
+        // Toggle category collapse/expand
+        function toggleCategory(category, event) {
+            // Prevent event bubbling
+            event.stopPropagation();
+            
+            const categorySection = event.target.closest('.category-section');
+            if (!categorySection) return;
+            
+            if (collapsedCategories.has(category)) {
+                collapsedCategories.delete(category);
+                categorySection.classList.remove('collapsed');
+            } else {
+                collapsedCategories.add(category);
+                categorySection.classList.add('collapsed');
+            }
+            
+            // Toggle test grid visibility with smooth transition
+            const testGrid = categorySection.querySelector('.test-grid');
+            if (testGrid) {
+                if (collapsedCategories.has(category)) {
+                    testGrid.style.display = 'none';
+                } else {
+                    testGrid.style.display = 'grid';
+                }
+            }
+        }
+        
+        // Render gallery - optimized to avoid full innerHTML replacement
+        function renderGallery(tests) {
+            const gallerySection = document.getElementById('gallery-section');
+            
+            if (tests.length === 0) {
+                gallerySection.innerHTML = `
+                    <div class="empty-state">
+                        <p style="font-size: 1.2rem; margin-bottom: 0.5rem;">No tests found</p>
+                        <p>Try adjusting your filters</p>
+                    </div>
+                `;
+                gallerySection.classList.add('active');
+                return;
+            }
+            
+            // Use CSS to hide/show cards instead of rebuilding DOM
+            const testIndexSet = new Set(tests.map(t => allTests.indexOf(t)));
+            
+            // Check if we already have rendered cards
+            const existingCards = gallerySection.querySelectorAll('.test-card');
+            
+            if (existingCards.length === allTests.length) {
+                // We have all cards rendered, just show/hide them
+                existingCards.forEach((card, index) => {
+                    if (testIndexSet.has(index)) {
+                        card.style.display = '';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+                gallerySection.classList.add('active');
+                return;
+            }
+            
+            // First render - build all cards once
+            const showCategoryHeaders = currentTypeFilter === 'all';
+            
+            if (showCategoryHeaders) {
+                // Group by category
+                const categories = {};
+                allTests.forEach(test => {
+                    const category = test.category || 'Other';
+                    if (!categories[category]) {
+                        categories[category] = [];
+                    }
+                    categories[category].push(test);
+                });
+                
+                const categoryOrder = ['E2E Tests', 'UI Tests'];
+                const sortedCategories = Object.keys(categories).sort((a, b) => {
+                    const indexA = categoryOrder.indexOf(a);
+                    const indexB = categoryOrder.indexOf(b);
+                    if (indexA !== -1 && indexB !== -1) return indexA - indexB;
+                    if (indexA !== -1) return -1;
+                    if (indexB !== -1) return 1;
+                    return a.localeCompare(b);
+                });
+                
+                let html = '';
+                sortedCategories.forEach(category => {
+                    const categoryTests = categories[category];
+                    const isCollapsed = collapsedCategories.has(category);
+                    const collapsedClass = isCollapsed ? 'collapsed' : '';
+                    const gridDisplay = isCollapsed ? 'display: none;' : '';
+                    
+                    html += `
+                        <div class="category-section ${collapsedClass}">
+                            <div class="category-header" onclick="toggleCategory('${category}', event)">
+                                <div class="category-header-content">
+                                    <h2>${category}</h2>
+                                    <span class="category-count">${categoryTests.length} tests</span>
+                                </div>
+                                <div class="category-chevron">
+                                    <svg viewBox="0 0 24 24">
+                                        <polyline points="6 9 12 15 18 9"></polyline>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="test-grid" style="${gridDisplay}">
+                                ${categoryTests.map(test => renderTestCard(test)).join('')}
+                            </div>
+                        </div>
+                    `;
+                });
+                gallerySection.innerHTML = html;
+            } else {
+                // Single grid with all tests
+                gallerySection.innerHTML = `
+                    <div class="test-grid">
+                        ${allTests.map(test => renderTestCard(test)).join('')}
+                    </div>
+                `;
+            }
+            
+            // Cache all card DOM elements for fast filtering
+            // IMPORTANT: Cards are rendered grouped by category, but we need them in allTests order
+            const cardElements = Array.from(gallerySection.querySelectorAll('.test-card'));
+            
+            // Build a map from test index to card element
+            allCards = new Array(allTests.length);
+            cardElements.forEach(card => {
+                // Extract test index from onclick attribute
+                const onclickAttr = card.getAttribute('onclick');
+                const match = onclickAttr.match(/openFrameViewer\((\d+)\)/);
+                if (match) {
+                    const testIndex = parseInt(match[1]);
+                    allCards[testIndex] = card;
+                }
+            });
+            
+            // Now hide cards that don't match filter
+            allCards.forEach((card, index) => {
+                if (card && !testIndexSet.has(index)) {
+                    card.style.display = 'none';
+                }
+            });
+            
+            // Build search index now that cards are rendered
+            buildSearchIndex();
+            
+            gallerySection.classList.add('active');
+        }
+
+        // Render individual test card
+        function renderTestCard(test) {
+            // Determine status class
+            const statusClass = test.failed ? 'status-fail' : 'status-pass';
+            const statusText = test.failed ? 'Failed' : 'Passed';
+            
+            // Determine type class
+            const typeClass = test.category === 'E2E Tests' ? 'type-e2e' : 'type-ui';
+            const typeText = test.category === 'E2E Tests' ? 'E2E' : 'UI';
+            
+            // Store test index for onclick (avoids large data in HTML)
+            const testIndex = allTests.indexOf(test);
+            
+            return `
+                <div class="test-card" onclick='openFrameViewer(${testIndex})'>
+                    <div class="gif-container">
+                        <div class="iphone-frame">
+                            <div class="iphone-screen">
+                                <img src="${test.gifUrl}" alt="${test.testMethod}" loading="lazy">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="test-details">
+                        <!-- Module Header - Hero -->
+                        <div class="module-header">
+                            <div class="module-name">${test.module || 'Unknown Module'}</div>
+                            <div class="team-name">${test.team || 'Unknown Team'}</div>
+                        </div>
+                        
+                        <!-- Test Class Section -->
+                        ${test.testClass ? `
+                        <div class="test-info-section">
+                            <div class="test-info-label">Test Class</div>
+                            <div class="code-box-container">
+                                <div class="test-class">${test.testClass}</div>
+                                <button class="copy-btn" onclick="copyToClipboard(event, '${test.testClass.replace(/'/g, "\\'")}', this)" title="Copy test class">
+                                    <svg viewBox="0 0 24 24">
+                                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        ` : ''}
+                        
+                        <!-- Test Method Section -->
+                        <div class="test-info-section">
+                            <div class="test-info-label">Test Method</div>
+                            <div class="code-box-container">
+                                <div class="test-method">${test.testMethod || 'unknown_test'}</div>
+                                <button class="copy-btn" onclick="copyToClipboard(event, '${(test.testMethod || 'unknown_test').replace(/'/g, "\\'")}', this)" title="Copy test method">
+                                    <svg viewBox="0 0 24 24">
+                                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Metadata Pills -->
+                        <div class="metadata-pills">
+                            <span class="metadata-pill ${typeClass}">${typeText}</span>
+                            <span class="metadata-pill ${statusClass}">${statusText}</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Open GIF viewer modal
+        function openFrameViewer(testIndex) {
+            const test = allTests[testIndex];
+            if (!test) return;
+            
+            const modal = document.getElementById('frame-viewer-modal');
+            const testNameEl = document.getElementById('frame-viewer-test-name');
+            const testInfoEl = document.getElementById('frame-viewer-test-info');
+            const gifContainer = document.getElementById('modal-gif-container');
+            
+            // Update modal header
+            testNameEl.textContent = test.testMethod || 'Unknown Test';
+            testInfoEl.textContent = `${test.module || 'Unknown'} • ${test.team || 'Unknown'}`;
+            
+            // Force GIF to reload from scratch by adding cache-busting timestamp
+            // This ensures the GIF starts from frame 0 and plays according to its embedded loop settings
+            const cacheBuster = `?_t=${Date.now()}`;
+            const gifUrlWithCacheBuster = test.gifUrl.includes('?') 
+                ? `${test.gifUrl}&_t=${Date.now()}`
+                : `${test.gifUrl}${cacheBuster}`;
+            
+            // Create enlarged GIF with iPhone frame
+            gifContainer.innerHTML = `
+                <div class="modal-iphone-frame">
+                    <div class="modal-iphone-screen">
+                        <img src="${gifUrlWithCacheBuster}" alt="${test.testMethod}" id="modal-gif-img" />
+                    </div>
+                </div>
+            `;
+            
+            // Show modal
+            modal.classList.add('active');
+            
+            // Prevent body scroll
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Close frame viewer modal
+        function closeFrameViewer() {
+            const modal = document.getElementById('frame-viewer-modal');
+            modal.classList.remove('active');
+            
+            // Restore body scroll
+            document.body.style.overflow = '';
+        }
+
+        // Close modal on escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeFrameViewer();
+            }
+        });
+
+        // Close modal on background click
+        document.getElementById('frame-viewer-modal')?.addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeFrameViewer();
+            }
+        });
+
+        // Load sample data
+        async function loadSampleData() {
+            document.getElementById('loading').classList.add('active');
+            document.getElementById('error-message').classList.remove('active');
+            
+            try {
+                updateLoadingStatus('Loading test ownership data...');
+                
+                // Load CSV file first
+                ownershipMap = await loadOwnershipCSV();
+                console.log(`✅ Loaded ${Object.keys(ownershipMap).length} test ownership entries from CSV`);
+                
+                updateLoadingStatus('Fetching sample manifest...');
+                
+                // Fetch the sample manifest
+                const response = await fetch('test-data.json');
+                if (!response.ok) {
+                    throw new Error('Sample data not found. Make sure test-data.json is in the same directory.');
+                }
+                
+                updateLoadingStatus('Processing test data...');
+                const manifestData = await response.json();
+                console.log('📦 Manifest data loaded:', manifestData);
+                
+                // Process the manifest data
+                const tests = await processManifestData(manifestData);
+                console.log(`✅ Processed ${tests.length} tests`);
+                
+                if (tests.length === 0) {
+                    showError('No test videos found in sample data');
+                    document.getElementById('loading').classList.remove('active');
+                    return;
+                }
+                
+                // Sort tests by MODULE > TEAM > TEST NAME
+                tests.sort((a, b) => {
+                    // First, sort by module
+                    const moduleCompare = (a.module || 'Unknown').localeCompare(b.module || 'Unknown');
+                    if (moduleCompare !== 0) return moduleCompare;
+                    
+                    // Then by team
+                    const teamCompare = (a.team || 'Unknown').localeCompare(b.team || 'Unknown');
+                    if (teamCompare !== 0) return teamCompare;
+                    
+                    // Finally by test method name
+                    return (a.testMethod || '').localeCompare(b.testMethod || '');
+                });
+                console.log('✅ Tests sorted by MODULE > TEAM > TEST NAME');
+                
+                // Store globally
+                allTests = tests;
+                filteredTests = [...tests];
+                
+                // Update UI
+                document.getElementById('loading').classList.remove('active');
+                
+                console.log('📊 Rendering stats...');
+                renderStats(tests, manifestData);
+                console.log('🔍 Populating filters...');
+                populateFilters(tests);
+                console.log('🖼️  Rendering gallery...');
+                renderGallery(tests);
+                console.log('✅ All done!');
+                
+            } catch (error) {
+                console.error('❌ Error loading sample data:', error);
+                showError('Error loading sample data: ' + error.message);
+                document.getElementById('loading').classList.remove('active');
+            }
+        }
+
+        // Load CSV from external file
+        let ownershipMap = {};
+        
+        // Fetch and parse CSV file
+        async function loadOwnershipCSV() {
+            try {
+                const response = await fetch('test-ownership.csv');
+                if (!response.ok) {
+                    console.warn('Could not load test-ownership.csv, using empty ownership data');
+                    return {};
+                }
+                const csvText = await response.text();
+                return parseTestOwnershipCSV(csvText);
+            } catch (error) {
+                console.warn('Error loading CSV:', error);
+                return {};
+            }
+        }
+        
+        // CSV test ownership data - FALLBACK (if CSV file not available)
+        const testOwnershipData = `Test,Ticket,Module,Team,Requires test for November release,November Test Implemented,Type,Transfer by Quarter
+test_3912713_transferIn_savings,,Banking,Banking,,,E2E,Q3
+test_3912714_transferOut_savings,,Banking,Banking,,,E2E,Q3
+test_3912748_fillOutDirectDepositForm,,Banking,Banking,,,E2E,Q3
+test_3912762_showBarcodePaperMoney,,Banking,Banking,,,E2E,Q3
+test_3912585_lockUnlockCashCard,,Card,Banking,,,E2E,Q3
+test_4129112_viewDiscountOfferFromTile,,Offers,Banking,,,E2E,Q4
+test_4142204_searchFilterPill,,Offers,Banking,,,E2E,Q4
+test_4244474_searchRecentlyViewedNotOnFilter,,Offers,Banking,,,E2E,Q4
+test_3912708_navigateBanking_savingsNux,,Banking,Banking,,,UI,Q3
+test_3912713_navigateBanking_addSavings,,Banking,Banking,,,UI,Q3
+test_3912714_transferOut,,Banking,Banking,,,UI,Q3
+test_3912751_activateRoundUps_withoutCashCard,,Banking,Banking,,,UI,Q3
+test_3912752_activateRoundUps,,Banking,Banking,,,UI,Q3
+test_3912756_navigateBanking_depositPaperMoney,,Banking,Banking,,,UI,Q3
+test_3912780_directDeposit_cashCardOrder,,Banking,Banking,,,UI,Q3
+test_4472385_savingsYieldW9Attestation,,Banking,Banking,,,UI,Q3
+test_4960660_navigateBanking_paychecksNux,,Banking,Banking,,,UI,Q3
+test_4960661_navigateBanking_paychecks_setAllocation,,Banking,Banking,,,UI,Q3
+test_3912575_OrderCashCard_noIdv_withPersonalization,,Card,Banking,,,UI,Q3
+test_3912576_OrderCashCard_Idv_noPersonalization,,Card,Banking,,,UI,Q3
+test_4397628_clientRouteNavigation_cashCardScreen_userWithCard,,Card,Banking,,,UI,Q3
+test_OrderCashCard_noIdv_noPersonalization,,Card,Banking,,,UI,Q3
+test_3913719_searchEmptyResults,,Offers,Banking,,,UI,Q4
+test_3968214_browseOffersTab,,Offers,Banking,,,UI,Q4
+test_4128487_quickActionFilters,CASHUIA-2689,Offers,Banking,,,UI,Q4
+test_4128488_viewOfferFromHero,,Offers,Banking,,,UI,Q4
+test_4128489_addOfferFromHero,,Offers,Banking,,,UI,Q4
+test_4129211_addOfferFromCollection,,Offers,Banking,,,UI,Q4
+test_4129212_swapOfferFromCollection,,Offers,Banking,,,UI,Q4
+test_4129415_addOfferFromCollectionTile,,Offers,Banking,,,UI,Q4
+test_4129417_swapOfferFromCollectionTile,,Offers,Banking,,,UI,Q4
+test_4129425_searchFilterFromCategoryTile,CASHUIA-2689,Offers,Banking,,,UI,Q4
+test_4142205_clearSearchFilter,CASHUIA-2836,Offers,Banking,,,UI,Q4
+test_4244473_openDetailSheetOnSearch,,Offers,Banking,,,UI,Q4
+test_4468496_offersBrowse,,Offers,Banking,,,UI,Q4
+test_4468497_coldLaunch_offersBrowse,,Offers,Banking,,,UI,Q4
+test_4646256_createPersonalAccountFromBitcoinApplet,,Business,Banking - Nano,,,E2E,Q4
+test_4143421_switchToBusinessAccount_singleMemberLLC,,Business,Banking - Nano,,,UI,Q4
+test_4425968_send_payment_from_business_to_main_account,,Business,Banking - Nano,,,UI,Q4
+test_4425969_send_payment_from_personal_to_business,,Business,Banking - Nano,,,UI,Q4
+test_create_business_account_profile_entry_point,,Business,Banking - Nano,,,UI,Q4
+test_startSwitchToBusinessAccountMultipleTimes,,Business,Banking - Nano,,,UI,Q4
+test_verifyBankingEligibility,CASHUIA-2835,Business,Banking - Nano,,,UI,Q4
+test_3914046_canAddBalanceWidgetToDeviceAndDisplaysData,CASHUIA-2974,Widgets,Banking - Nano,,,UI,Q4
+test_3913081_weeklyAllowanceSetup,,Families,Banking — Families,,,E2E,Q4
+test_3970526_purchaseStockAboveLimit,,Families,Banking — Families,,,E2E,Q4
+test_3970529_purchaseBitcoinWhenSettingIsOff,,Families,Banking — Families,,,E2E,Q4
+test_3913059_teenUnder13,,Families,Banking — Families,,,UI,Q4
+test_3913060_teenBetween13and18,,Families,Banking — Families,,,UI,Q4
+test_3966626_requestTeenSponsorshipFromP2Ppay,,Families,Banking — Families,,,UI,Q4
+test_3970523_requestInvestingForStockWhenAlreadySponsored,,Families,Banking — Families,,,UI,Q4
+test_3970524_requestInvestingForBitcoinWhenAlreadySponsored,,Families,Banking — Families,,,UI,Q4
+test_3970527_purchaseBitcoinAboveLimit,,Families,Banking — Families,,,UI,Q4
+test_3970528_purchaseStocksWhenSettingIsOff,,Families,Banking — Families,,,UI,Q4
+test_3970530_setCustomLimits,,Families,Banking — Families,,,UI,Q4
+test_3970531_toggleStocksSettings,,Families,Banking — Families,,,UI,Q4
+test_3970532_toggleBitcoinSettings,,Families,Banking — Families,,,UI,Q4
+test_3970533_requestTeenSponsorshipFromStockBuy,,Families,Banking — Families,,,UI,Q4
+test_3970534_requestTeenSponsorshipFromBitcoinBuy,,Families,Banking — Families,,,UI,Q4
+test_4550067_toggleOnP2pForTeen,,Families,Banking — Families,,,UI,Q4
+test_4550068_toggleOffP2pForTeen,,Families,Banking — Families,,,UI,Q4
+test_4715961_requestTeenSponsorshipFromCardOrder,,Families,Banking — Families,,,UI,Q4
+test_3912639_sellStock,,Investing,Banking — Savings and Investing,,,E2E,Q4
+test_3912672_viewingInvestmentDetails,,Investing,Banking — Savings and Investing,,,E2E,Q4
+test_3912638_sellStock_oneTimeFixedAmount_requirePasscode,,Investing,Banking — Savings and Investing,,,UI,Q4
+test_3912649_purchaseStock_oneTimeFixedAmount_firstTimeBuyer_IDV,,Investing,Banking — Savings and Investing,,,UI,Q4
+test_3912650_purchaseStock_oneTimeFixedAmount_requirePasscode,,Investing,Banking — Savings and Investing,,,UI,Q4
+test_3912653_purchaseStock_reccuringBiWeeklyCustomAmount_requirePasscode,,Investing,Banking — Savings and Investing,,,UI,Q4
+test_3912655_purchaseStock_customPurchaseOrder_requirePasscode,,Investing,Banking — Savings and Investing,,,UI,Q4
+test_3912661_sortPortfolio,,Investing,Banking — Savings and Investing,,,UI,Q4
+test_3912675_followStock,,Investing,Banking — Savings and Investing,,,UI,Q4
+test_4770113_changeBitcoinRoundupDestinationToSavings,,Investing,Banking — Savings and Investing,,,UI,Q4
+test_purchaseStock_discoverStock_searchInCategory_PerformanceFiler,,Investing,Banking — Savings and Investing,,,UI,Q4
+test_purchaseStock_oneTimeCustomAmount_requirePasscode,,Investing,Banking — Savings and Investing,,,UI,Q4
+test_sellStock_customAmount_requirePasscode,,Investing,Banking — Savings and Investing,,,UI,Q4
+test_3912701_tile3XEntryPoint,,Lending,Banking — Savings and Investing,,,UI,Q4
+test_4249417_applet_timeline_tile_repay_oneLoan_remaining_arcade,,Lending,Banking — Savings and Investing,,,UI,Q4
+test_applet_bulletin_configuredWithRoutingSetToActionURL,,Lending,Banking — Savings and Investing,,,UI,Q4
+test_applet_bulletin_tile_infoSheet,,Lending,Banking — Savings and Investing,,,UI,Q4
+test_applet_bulletin_tile_infoSheet_button_tap,,Lending,Banking — Savings and Investing,,,UI,Q4
+test_applet_timeline_tile_repay_details_deeplink,CASHI-30794,Lending,Banking — Savings and Investing,,,UI,Q4
+test_applet_timeline_tile_repay_multiLoan_custom,,Lending,Banking — Savings and Investing,,,UI,Q4
+test_applet_timeline_tile_repay_multiLoan_remaining,,Lending,Banking — Savings and Investing,,,UI,Q4
+test_applet_timeline_tile_repay_oneLoan_next,,Lending,Banking — Savings and Investing,,,UI,Q4
+test_applet_timeline_tile_repay_oneLoan_overdue,,Lending,Banking — Savings and Investing,,,UI,Q4
+test_blocker_overdue_loan_otherAmount,,Lending,Banking — Savings and Investing,,,UI,Q4
+test_bulletinDeepLink_asyncLoadLaunchesAndShowsBulletin,,Lending,Banking — Savings and Investing,,,UI,Q4
+test_creditLimitAndBorrowButtonTile_borrowFlow,,Lending,Banking — Savings and Investing,,,UI,Q4
+test_ftb_blocker,CASHUIA-2281,Lending,Banking — Savings and Investing,,,UI,Q4
+test_globalEntryPoint,,Lending,Banking — Savings and Investing,,,UI,Q4
+test_loanDetailsDeepLink_asyncLoanLaunchesAndShowsLoanDetails,,Lending,Banking — Savings and Investing,,,UI,Q4
+test_loanHistoryTile_opensLoanDetails_autopay,,Lending,Banking — Savings and Investing,,,UI,Q4
+test_loanHistoryTile_opensLoanDetails_expanded,,Lending,Banking — Savings and Investing,,,UI,Q4
+test_loanHistoryTile_opensLoanDetails_multiLoan_custom,,Lending,Banking — Savings and Investing,,,UI,Q4
+test_loanHistoryTile_opensLoanDetails_multiLoan_remainingBalance,,Lending,Banking — Savings and Investing,,,UI,Q4
+test_loanHistoryTile_opensLoanDetails_multiLoan_repaid,,Lending,Banking — Savings and Investing,,,UI,Q4
+test_loanHistoryTile_opensLoanDetails_oneLoan,,Lending,Banking — Savings and Investing,,,UI,Q4
+test_localEntryPoint_overridesGlobalEntryPoint,,Lending,Banking — Savings and Investing,,,UI,Q4
+test_unlockBorrow,,Lending,Banking — Savings and Investing,,,UI,Q4
+test_viewLoanClientRoute,,Lending,Banking — Savings and Investing,,,UI,Q4
+test_3912472_buyBitcoin,,Bitcoin,Bitcoin,,,E2E,Q4
+test_3912527_sendBitcoinOnchain,,Bitcoin,Bitcoin,,,E2E,Q4
+test_4087251_bitcoinBasics,,Bitcoin,Bitcoin,,,E2E,Q4
+test_4561697_sellBitcoin,,Bitcoin,Bitcoin,,,E2E,Q4
+test_3912469_bitcoinAppletNullState,,Bitcoin,Bitcoin,,,UI,Q4
+test_3912471_buyBitcoinFirstTime,,Bitcoin,Bitcoin,,,UI,Q4
+test_3912472_buyBitcoinSuggestedAmount,,Bitcoin,Bitcoin,,,UI,Q4
+test_3912474_sellBitcoin,,Bitcoin,Bitcoin,,,UI,Q4
+test_3912485_shareLightningQrCode,,Bitcoin,Bitcoin,,,UI,Q4
+test_3912488_setUpAutoInvest,,Bitcoin,Bitcoin,,,UI,Q4
+test_3912489_updateAutoInvest,,Bitcoin,Bitcoin,,,UI,Q4
+test_3912508_paidInBitcoinWithNoCard,,Bitcoin,Bitcoin,,,UI,Q4
+test_3912509_paidInBitcoinWithUnactivatedCard,,Bitcoin,Bitcoin,,,UI,Q4
+test_3912523_nyLightningNotAvailable,,Bitcoin,Bitcoin,,,UI,Q4
+test_3912528_onchainWithdrawalPasteAddress,CASHUIA-2541,Bitcoin,Bitcoin,,,UI,Q4
+test_3912532_updateBitcoinNotifications,,Bitcoin,Bitcoin,,,UI,Q4
+test_4492178_bitcoinCopyAddressFromDeposits,,Bitcoin,Bitcoin,,,UI,Q4
+test_4492820_buyBitcoinCustomAmount,CASHUIA-2283,Bitcoin,Bitcoin,,,UI,Q4
+test_4492821_copyLightningAddressFromQrCode,CASHUIA-2541,Bitcoin,Bitcoin,,,UI,Q4
+test_4492822_generateCustomLightningQrCode,,Bitcoin,Bitcoin,,,UI,Q4
+test_4492824_lightningWithdrawalPasteAddress,CASHUIA-2541,Bitcoin,Bitcoin,,,UI,Q4
+test_4492825_lightningWithdrawalPasteAddressFaceId,CASHUIA-2541,Bitcoin,Bitcoin,,,UI,Q4
+test_4493041_bitcoinCopyAddressFromReceives,,Bitcoin,Bitcoin,,,UI,Q4
+test_4493119_onchainWithdrawalPasteAddressFaceId,CASHUIA-2541,Bitcoin,Bitcoin,,,UI,Q4
+test_4493122_nyCopyBitcoinAddressFromDeposits,,Bitcoin,Bitcoin,,,UI,Q4
+test_4493149_navigateFromBitcoinAppletToMoneyTab,,Bitcoin,Bitcoin,,,UI,Q4
+test_4493154_getCashCardFromBitcoinApplet,,Bitcoin,Bitcoin,,,UI,Q4
+test_4493155_launchDidvFromDepositBitcoin,,Bitcoin,Bitcoin,,,UI,Q4
+test_4493156_launchCryptoOnboardingFromDeposit,,Bitcoin,Bitcoin,,,UI,Q4
+test_4493158_viewAllBitcoinNews,,Bitcoin,Bitcoin,,,UI,Q4
+test_4770107_onboardBitcoinRoundups,,Bitcoin,Bitcoin,,,UI,Q4
+test_4770109_onboardAutoInvest,,Bitcoin,Bitcoin,,,UI,Q4
+test_4770110_onboardPaidInBitcoin,,Bitcoin,Bitcoin,,,UI,Q4
+test_4770112_learnMoreOnboardingEntryPoints,,Bitcoin,Bitcoin,,,UI,Q4
+test_4770203_cancelAutoInvest,,Bitcoin,Bitcoin,,,UI,Q4
+test_4770348_turnOffPaidInBitcoin,,Bitcoin,Bitcoin,,,UI,Q4
+test_4770349_updatePaidInBitcoinAllocation,,Bitcoin,Bitcoin,,,UI,Q4
+test_4900759_updatePaidInBitcoinAllocationFromPaychecks,,Bitcoin,Bitcoin,,,UI,Q4
+test_4903213_onboardBitcoinRoundupsFromLearnMore,,Bitcoin,Bitcoin,,,UI,Q4
+test_4903375_enableBitcoinRoundups,,Bitcoin,Bitcoin,,,UI,Q4
+test_5075247_turnBackOnAutoInvest,,Bitcoin,Bitcoin,,,UI,Q4
+test_coldLaunch_bitcoinPayment,,Bitcoin,Bitcoin,,,UI,Q4
+test_coldLaunch_lightningPayment,,Bitcoin,Bitcoin,,,UI,Q4
+test_view_news_article_flow,,Bitcoin,Bitcoin,,,UI,Q4
+test_5026105_createStandardCheckoutFromIab,CASHUIA-3184,Afterpay,Commerce - Consumer Experience,,,E2E,Q4
+test_confirmEcommercePaymentFromBalance,,CashAppPay,Commerce - Consumer Experience,,,E2E,Q4
+test_confirmEcommercePayment_dynamicGrantApproval,,CashAppPay,Commerce - Consumer Experience,,,E2E,Q4
+test_confirmEcommerceRedirectPayment,,CashAppPay,Commerce - Consumer Experience,,,E2E,Q4
+test_confirmInStoreFromBalance,,CashAppPay,Commerce - Consumer Experience,,,E2E,Q4
+test_discardEcommerceRedirectPayment,,CashAppPay,Commerce - Consumer Experience,,,E2E,Q4
+test_dismissInStorePayment,,CashAppPay,Commerce - Consumer Experience,,,E2E,Q4
+test_failExpiredCard,CASHUIA-3263,CashAppPay,Commerce - Consumer Experience,,,E2E,Q4
+test_3912305_SuccessfulInStorePayment_inHalfsheet,,CashAppPay,Commerce - Consumer Experience,,,UI,Q4
+test_4435031_ColdStartDeepLink,,CashAppPay,Commerce - Consumer Experience,,,UI,Q4
+test_4298424_searchActivityByNameAndNote,,Activity,Core Experiences - Core Surfaces,,,E2E,Q4
+test_4606116_viewPaymentTransaction,,Activity,Core Experiences - Core Surfaces,,,E2E,Q4
+test_3968032_merchantProfileEntryPoint_instrumentQuickNav,,Activity,Core Experiences - Core Surfaces,,,UI,Q4
+test_4521075_addFavorite_fromActivity,,Activity,Core Experiences - Core Surfaces,,,UI,Q4
+test_4522092_paymentRequest_confirmBlocker_initiatedByRecipient,,Activity,Core Experiences - Core Surfaces,,,UI,Q4
+test_4522093_paymentRequest_confirmBlocker_requiresPasscode_resolveWithBiometrics,,Activity,Core Experiences - Core Surfaces,,,UI,Q4
+test_4522094_paymentRequest_confirmBlocker_possibleDuplicate,CASHUIA-2975,Activity,Core Experiences - Core Surfaces,,,UI,Q4
+test_4522095_paymentFromProfile_noPasscode,,Activity,Core Experiences - Core Surfaces,,,UI,Q4
+test_4522162_requestPaymentFromProfile_noPasscode,,Activity,Core Experiences - Core Surfaces,,,UI,Q4
+test_4522225_paymentFromProfile_noPasscode_instrumentQuickNav,,Activity,Core Experiences - Core Surfaces,,,UI,Q4
+test_4522226_requestFromProfile_noPasscode_instrumentQuickNav,,Activity,Core Experiences - Core Surfaces,,,UI,Q4
+test_4522227_paymentRequest_confirmBlocker_requiresPasscode_resolveWithManualEntry,,Activity,Core Experiences - Core Surfaces,,,UI,Q4
+test_4522228_paymentFromProfile_noPasscode_instrumentReceipt,,Activity,Core Experiences - Core Surfaces,,,UI,Q4
+test_4522229_requestFromProfile_noPasscode_instrumentReceipt,,Activity,Core Experiences - Core Surfaces,,,UI,Q4
+test_4522230_paymentFromProfile_pendingAfterError,,Activity,Core Experiences - Core Surfaces,,,UI,Q4
+test_4522231_requestFromProfile_pendingAfterError,,Activity,Core Experiences - Core Surfaces,,,UI,Q4
+test_4522232_cancelOutstandingPayment,,Activity,Core Experiences - Core Surfaces,,,UI,Q4
+test_4522233_declineOutstandingPaymentRequest,,Activity,Core Experiences - Core Surfaces,,,UI,Q4
+test_5038563_clientRouteActivitySearch,,Activity,Core Experiences - Core Surfaces,,,UI,Q4
+test_paymentRequest_confirmBlocker_multipleFlags,CASHUIA-2881,Activity,Core Experiences - Core Surfaces,,,UI,Q4
+test_simpleActivityFlow_hybridFeed,,Activity,Core Experiences - Core Surfaces,,,UI,Q4
+test_3967812_inviteFriendsFromYourAccount,,InviteFriends,Core Experiences - P2P,,,UI,Q4
+test_4521066_inviteFriendsFromActivityFeed,,InviteFriends,Core Experiences - P2P,,,UI,Q4
+test_3967910_requestPaymentViaCashtag,,P2P,Core Experiences - P2P,,,UI,Q4
+test_3967928_payment_pad_united_states,,P2P,Core Experiences - P2P,,,UI,Q4
+test_3967930_sendPaymentViaCashTag,,P2P,Core Experiences - P2P,,,UI,Q4
+test_3967990_paymentFlow_RecipientProfile_withSendingInstrument,,P2P,Core Experiences - P2P,,,UI,Q4
+test_3967992_paymentFlow_RecipientProfile_withRequestingInstrument,,P2P,Core Experiences - P2P,,,UI,Q4
+test_3968014_paymentFlow_BlockRecipientFromProfile_withSendingInstruments,,P2P,Core Experiences - P2P,,,UI,Q4
+test_3968015_paymentFlow_ReportRecipientFromProfile,,P2P,Core Experiences - P2P,,,UI,Q4
+test_4190487_personalizedPayments_senderFlow_united_states,,P2P,Core Experiences - P2P,,,UI,Q4
+test_4492322_sendPaymentWithConnectionError,CASHI-31629,P2P,Core Experiences - P2P,,,UI,Q4
+test_4521062_personalizedPayments_no_recipient,,P2P,Core Experiences - P2P,,,UI,Q4
+test_4521064_paymentFlow_biometrics_preInitiatePaymentScanSucceeds,,P2P,Core Experiences - P2P,,,UI,Q4
+test_4521065_paymentFlow_ReportAndBlockRecipientFromProfile,,P2P,Core Experiences - P2P,,,UI,Q4
+test_4561689_requiredPaymentNote,,P2P,Core Experiences - P2P,,,UI,Q4
+test_5272954_sendPaymentViaCashTagWithIDV,,P2P,Core Experiences - P2P,,,UI,Q4
+test_paymentFlow_biometrics_preInititatePaymentScanFails_fallsBackToManualPINEntry,,P2P,Core Experiences - P2P,,,UI,Q4
+test_autoDisplayShortlinkKey_doesNotPresentHalfSheet_ifAppLaunchedViaFlowDeepLink,,Local,Local,,,UI,Q4
+test_autoDisplayShortlinkKey_presentsExpandableSheet,,Local,Local,,,UI,Q4
+test_upgradeLockout,,AppUpgrades,Systems and Standards - Client Systems,,,UI,Q4
+test_upgradeSuggestion,,AppUpgrades,Systems and Standards - Client Systems,,,UI,Q4
+test_4490232_backgroundLaunchTabAppLockSettingDisabled,,Client Route Navigation,Systems and Standards - Client Systems,,,UI,Q4
+test_4492170_coldLaunchTabAppLockSettingDisabled,,Client Route Navigation,Systems and Standards - Client Systems,,,UI,Q4
+test_4492171_launchProfileDirectory,,Client Route Navigation,Systems and Standards - Client Systems,,,UI,Q4
+test_4492172_coldLaunchTabAppLockSettingEnabled,CASHUIA-2418,Client Route Navigation,Systems and Standards - Client Systems,,,UI,Q4
+test_4492173_backgroundLaunchTabAppLockSettingEnabled,CASHUIA-2418,Client Route Navigation,Systems and Standards - Client Systems,,,UI,Q4
+test_4492174_backgroundLaunchModalAppLockSettingDisabled,CASHUIA-2972,Client Route Navigation,Systems and Standards - Client Systems,,,UI,Q4
+test_4492175_backgroundLaunchModalAppLockSettingEnabled,CASHUIA-2419,Client Route Navigation,Systems and Standards - Client Systems,,,UI,Q4
+test_4492176_coldLaunchModalAppLockSettingDisabled,,Client Route Navigation,Systems and Standards - Client Systems,,,UI,Q4
+test_4492177_coldLaunchModalAppLockSettingEnabled,CASHUIA-2419,Client Route Navigation,Systems and Standards - Client Systems,,,UI,Q4
+test_5038564_coldLaunchActivitySearch,CASHUIA-2446,Client Route Navigation,Systems and Standards - Client Systems,,,UI,Q4
+test_activityClientRoute_whenDetailsPushedOnNavStack,,Client Route Navigation,Systems and Standards - Client Systems,,,UI,Q4
+test_backgroundLaunch_accountRequirementNone_doesNotSwitchAccounts,,Client Route Navigation,Systems and Standards - Client Systems,,,UI,Q4
+test_backgroundLaunch_accountRequirementPromptIfNeeded_switchesAccounts,CASHI-31376,Client Route Navigation,Systems and Standards - Client Systems,,,UI,Q4
+test_coldLaunchProfileDirectory,CASHUIA-2420,Client Route Navigation,Systems and Standards - Client Systems,,,UI,Q4
+test_coldLaunch_accountRequirementNone_doesNotSwitchAccounts,,Client Route Navigation,Systems and Standards - Client Systems,,,UI,Q4
+test_coldLaunch_accountRequirementPromptIfNeeded_switchesAccounts,CASHI-31376,Client Route Navigation,Systems and Standards - Client Systems,,,UI,Q4
+test_configuredToPromptCustomerForAccount_switchesAccounts,CASHI-31376,Client Route Navigation,Systems and Standards - Client Systems,,,UI,Q4
+test_invalidActivityLink,,Client Route Navigation,Systems and Standards - Client Systems,,,UI,Q4
+test_launchProfile,,Client Route Navigation,Systems and Standards - Client Systems,,,UI,Q4
+test_launchProfilePersonal,,Client Route Navigation,Systems and Standards - Client Systems,,,UI,Q4
+test_launchQrCodeScanner,,Client Route Navigation,Systems and Standards - Client Systems,,,UI,Q4
+test_launch_equityDetail,,Client Route Navigation,Systems and Standards - Client Systems,,,UI,Q4
+test_3968078_signOut,,Account,Trust,,,E2E,Q3
+test_4474425_c4bEligibleCanSwitchToPersonal,,Account,Trust,,,E2E,Q3
+test_4474426_linkedAccountsDisplayInAccountPicker,,Account,Trust,,,E2E,Q3
+test_4492811_lowRisk_recoverAccountViaCashTagPinDebitCard,,Account,Trust,,,E2E,Q3
+test_4492812_lowRisk_recoverAccountViaEmailPinDebitCard,,Account,Trust,,,E2E,Q3
+test_4492815_mediumRisk_recoverAccountViaCashtagPinDebitCard,,Account,Trust,,,E2E,Q3
+test_4492816_mediumRisk_recoverAccountViaEmailPinDebitCard,,Account,Trust,,,E2E,Q3
+test_4492817_mediumRisk_recoverAccountViaPhoneNumberPinDebitCard,,Account,Trust,,,E2E,Q3
+test_4492818_highRisk_recoverAccount,,Account,Trust,,,E2E,Q3
+test_4492819_unrecoverableAccount,,Account,Trust,,,E2E,Q3
+test_4549676_mediumRisk_recoverAccountViaEmailCashCardPin,,Account,Trust,,,E2E,Q3
+test_4549677_mediumRisk_recoverAccountViaEmailCashCardDebitCard,,Account,Trust,,,E2E,Q3
+test_4549678_mediumRisk_recoverAccountViaCashtagCashCardPin,,Account,Trust,,,E2E,Q3
+test_4549679_mediumRisk_recoverAccountViaCashtagCashCardDebitCard,,Account,Trust,,,E2E,Q3
+test_4813153_m1EligibleAccountNoSecondaryAccount,,Account,Trust,,,E2E,Q3
+test_4813154_personalWithBusinessSecondary,,Account,Trust,,,E2E,Q3
+test_4906857_lowRisk_recoverAccountViaPhoneNumberPinDebitCard,,Account,Trust,,,E2E,Q3
+test_4906898_knownDevice_recoverAccountViaCashTagPin,,Account,Trust,,,E2E,Q3
+test_4906899_knownDevice_recoverAccountViaCashtagDebitCard,,Account,Trust,,,E2E,Q3
+test_4906900_knownDevice_recoverAccountViaEmailPin,,Account,Trust,,,E2E,Q3
+test_4906901_knownDevice_recoverAccountViaEmailDebitCard,,Account,Trust,,,E2E,Q3
+test_4906902_knownDevice_recoverAccountViaPhoneNumberPin,,Account,Trust,,,E2E,Q3
+test_5087393_selectedAccountDisplaysAfterAppBackground,,Account,Trust,,,E2E,Q3
+test_c4bEligible_canCreatePersonalSecondaryAccount,,Account,Trust,,,E2E,Q3
+test_canCreateNewBusinessAccount,,Account,Trust,,,E2E,Q3
+test_linkNewAccountWithEmail,,Account,Trust,,,E2E,Q3
+test_linkNewAccountWithPhone,,Account,Trust,,,E2E,Q3
+test_4437653_eidvTriggerFromAccountAndRoutingAddInstant,,IDV,Trust,,,E2E,Q3
+test_4437654_eidvTriggerFromAccountAndRoutingDepositPaperMoney,,IDV,Trust,,,E2E,Q3
+test_4906966_eidvTriggerAddMoneyFromMoneyScreen,,IDV,Trust,,,E2E,Q3
+test_4521071_linkDebitCard,,Instruments,Trust,,,E2E,Q3
+test_4906903_linkBankAccount,CASHUIA-3069,Instruments,Trust,,,E2E,Q3
+test_3912788_flowEmailOnboardingWithCardLinking,,Onboarding,Trust,,,E2E,Q3
+test_3912789_flowOnboardingPhoneWithCardLinking,CASHUIA-2993,Onboarding,Trust,,,E2E,Q3
+test_3967930_sendPayment,,Onboarding,Trust,,,E2E,Q3
+test_4233548_emailOnboardingSkipCardLinking,,Onboarding,Trust,,,E2E,Q3
+test_4233550_flowOnboardingPhoneSkipCardLinking,,Onboarding,Trust,,,E2E,Q3
+test_4491498_signinEmailFlow,,Onboarding,Trust,,,E2E,Q3
+test_4789955_signinPhoneFlow,,Onboarding,Trust,,,E2E,Q3
+test_cardOnboarding_appears,,Onboarding,Trust,,,E2E,Q3
+test_flowEmailOnboarding_usTaxes,,Onboarding,Trust,,,E2E,Q3
+test_flowOnboarding_usLoyalty,,Onboarding,Trust,,,E2E,Q3
+test_flowOnboarding_usLoyaltySkip,,Onboarding,Trust,,,E2E,Q3
+test_flowOnboarding_usRewardCode,,Onboarding,Trust,,,E2E,Q3
+test_flowOnboarding_usRewardCodeSkip,,Onboarding,Trust,,,E2E,Q3
+test_loginEmailFlow_usDenylistedAccount,,Onboarding,Trust,,,E2E,Q3
+test_signinEmailFlowHappyPath,,Onboarding,Trust,,,E2E,Q3
+test_signinEmailFlowUnHappyPath,,Onboarding,Trust,,,E2E,Q3
+test_signinEmailFlowViaAR,,Onboarding,Trust,,,E2E,Q3
+test_signinEmailFlowViaResentCodeHappyPath,,Onboarding,Trust,,,E2E,Q3
+test_signinEmailFlowViaResentCodeUnHappyPath,,Onboarding,Trust,,,E2E,Q3
+test_signinSMSFlowUnHappyPath,,Onboarding,Trust,,,E2E,Q3
+test_signinSMSFlowViaAR,,Onboarding,Trust,,,E2E,Q3
+test_signinSMSFlowViaResentCodeHappyPath,,Onboarding,Trust,,,E2E,Q3
+test_signinSMSFlowViaResentCodeUnHappyPath,,Onboarding,Trust,,,E2E,Q3
+test_3912732_addCashWithEidv,,Transfers,Trust,,,E2E,Q3
+test_3912740_standardWithdrawalAndGetItNow,,Transfers,Trust,,,E2E,Q3
+test_3912741_triggerCashout,,Transfers,Trust,,,E2E,Q3
+test_4813155_addCash,,Transfers,Trust,,,E2E,Q3
+test_addCashViaInstantACH,,Transfers,Trust,,,E2E,Q3
+test_3912993_singleAccountPicker,,Account,Trust,,,UI,Q3
+test_3912994_multipleAccountsPicker,,Account,Trust,,,UI,Q3
+test_3912995_removeAccountViaMenuWithMultipleAccounts,,Account,Trust,,,UI,Q3
+test_3912996_removeAccountViaSwipeWithSingleAccount,,Account,Trust,,,UI,Q3
+test_3968062_addFavorite_fromSearch_firstTimeFavorite,,Account,Trust,,,UI,Q3
+test_3968065_addFavorite_fromSearch,,Account,Trust,,,UI,Q3
+test_3968067_removeFavorite_fromFavoritesManagementList,,Account,Trust,,,UI,Q3
+test_3968087_addPhone,,Account,Trust,,,UI,Q3
+test_3968088_verify_us_email_page_is_displayed,,Account,Trust,,,UI,Q3
+test_3968089_add_us_address,,Account,Trust,,,UI,Q3
+test_3968090_remove_us_phone,,Account,Trust,,,UI,Q3
+test_3968092_remove_us_phone_no_email,,Account,Trust,,,UI,Q3
+test_3968093_replace_us_address,,Account,Trust,,,UI,Q3
+test_3968098_shareAccountLinkData,,Account,Trust,,,UI,Q3
+test_3968105_changing_cashtag,,Account,Trust,,,UI,Q3
+test_3968113_replaceDebitCard,,Account,Trust,,,UI,Q3
+test_3968116_removeDebitCard,,Account,Trust,,,UI,Q3
+test_3968123_updateCashPin,CASHUIA-2328,Account,Trust,,,UI,Q3
+test_3968129_viewQRCode_Screen,,Account,Trust,,,UI,Q3
+test_3968133_scan_CustomerProfileQRCode_completePayment,,Account,Trust,,,UI,Q3
+test_3968168_disableMoveMoney,,Account,Trust,,,UI,Q3
+test_4287613_enableUnlockTheApp,CASHUIA-2328,Account,Trust,,,UI,Q3
+test_4424507_switch_to_personal_account_personal_settings_entry,CASHI-31343,Account,Trust,,,UI,Q3
+test_4424509_switch_to_personal_account_notifications_settings_entry,CASHI-31343,Account,Trust,,,UI,Q3
+test_4474425_switch_to_business_account_profileIcon_entry_point,CASHUIA-2879,Account,Trust,,,UI,Q3
+test_4493166_updateCashtag_countLimit,,Account,Trust,,,UI,Q3
+test_4521071_linkDebitCard,,Account,Trust,,,UI,Q3
+test_4521072_linkInvalidDebitCard_us,,Account,Trust,,,UI,Q3
+test_4521073_addFavorite_fromProfile_firstTimeFavorite,,Account,Trust,,,UI,Q3
+test_4521076_paymentFlow_unfavoriteFromProfile_withSendingInstrument,,Account,Trust,,,UI,Q3
+test_4521077_removeFavorite_fromProfile,,Account,Trust,,,UI,Q3
+test_4522090_updateCashPinWithBiometricsOn,,Account,Trust,,,UI,Q3
+test_4522091_addFavorite_fromProfile,,Account,Trust,,,UI,Q3
+test_5117736_cancelSignOut,,Account,Trust,,,UI,Q3
+test_5120196_disableMoveMoney_resetPIN,,Account,Trust,,,UI,Q3
+test_paymentFlow_favoriteFromProfile_withSendingInstrument,,Account,Trust,,,UI,Q3
+test_removeAccountViaMenuWithSingleAccount,,Account,Trust,,,UI,Q3
+test_removeAccountViaSwipeWithMultipleAccounts,,Account,Trust,,,UI,Q3
+test_signin_shouldBlock_withIncompleteMCFData,CASHUIA-2231,Account,Trust,,,UI,Q3
+test_signin_shouldBlock_withMissingMCFData,CASHUIA-2231,Account,Trust,,,UI,Q3
+test_signin_shouldSucceed_withCompleteMCFData,CASHUIA-2231,Account,Trust,,,UI,Q3
+test_update_name,,Account,Trust,,,UI,Q3
+test_verifyNamePreview,,Account,Trust,,,UI,Q3
+test_verify_business_info_in_settings,,Account,Trust,,,UI,Q3
+test_viewLimits,,Account,Trust,,,UI,Q3
+test_viewLimits_rpc_teen,,Account,Trust,,,UI,Q3
+test_4397881_kycVerifyPersonalInformation,,IDV,Trust,,,UI,Q3
+test_4397893_sowResolveAdverseAction,,IDV,Trust,,,UI,Q3
+test_dIDVRefresh,,IDV,Trust,,,UI,Q3
+test_dIDVResolveAdverseAction,,IDV,Trust,,,UI,Q3
+test_resolvePersonalInfoRefreshAdverseAction,,IDV,Trust,,,UI,Q3
+test_sowRefresh,,IDV,Trust,,,UI,Q3
+test_4491498_signinFlowUseEmailWithPasscodeBlocker,,Login,Trust,,,UI,Q3
+test_4789955_signinFlowUsePhoneNumberWithNoAdditionalBlockers,,Login,Trust,,,UI,Q3
+test_signinFlowInvalidPin,,Login,Trust,,,UI,Q3
+test_3912788_onboardingFlow_usCustomerWithoutCardLinking_legacySessionManagement,,Onboarding,Trust,,,UI,Q3
+test_onboardingFlow_usCustomerWithoutCardLinking,,Onboarding,Trust,,,UI,Q3
+test_3912729_daily_recurringDeposit,,Transfers,Trust,,,UI,Q3
+test_3912730_weekly_recurringDeposit,,Transfers,Trust,,,UI,Q3
+test_3912731_monthly_recurringDeposit,,Transfers,Trust,,,UI,Q3
+test_3912732_addCashNonIDVAccount,,Transfers,Trust,,,UI,Q3
+test_3968119_navigateToInstrumentLinkTab_linkNewCreditCard_cardLinkingIsSuccessful,,Transfers,Trust,,,UI,Q3
+test_4069247_addCashATMWithCardLinking,,Transfers,Trust,,,UI,Q3
+test_4813155_addCashEnterAmount,,Transfers,Trust,,,UI,Q3
+test_instantCashOutWithConfirmation,,Transfers,Trust,,,UI,Q3
+test_legacyInstantCashOutWithoutFee,,Transfers,Trust,,,UI,Q3
+test_navigateToInstrumentLinkTab,,Transfers,Trust,,,UI,Q3
+test_navigateToInstrumentLinkTab_backButtonAction,,Transfers,Trust,,,UI,Q3
+test_navigateToInstrumentLinkTab_linkNewBankAction_bankLinkingAppears,,Transfers,Trust,,,UI,Q3
+test_navigateToInstrumentLinkTab_linkNewCreditCard_cardLinkingIsUnsuccessful,,Transfers,Trust,,,UI,Q3
+test_navigateToInstrumentLinkTab_tapOnExistingInstrumentActionSheet,,Transfers,Trust,,,UI,Q3
+test_standardCashOut,,Transfers,Trust,,,UI,Q3
+test_coldLaunch_supportPage,,Support,Trust - Support,,,UI,Q4`;
+
+        // Parse CSV data into a lookup map (MODULE and TEAM only)
+        function parseTestOwnershipCSV(csvData) {
+            const lines = csvData.trim().split('\n');
+            const headers = lines[0].split(',');
+            const map = {};
+            
+            for (let i = 1; i < lines.length; i++) {
+                const line = lines[i].trim();
+                if (!line) continue;
+                
+                const values = line.split(',');
+                const testMethod = values[0]; // e.g., "test_verifyNamePreview"
+                
+                // Extract only MODULE and TEAM from CSV
+                // CSV format: Test,Ticket,Module,Team,Type
+                map[testMethod] = {
+                    module: values[2] || 'Unknown',
+                    team: values[3] || 'Unknown'
+                };
+            }
+            
+            return map;
+        }
+
+        // Initialize with fallback data if CSV file fails to load
+        if (Object.keys(ownershipMap).length === 0) {
+            ownershipMap = parseTestOwnershipCSV(testOwnershipData);
+        }
+
+        // Process manifest data into test objects
+        async function processManifestData(manifestData) {
+            const tests = [];
+            
+            console.log('📦 Processing manifest data:', manifestData);
+            
+            // Handle different manifest formats
+            let testResults;
+            if (Array.isArray(manifestData)) {
+                // Direct array of tests
+                testResults = manifestData;
+            } else if (manifestData.tests && Array.isArray(manifestData.tests)) {
+                // Wrapped in a tests array (Cash CLI format)
+                testResults = manifestData.tests;
+                console.log(`📋 Found ${testResults.length} test results`);
+            } else {
+                // Single test object
+                testResults = [manifestData];
+            }
+            
+            for (const testResult of testResults) {
+                const testId = testResult.testIdentifier || 'Unknown';
+                const attachments = testResult.attachments || [];
+                
+                for (const attachment of attachments) {
+                    const exportedFile = attachment.exportedFileName || '';
+                    
+                    // Only process GIF attachments
+                    if (!exportedFile.toLowerCase().endsWith('.gif')) {
+                        continue;
+                    }
+                    
+                    // Extract test class and method from identifier
+                    // Format: "TestClassName/test_methodName()"
+                    const testClass = testResult.testClass || testId.split('/')[0] || 'Unknown';
+                    const testMethodRaw = testResult.testMethod || testId.split('/')[1] || 'Unknown';
+                    const testMethod = testMethodRaw.replace('()', ''); // Remove () if present
+                    
+                    // Look up ownership data from CSV using test method name
+                    const ownershipInfo = ownershipMap[testMethod] || {};
+                    const module = ownershipInfo.module || 'Unknown';
+                    const team = ownershipInfo.team || 'Unknown';
+                    
+                    // Log mapping for debugging
+                    if (!ownershipInfo.module) {
+                        console.log(`⚠️  No CSV match for test: ${testMethod}`);
+                    }
+                    
+                    // Determine category from test class name (not from CSV)
+                    // E2E tests typically have "E2E" in their class name
+                    const category = testClass.includes('E2E') ? 'E2E Tests' : 'UI Tests';
+                    
+                    // Check if GIF is a file path or embedded base64
+                    let gifUrl = attachment.gifUrl || attachment.gifData || attachment.exportedFileName;
+                    
+                    console.log(`🖼️  Processing GIF for ${testMethod}:`, {
+                        gifUrl: attachment.gifUrl,
+                        gifData: attachment.gifData ? 'present' : 'missing',
+                        exportedFileName: attachment.exportedFileName,
+                        finalUrl: gifUrl
+                    });
+                    
+                    // If it's just a filename without path, assume it's in the same directory
+                    if (!gifUrl.startsWith('data:') && !gifUrl.includes('/')) {
+                        // Just a filename, use as-is (relative path)
+                        gifUrl = attachment.exportedFileName;
+                    }
+                    
+                    const testInfo = {
+                        // Display fields
+                        name: attachment.suggestedHumanReadableName || exportedFile,
+                        testId: testId,
+                        testClass: testClass,
+                        testMethod: testMethod,
+                        module: module,
+                        team: team,
+                        category: category,
+                        
+                        // Device info
+                        device: attachment.deviceName || 'Unknown',
+                        deviceId: attachment.deviceId || 'unknown',
+                        
+                        // Test metadata
+                        configuration: attachment.configurationName || 'unknown',
+                        timestamp: attachment.timestamp || '',
+                        failed: attachment.isAssociatedWithFailure || false,
+                        
+                        // Build info
+                        buildIndex: testResult.buildIndex,
+                        buildName: attachment.buildName || 'Build',
+                        xcresultSource: testResult.xcresultSource || attachment.xcresultSource,
+                        
+                        // Processing metadata
+                        processingTimestamp: testResult.processingTimestamp || attachment.processingTimestamp,
+                        
+                        // GIF data
+                        gifUrl: gifUrl,
+                        gifSizeBytes: attachment.gifSizeBytes || 0,
+                        exportedFileName: exportedFile,
+                        
+                        // BuildKite info (from test result)
+                        buildkite: testResult.buildkite
+                    };
+                    
+                    tests.push(testInfo);
+                }
+            }
+            
+            return tests;
+        }
+
+        // Copy to clipboard function
+        async function copyToClipboard(event, text, button) {
+            // Prevent card click event
+            event.stopPropagation();
+            
+            try {
+                await navigator.clipboard.writeText(text);
+                
+                // Visual feedback
+                button.classList.add('copied');
+                
+                // Reset after 2 seconds
+                setTimeout(() => {
+                    button.classList.remove('copied');
+                }, 2000);
+            } catch (err) {
+                console.error('Failed to copy:', err);
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                textArea.style.position = 'fixed';
+                textArea.style.left = '-999999px';
+                document.body.appendChild(textArea);
+                textArea.select();
+                try {
+                    document.execCommand('copy');
+                    button.classList.add('copied');
+                    setTimeout(() => {
+                        button.classList.remove('copied');
+                    }, 2000);
+                } catch (err) {
+                    console.error('Fallback copy failed:', err);
+                }
+                document.body.removeChild(textArea);
+            }
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Automatically load sample data
+            loadSampleData();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,351 @@
+Test,Ticket,Module,Team,Type
+test_3912713_transferIn_savings,,Banking,Banking,E2E
+test_3912714_transferOut_savings,,Banking,Banking,E2E
+test_3912748_fillOutDirectDepositForm,,Banking,Banking,E2E
+test_3912762_showBarcodePaperMoney,,Banking,Banking,E2E
+test_3912585_lockUnlockCashCard,,Card,Banking,E2E
+test_4129112_viewDiscountOfferFromTile,,Offers,Banking,E2E
+test_4142204_searchFilterPill,,Offers,Banking,E2E
+test_4244474_searchRecentlyViewedNotOnFilter,,Offers,Banking,E2E
+test_3912708_navigateBanking_savingsNux,,Banking,Banking,UI
+test_3912713_navigateBanking_addSavings,,Banking,Banking,UI
+test_3912714_transferOut,,Banking,Banking,UI
+test_3912751_activateRoundUps_withoutCashCard,,Banking,Banking,UI
+test_3912752_activateRoundUps,,Banking,Banking,UI
+test_3912756_navigateBanking_depositPaperMoney,,Banking,Banking,UI
+test_3912780_directDeposit_cashCardOrder,,Banking,Banking,UI
+test_4472385_savingsYieldW9Attestation,,Banking,Banking,UI
+test_4960660_navigateBanking_paychecksNux,,Banking,Banking,UI
+test_4960661_navigateBanking_paychecks_setAllocation,,Banking,Banking,UI
+test_3912575_OrderCashCard_noIdv_withPersonalization,,Card,Banking,UI
+test_3912576_OrderCashCard_Idv_noPersonalization,,Card,Banking,UI
+test_4397628_clientRouteNavigation_cashCardScreen_userWithCard,,Card,Banking,UI
+test_OrderCashCard_noIdv_noPersonalization,,Card,Banking,UI
+test_3913719_searchEmptyResults,,Offers,Banking,UI
+test_3968214_browseOffersTab,,Offers,Banking,UI
+test_4128487_quickActionFilters,CASHUIA-2689,Offers,Banking,UI
+test_4128488_viewOfferFromHero,,Offers,Banking,UI
+test_4128489_addOfferFromHero,,Offers,Banking,UI
+test_4129211_addOfferFromCollection,,Offers,Banking,UI
+test_4129212_swapOfferFromCollection,,Offers,Banking,UI
+test_4129415_addOfferFromCollectionTile,,Offers,Banking,UI
+test_4129417_swapOfferFromCollectionTile,,Offers,Banking,UI
+test_4129425_searchFilterFromCategoryTile,CASHUIA-2689,Offers,Banking,UI
+test_4142205_clearSearchFilter,CASHUIA-2836,Offers,Banking,UI
+test_4244473_openDetailSheetOnSearch,,Offers,Banking,UI
+test_4468496_offersBrowse,,Offers,Banking,UI
+test_4468497_coldLaunch_offersBrowse,,Offers,Banking,UI
+test_4143421_switchToBusinessAccount_singleMemberLLC,,Business,Banking - Nano,UI
+test_4425968_send_payment_from_business_to_main_account,,Business,Banking - Nano,UI
+test_4425969_send_payment_from_personal_to_business,,Business,Banking - Nano,UI
+test_create_business_account_profile_entry_point,,Business,Banking - Nano,UI
+test_startSwitchToBusinessAccountMultipleTimes,,Business,Banking - Nano,UI
+test_verifyBankingEligibility,CASHUIA-2835,Business,Banking - Nano,UI
+test_3914046_canAddBalanceWidgetToDeviceAndDisplaysData,CASHUIA-2974,Widgets,Banking - Nano,UI
+test_3913081_weeklyAllowanceSetup,,Families,Banking — Families,E2E
+test_3970526_purchaseStockAboveLimit,,Families,Banking — Families,E2E
+test_3970529_purchaseBitcoinWhenSettingIsOff,,Families,Banking — Families,E2E
+test_3913059_teenUnder13,,Families,Banking — Families,UI
+test_3913060_teenBetween13and18,,Families,Banking — Families,UI
+test_3966626_requestTeenSponsorshipFromP2Ppay,,Families,Banking — Families,UI
+test_3970523_requestInvestingForStockWhenAlreadySponsored,,Families,Banking — Families,UI
+test_3970524_requestInvestingForBitcoinWhenAlreadySponsored,,Families,Banking — Families,UI
+test_3970527_purchaseBitcoinAboveLimit,,Families,Banking — Families,UI
+test_3970528_purchaseStocksWhenSettingIsOff,,Families,Banking — Families,UI
+test_3970530_setCustomLimits,,Families,Banking — Families,UI
+test_3970531_toggleStocksSettings,,Families,Banking — Families,UI
+test_3970532_toggleBitcoinSettings,,Families,Banking — Families,UI
+test_3970533_requestTeenSponsorshipFromStockBuy,,Families,Banking — Families,UI
+test_3970534_requestTeenSponsorshipFromBitcoinBuy,,Families,Banking — Families,UI
+test_4550067_toggleOnP2pForTeen,,Families,Banking — Families,UI
+test_4550068_toggleOffP2pForTeen,,Families,Banking — Families,UI
+test_4715961_requestTeenSponsorshipFromCardOrder,,Families,Banking — Families,UI
+test_3912639_sellStock,,Investing,Banking — Savings and Investing,E2E
+test_3912672_viewingInvestmentDetails,,Investing,Banking — Savings and Investing,E2E
+test_3912638_sellStock_oneTimeFixedAmount_requirePasscode,,Investing,Banking — Savings and Investing,UI
+test_3912649_purchaseStock_oneTimeFixedAmount_firstTimeBuyer_IDV,,Investing,Banking — Savings and Investing,UI
+test_3912650_purchaseStock_oneTimeFixedAmount_requirePasscode,,Investing,Banking — Savings and Investing,UI
+test_3912653_purchaseStock_reccuringBiWeeklyCustomAmount_requirePasscode,,Investing,Banking — Savings and Investing,UI
+test_3912655_purchaseStock_customPurchaseOrder_requirePasscode,,Investing,Banking — Savings and Investing,UI
+test_3912661_sortPortfolio,,Investing,Banking — Savings and Investing,UI
+test_3912675_followStock,,Investing,Banking — Savings and Investing,UI
+test_4770113_changeBitcoinRoundupDestinationToSavings,,Investing,Banking — Savings and Investing,UI
+test_purchaseStock_discoverStock_searchInCategory_PerformanceFiler,,Investing,Banking — Savings and Investing,UI
+test_purchaseStock_oneTimeCustomAmount_requirePasscode,,Investing,Banking — Savings and Investing,UI
+test_sellStock_customAmount_requirePasscode,,Investing,Banking — Savings and Investing,UI
+test_3912701_tile3XEntryPoint,,Lending,Banking — Savings and Investing,UI
+test_4249417_applet_timeline_tile_repay_oneLoan_remaining_arcade,,Lending,Banking — Savings and Investing,UI
+test_applet_bulletin_configuredWithRoutingSetToActionURL,,Lending,Banking — Savings and Investing,UI
+test_applet_bulletin_tile_infoSheet,,Lending,Banking — Savings and Investing,UI
+test_applet_bulletin_tile_infoSheet_button_tap,,Lending,Banking — Savings and Investing,UI
+test_applet_timeline_tile_repay_details_deeplink,CASHI-30794,Lending,Banking — Savings and Investing,UI
+test_applet_timeline_tile_repay_multiLoan_custom,,Lending,Banking — Savings and Investing,UI
+test_applet_timeline_tile_repay_multiLoan_remaining,,Lending,Banking — Savings and Investing,UI
+test_applet_timeline_tile_repay_oneLoan_next,,Lending,Banking — Savings and Investing,UI
+test_applet_timeline_tile_repay_oneLoan_overdue,,Lending,Banking — Savings and Investing,UI
+test_blocker_overdue_loan_otherAmount,,Lending,Banking — Savings and Investing,UI
+test_bulletinDeepLink_asyncLoadLaunchesAndShowsBulletin,,Lending,Banking — Savings and Investing,UI
+test_creditLimitAndBorrowButtonTile_borrowFlow,,Lending,Banking — Savings and Investing,UI
+test_ftb_blocker,CASHUIA-2281,Lending,Banking — Savings and Investing,UI
+test_globalEntryPoint,,Lending,Banking — Savings and Investing,UI
+test_loanDetailsDeepLink_asyncLoanLaunchesAndShowsLoanDetails,,Lending,Banking — Savings and Investing,UI
+test_loanHistoryTile_opensLoanDetails_autopay,,Lending,Banking — Savings and Investing,UI
+test_loanHistoryTile_opensLoanDetails_expanded,,Lending,Banking — Savings and Investing,UI
+test_loanHistoryTile_opensLoanDetails_multiLoan_custom,,Lending,Banking — Savings and Investing,UI
+test_loanHistoryTile_opensLoanDetails_multiLoan_remainingBalance,,Lending,Banking — Savings and Investing,UI
+test_loanHistoryTile_opensLoanDetails_multiLoan_repaid,,Lending,Banking — Savings and Investing,UI
+test_loanHistoryTile_opensLoanDetails_oneLoan,,Lending,Banking — Savings and Investing,UI
+test_localEntryPoint_overridesGlobalEntryPoint,,Lending,Banking — Savings and Investing,UI
+test_unlockBorrow,,Lending,Banking — Savings and Investing,UI
+test_viewLoanClientRoute,,Lending,Banking — Savings and Investing,UI
+test_3912472_buyBitcoin,,Bitcoin,Bitcoin,E2E
+test_3912527_sendBitcoinOnchain,,Bitcoin,Bitcoin,E2E
+test_4087251_bitcoinBasics,,Bitcoin,Bitcoin,E2E
+test_4561697_sellBitcoin,,Bitcoin,Bitcoin,E2E
+test_3912469_bitcoinAppletNullState,,Bitcoin,Bitcoin,UI
+test_3912471_buyBitcoinFirstTime,,Bitcoin,Bitcoin,UI
+test_3912472_buyBitcoinSuggestedAmount,,Bitcoin,Bitcoin,UI
+test_3912474_sellBitcoin,,Bitcoin,Bitcoin,UI
+test_3912485_shareLightningQrCode,,Bitcoin,Bitcoin,UI
+test_3912488_setUpAutoInvest,,Bitcoin,Bitcoin,UI
+test_3912489_updateAutoInvest,,Bitcoin,Bitcoin,UI
+test_3912508_paidInBitcoinWithNoCard,,Bitcoin,Bitcoin,UI
+test_3912509_paidInBitcoinWithUnactivatedCard,,Bitcoin,Bitcoin,UI
+test_3912523_nyLightningNotAvailable,,Bitcoin,Bitcoin,UI
+test_3912528_onchainWithdrawalPasteAddress,CASHUIA-2541,Bitcoin,Bitcoin,UI
+test_3912532_updateBitcoinNotifications,,Bitcoin,Bitcoin,UI
+test_4492178_bitcoinCopyAddressFromDeposits,,Bitcoin,Bitcoin,UI
+test_4492820_buyBitcoinCustomAmount,CASHUIA-2283,Bitcoin,Bitcoin,UI
+test_4492821_copyLightningAddressFromQrCode,CASHUIA-2541,Bitcoin,Bitcoin,UI
+test_4492822_generateCustomLightningQrCode,,Bitcoin,Bitcoin,UI
+test_4492824_lightningWithdrawalPasteAddress,CASHUIA-2541,Bitcoin,Bitcoin,UI
+test_4492825_lightningWithdrawalPasteAddressFaceId,CASHUIA-2541,Bitcoin,Bitcoin,UI
+test_4493041_bitcoinCopyAddressFromReceives,,Bitcoin,Bitcoin,UI
+test_4493119_onchainWithdrawalPasteAddressFaceId,CASHUIA-2541,Bitcoin,Bitcoin,UI
+test_4493122_nyCopyBitcoinAddressFromDeposits,,Bitcoin,Bitcoin,UI
+test_4493149_navigateFromBitcoinAppletToMoneyTab,,Bitcoin,Bitcoin,UI
+test_4493154_getCashCardFromBitcoinApplet,,Bitcoin,Bitcoin,UI
+test_4493155_launchDidvFromDepositBitcoin,,Bitcoin,Bitcoin,UI
+test_4493156_launchCryptoOnboardingFromDeposit,,Bitcoin,Bitcoin,UI
+test_4493158_viewAllBitcoinNews,,Bitcoin,Bitcoin,UI
+test_4770107_onboardBitcoinRoundups,,Bitcoin,Bitcoin,UI
+test_4770109_onboardAutoInvest,,Bitcoin,Bitcoin,UI
+test_4770110_onboardPaidInBitcoin,,Bitcoin,Bitcoin,UI
+test_4770112_learnMoreOnboardingEntryPoints,,Bitcoin,Bitcoin,UI
+test_4770203_cancelAutoInvest,,Bitcoin,Bitcoin,UI
+test_4770348_turnOffPaidInBitcoin,,Bitcoin,Bitcoin,UI
+test_4770349_updatePaidInBitcoinAllocation,,Bitcoin,Bitcoin,UI
+test_4900759_updatePaidInBitcoinAllocationFromPaychecks,,Bitcoin,Bitcoin,UI
+test_4903213_onboardBitcoinRoundupsFromLearnMore,,Bitcoin,Bitcoin,UI
+test_4903375_enableBitcoinRoundups,,Bitcoin,Bitcoin,UI
+test_5075247_turnBackOnAutoInvest,,Bitcoin,Bitcoin,UI
+test_coldLaunch_bitcoinPayment,,Bitcoin,Bitcoin,UI
+test_coldLaunch_lightningPayment,,Bitcoin,Bitcoin,UI
+test_view_news_article_flow,,Bitcoin,Bitcoin,UI
+test_5026105_createStandardCheckoutFromIab,CASHUIA-3184,Afterpay,Commerce - Consumer Experience,E2E
+test_confirmEcommercePaymentFromBalance,,CashAppPay,Commerce - Consumer Experience,E2E
+test_confirmEcommercePayment_dynamicGrantApproval,,CashAppPay,Commerce - Consumer Experience,E2E
+test_confirmEcommerceRedirectPayment,,CashAppPay,Commerce - Consumer Experience,E2E
+test_confirmInStoreFromBalance,,CashAppPay,Commerce - Consumer Experience,E2E
+test_discardEcommerceRedirectPayment,,CashAppPay,Commerce - Consumer Experience,E2E
+test_dismissInStorePayment,,CashAppPay,Commerce - Consumer Experience,E2E
+test_failExpiredCard,CASHUIA-3263,CashAppPay,Commerce - Consumer Experience,E2E
+test_3912305_SuccessfulInStorePayment_inHalfsheet,,CashAppPay,Commerce - Consumer Experience,UI
+test_4435031_ColdStartDeepLink,,CashAppPay,Commerce - Consumer Experience,UI
+test_4298424_searchActivityByNameAndNote,,Activity,Core Experiences - Core Surfaces,E2E
+test_4606116_viewPaymentTransaction,,Activity,Core Experiences - Core Surfaces,E2E
+test_3968032_merchantProfileEntryPoint_instrumentQuickNav,,Activity,Core Experiences - Core Surfaces,UI
+test_4521075_addFavorite_fromActivity,,Activity,Core Experiences - Core Surfaces,UI
+test_4522092_paymentRequest_confirmBlocker_initiatedByRecipient,,Activity,Core Experiences - Core Surfaces,UI
+test_4522093_paymentRequest_confirmBlocker_requiresPasscode_resolveWithBiometrics,,Activity,Core Experiences - Core Surfaces,UI
+test_4522094_paymentRequest_confirmBlocker_possibleDuplicate,CASHUIA-2975,Activity,Core Experiences - Core Surfaces,UI
+test_4522095_paymentFromProfile_noPasscode,,Activity,Core Experiences - Core Surfaces,UI
+test_4522162_requestPaymentFromProfile_noPasscode,,Activity,Core Experiences - Core Surfaces,UI
+test_4522225_paymentFromProfile_noPasscode_instrumentQuickNav,,Activity,Core Experiences - Core Surfaces,UI
+test_4522226_requestFromProfile_noPasscode_instrumentQuickNav,,Activity,Core Experiences - Core Surfaces,UI
+test_4522227_paymentRequest_confirmBlocker_requiresPasscode_resolveWithManualEntry,,Activity,Core Experiences - Core Surfaces,UI
+test_4522228_paymentFromProfile_noPasscode_instrumentReceipt,,Activity,Core Experiences - Core Surfaces,UI
+test_4522229_requestFromProfile_noPasscode_instrumentReceipt,,Activity,Core Experiences - Core Surfaces,UI
+test_4522230_paymentFromProfile_pendingAfterError,,Activity,Core Experiences - Core Surfaces,UI
+test_4522231_requestFromProfile_pendingAfterError,,Activity,Core Experiences - Core Surfaces,UI
+test_4522232_cancelOutstandingPayment,,Activity,Core Experiences - Core Surfaces,UI
+test_4522233_declineOutstandingPaymentRequest,,Activity,Core Experiences - Core Surfaces,UI
+test_5038563_clientRouteActivitySearch,,Activity,Core Experiences - Core Surfaces,UI
+test_paymentRequest_confirmBlocker_multipleFlags,CASHUIA-2881,Activity,Core Experiences - Core Surfaces,UI
+test_simpleActivityFlow_hybridFeed,,Activity,Core Experiences - Core Surfaces,UI
+test_3967812_inviteFriendsFromYourAccount,,InviteFriends,Core Experiences - P2P,UI
+test_4521066_inviteFriendsFromActivityFeed,,InviteFriends,Core Experiences - P2P,UI
+test_3967910_requestPaymentViaCashtag,,P2P,Core Experiences - P2P,UI
+test_3967928_payment_pad_united_states,,P2P,Core Experiences - P2P,UI
+test_3967930_sendPaymentViaCashTag,,P2P,Core Experiences - P2P,UI
+test_3967990_paymentFlow_RecipientProfile_withSendingInstrument,,P2P,Core Experiences - P2P,UI
+test_3967992_paymentFlow_RecipientProfile_withRequestingInstrument,,P2P,Core Experiences - P2P,UI
+test_3968014_paymentFlow_BlockRecipientFromProfile_withSendingInstruments,,P2P,Core Experiences - P2P,UI
+test_3968015_paymentFlow_ReportRecipientFromProfile,,P2P,Core Experiences - P2P,UI
+test_4190487_personalizedPayments_senderFlow_united_states,,P2P,Core Experiences - P2P,UI
+test_4492322_sendPaymentWithConnectionError,CASHI-31629,P2P,Core Experiences - P2P,UI
+test_4521062_personalizedPayments_no_recipient,,P2P,Core Experiences - P2P,UI
+test_4521064_paymentFlow_biometrics_preInitiatePaymentScanSucceeds,,P2P,Core Experiences - P2P,UI
+test_4521065_paymentFlow_ReportAndBlockRecipientFromProfile,,P2P,Core Experiences - P2P,UI
+test_4561689_requiredPaymentNote,,P2P,Core Experiences - P2P,UI
+test_5272954_sendPaymentViaCashTagWithIDV,,P2P,Core Experiences - P2P,UI
+test_paymentFlow_biometrics_preInititatePaymentScanFails_fallsBackToManualPINEntry,,P2P,Core Experiences - P2P,UI
+test_autoDisplayShortlinkKey_doesNotPresentHalfSheet_ifAppLaunchedViaFlowDeepLink,,Local,Local,UI
+test_autoDisplayShortlinkKey_presentsExpandableSheet,,Local,Local,UI
+test_upgradeLockout,,AppUpgrades,Systems and Standards - Client Systems,UI
+test_upgradeSuggestion,,AppUpgrades,Systems and Standards - Client Systems,UI
+test_4490232_backgroundLaunchTabAppLockSettingDisabled,,Client Route Navigation,Systems and Standards - Client Systems,UI
+test_4492170_coldLaunchTabAppLockSettingDisabled,,Client Route Navigation,Systems and Standards - Client Systems,UI
+test_4492171_launchProfileDirectory,,Client Route Navigation,Systems and Standards - Client Systems,UI
+test_4492172_coldLaunchTabAppLockSettingEnabled,CASHUIA-2418,Client Route Navigation,Systems and Standards - Client Systems,UI
+test_4492173_backgroundLaunchTabAppLockSettingEnabled,CASHUIA-2418,Client Route Navigation,Systems and Standards - Client Systems,UI
+test_4492174_backgroundLaunchModalAppLockSettingDisabled,CASHUIA-2972,Client Route Navigation,Systems and Standards - Client Systems,UI
+test_4492175_backgroundLaunchModalAppLockSettingEnabled,CASHUIA-2419,Client Route Navigation,Systems and Standards - Client Systems,UI
+test_4492176_coldLaunchModalAppLockSettingDisabled,,Client Route Navigation,Systems and Standards - Client Systems,UI
+test_4492177_coldLaunchModalAppLockSettingEnabled,CASHUIA-2419,Client Route Navigation,Systems and Standards - Client Systems,UI
+test_5038564_coldLaunchActivitySearch,CASHUIA-2446,Client Route Navigation,Systems and Standards - Client Systems,UI
+test_activityClientRoute_whenDetailsPushedOnNavStack,,Client Route Navigation,Systems and Standards - Client Systems,UI
+test_backgroundLaunch_accountRequirementNone_doesNotSwitchAccounts,,Client Route Navigation,Systems and Standards - Client Systems,UI
+test_backgroundLaunch_accountRequirementPromptIfNeeded_switchesAccounts,CASHI-31376,Client Route Navigation,Systems and Standards - Client Systems,UI
+test_coldLaunchProfileDirectory,CASHUIA-2420,Client Route Navigation,Systems and Standards - Client Systems,UI
+test_coldLaunch_accountRequirementNone_doesNotSwitchAccounts,,Client Route Navigation,Systems and Standards - Client Systems,UI
+test_coldLaunch_accountRequirementPromptIfNeeded_switchesAccounts,CASHI-31376,Client Route Navigation,Systems and Standards - Client Systems,UI
+test_configuredToPromptCustomerForAccount_switchesAccounts,CASHI-31376,Client Route Navigation,Systems and Standards - Client Systems,UI
+test_invalidActivityLink,,Client Route Navigation,Systems and Standards - Client Systems,UI
+test_launchProfile,,Client Route Navigation,Systems and Standards - Client Systems,UI
+test_launchProfilePersonal,,Client Route Navigation,Systems and Standards - Client Systems,UI
+test_launchQrCodeScanner,,Client Route Navigation,Systems and Standards - Client Systems,UI
+test_launch_equityDetail,,Client Route Navigation,Systems and Standards - Client Systems,UI
+test_3968078_signOut,,Account,Trust,E2E
+test_4474425_c4bEligibleCanSwitchToPersonal,,Account,Trust,E2E
+test_4474426_linkedAccountsDisplayInAccountPicker,,Account,Trust,E2E
+test_4492811_lowRisk_recoverAccountViaCashTagPinDebitCard,,Account,Trust,E2E
+test_4492812_lowRisk_recoverAccountViaEmailPinDebitCard,,Account,Trust,E2E
+test_4492815_mediumRisk_recoverAccountViaCashtagPinDebitCard,,Account,Trust,E2E
+test_4492816_mediumRisk_recoverAccountViaEmailPinDebitCard,,Account,Trust,E2E
+test_4492817_mediumRisk_recoverAccountViaPhoneNumberPinDebitCard,,Account,Trust,E2E
+test_4492818_highRisk_recoverAccount,,Account,Trust,E2E
+test_4492819_unrecoverableAccount,,Account,Trust,E2E
+test_4549676_mediumRisk_recoverAccountViaEmailCashCardPin,,Account,Trust,E2E
+test_4549677_mediumRisk_recoverAccountViaEmailCashCardDebitCard,,Account,Trust,E2E
+test_4549678_mediumRisk_recoverAccountViaCashtagCashCardPin,,Account,Trust,E2E
+test_4549679_mediumRisk_recoverAccountViaCashtagCashCardDebitCard,,Account,Trust,E2E
+test_4813153_m1EligibleAccountNoSecondaryAccount,,Account,Trust,E2E
+test_4813154_personalWithBusinessSecondary,,Account,Trust,E2E
+test_4906857_lowRisk_recoverAccountViaPhoneNumberPinDebitCard,,Account,Trust,E2E
+test_4906898_knownDevice_recoverAccountViaCashTagPin,,Account,Trust,E2E
+test_4906899_knownDevice_recoverAccountViaCashtagDebitCard,,Account,Trust,E2E
+test_4906900_knownDevice_recoverAccountViaEmailPin,,Account,Trust,E2E
+test_4906901_knownDevice_recoverAccountViaEmailDebitCard,,Account,Trust,E2E
+test_4906902_knownDevice_recoverAccountViaPhoneNumberPin,,Account,Trust,E2E
+test_5087393_selectedAccountDisplaysAfterAppBackground,,Account,Trust,E2E
+test_c4bEligible_canCreatePersonalSecondaryAccount,,Account,Trust,E2E
+test_canCreateNewBusinessAccount,,Account,Trust,E2E
+test_linkNewAccountWithEmail,,Account,Trust,E2E
+test_linkNewAccountWithPhone,,Account,Trust,E2E
+test_4437653_eidvTriggerFromAccountAndRoutingAddInstant,,IDV,Trust,E2E
+test_4437654_eidvTriggerFromAccountAndRoutingDepositPaperMoney,,IDV,Trust,E2E
+test_4906966_eidvTriggerAddMoneyFromMoneyScreen,,IDV,Trust,E2E
+test_4521071_linkDebitCard,,Instruments,Trust,E2E
+test_4906903_linkBankAccount,CASHUIA-3069,Instruments,Trust,E2E
+test_3912788_flowEmailOnboardingWithCardLinking,,Onboarding,Trust,E2E
+test_3912789_flowOnboardingPhoneWithCardLinking,CASHUIA-2993,Onboarding,Trust,E2E
+test_3967930_sendPayment,,Onboarding,Trust,E2E
+test_4233548_emailOnboardingSkipCardLinking,,Onboarding,Trust,E2E
+test_4233550_flowOnboardingPhoneSkipCardLinking,,Onboarding,Trust,E2E
+test_4491498_signinEmailFlow,,Onboarding,Trust,E2E
+test_4789955_signinPhoneFlow,,Onboarding,Trust,E2E
+test_cardOnboarding_appears,,Onboarding,Trust,E2E
+test_flowEmailOnboarding_usTaxes,,Onboarding,Trust,E2E
+test_flowOnboarding_usLoyalty,,Onboarding,Trust,E2E
+test_flowOnboarding_usLoyaltySkip,,Onboarding,Trust,E2E
+test_flowOnboarding_usRewardCode,,Onboarding,Trust,E2E
+test_flowOnboarding_usRewardCodeSkip,,Onboarding,Trust,E2E
+test_loginEmailFlow_usDenylistedAccount,,Onboarding,Trust,E2E
+test_signinEmailFlowHappyPath,,Onboarding,Trust,E2E
+test_signinEmailFlowUnHappyPath,,Onboarding,Trust,E2E
+test_signinEmailFlowViaAR,,Onboarding,Trust,E2E
+test_signinEmailFlowViaResentCodeHappyPath,,Onboarding,Trust,E2E
+test_signinEmailFlowViaResentCodeUnHappyPath,,Onboarding,Trust,E2E
+test_signinSMSFlowUnHappyPath,,Onboarding,Trust,E2E
+test_signinSMSFlowViaAR,,Onboarding,Trust,E2E
+test_signinSMSFlowViaResentCodeHappyPath,,Onboarding,Trust,E2E
+test_signinSMSFlowViaResentCodeUnHappyPath,,Onboarding,Trust,E2E
+test_3912732_addCashWithEidv,,Transfers,Trust,E2E
+test_3912740_standardWithdrawalAndGetItNow,,Transfers,Trust,E2E
+test_3912741_triggerCashout,,Transfers,Trust,E2E
+test_4813155_addCash,,Transfers,Trust,E2E
+test_addCashViaInstantACH,,Transfers,Trust,E2E
+test_3912993_singleAccountPicker,,Account,Trust,UI
+test_3912994_multipleAccountsPicker,,Account,Trust,UI
+test_3912995_removeAccountViaMenuWithMultipleAccounts,,Account,Trust,UI
+test_3912996_removeAccountViaSwipeWithSingleAccount,,Account,Trust,UI
+test_3968062_addFavorite_fromSearch_firstTimeFavorite,,Account,Trust,UI
+test_3968065_addFavorite_fromSearch,,Account,Trust,UI
+test_3968067_removeFavorite_fromFavoritesManagementList,,Account,Trust,UI
+test_3968087_addPhone,,Account,Trust,UI
+test_3968088_verify_us_email_page_is_displayed,,Account,Trust,UI
+test_3968089_add_us_address,,Account,Trust,UI
+test_3968090_remove_us_phone,,Account,Trust,UI
+test_3968092_remove_us_phone_no_email,,Account,Trust,UI
+test_3968093_replace_us_address,,Account,Trust,UI
+test_3968098_shareAccountLinkData,,Account,Trust,UI
+test_3968105_changing_cashtag,,Account,Trust,UI
+test_3968113_replaceDebitCard,,Account,Trust,UI
+test_3968116_removeDebitCard,,Account,Trust,UI
+test_3968123_updateCashPin,CASHUIA-2328,Account,Trust,UI
+test_3968129_viewQRCode_Screen,,Account,Trust,UI
+test_3968133_scan_CustomerProfileQRCode_completePayment,,Account,Trust,UI
+test_3968168_disableMoveMoney,,Account,Trust,UI
+test_4287613_enableUnlockTheApp,CASHUIA-2328,Account,Trust,UI
+test_4424507_switch_to_personal_account_personal_settings_entry,CASHI-31343,Account,Trust,UI
+test_4424509_switch_to_personal_account_notifications_settings_entry,CASHI-31343,Account,Trust,UI
+test_4474425_switch_to_business_account_profileIcon_entry_point,CASHUIA-2879,Account,Trust,UI
+test_4493166_updateCashtag_countLimit,,Account,Trust,UI
+test_4521071_linkDebitCard,,Account,Trust,UI
+test_4521072_linkInvalidDebitCard_us,,Account,Trust,UI
+test_4521073_addFavorite_fromProfile_firstTimeFavorite,,Account,Trust,UI
+test_4521076_paymentFlow_unfavoriteFromProfile_withSendingInstrument,,Account,Trust,UI
+test_4521077_removeFavorite_fromProfile,,Account,Trust,UI
+test_4522090_updateCashPinWithBiometricsOn,,Account,Trust,UI
+test_4522091_addFavorite_fromProfile,,Account,Trust,UI
+test_5117736_cancelSignOut,,Account,Trust,UI
+test_5120196_disableMoveMoney_resetPIN,,Account,Trust,UI
+test_paymentFlow_favoriteFromProfile_withSendingInstrument,,Account,Trust,UI
+test_removeAccountViaMenuWithSingleAccount,,Account,Trust,UI
+test_removeAccountViaSwipeWithMultipleAccounts,,Account,Trust,UI
+test_signin_shouldBlock_withIncompleteMCFData,CASHUIA-2231,Account,Trust,UI
+test_signin_shouldBlock_withMissingMCFData,CASHUIA-2231,Account,Trust,UI
+test_signin_shouldSucceed_withCompleteMCFData,CASHUIA-2231,Account,Trust,UI
+test_update_name,,Account,Trust,UI
+test_verifyNamePreview,,Account,Trust,UI
+test_verify_business_info_in_settings,,Account,Trust,UI
+test_viewLimits,,Account,Trust,UI
+test_viewLimits_rpc_teen,,Account,Trust,UI
+test_4397881_kycVerifyPersonalInformation,,IDV,Trust,UI
+test_4397893_sowResolveAdverseAction,,IDV,Trust,UI
+test_dIDVRefresh,,IDV,Trust,UI
+test_dIDVResolveAdverseAction,,IDV,Trust,UI
+test_resolvePersonalInfoRefreshAdverseAction,,IDV,Trust,UI
+test_sowRefresh,,IDV,Trust,UI
+test_4491498_signinFlowUseEmailWithPasscodeBlocker,,Login,Trust,UI
+test_4789955_signinFlowUsePhoneNumberWithNoAdditionalBlockers,,Login,Trust,UI
+test_signinFlowInvalidPin,,Login,Trust,UI
+test_3912788_onboardingFlow_usCustomerWithoutCardLinking_legacySessionManagement,,Onboarding,Trust,UI
+test_onboardingFlow_usCustomerWithoutCardLinking,,Onboarding,Trust,UI
+test_3912729_daily_recurringDeposit,,Transfers,Trust,UI
+test_3912730_weekly_recurringDeposit,,Transfers,Trust,UI
+test_3912731_monthly_recurringDeposit,,Transfers,Trust,UI
+test_3912732_addCashNonIDVAccount,,Transfers,Trust,UI
+test_3968119_navigateToInstrumentLinkTab_linkNewCreditCard_cardLinkingIsSuccessful,,Transfers,Trust,UI
+test_4069247_addCashATMWithCardLinking,,Transfers,Trust,UI
+test_4813155_addCashEnterAmount,,Transfers,Trust,UI
+test_instantCashOutWithConfirmation,,Transfers,Trust,UI
+test_legacyInstantCashOutWithoutFee,,Transfers,Trust,UI
+test_navigateToInstrumentLinkTab,,Transfers,Trust,UI
+test_navigateToInstrumentLinkTab_backButtonAction,,Transfers,Trust,UI
+test_navigateToInstrumentLinkTab_linkNewBankAction_bankLinkingAppears,,Transfers,Trust,UI
+test_navigateToInstrumentLinkTab_linkNewCreditCard_cardLinkingIsUnsuccessful,,Transfers,Trust,UI
+test_navigateToInstrumentLinkTab_tapOnExistingInstrumentActionSheet,,Transfers,Trust,UI
+test_standardCashOut,,Transfers,Trust,UI
+test_coldLaunch_supportPage,,Support,Trust - Support,UI
