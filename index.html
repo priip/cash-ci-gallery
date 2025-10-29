@@ -1222,24 +1222,21 @@
         }
 
         .frame-viewer-content {
+            position: relative;
+            width: 600px;
             max-width: 90vw;
-            max-height: 90vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: var(--arcade-space-xl);
+            padding-bottom: var(--arcade-space-xxl);
         }
 
         .frame-viewer-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
             width: 100%;
-            gap: var(--arcade-space-xl);
         }
 
         .frame-viewer-title {
-            flex: 1;
             text-align: left;
         }
 
@@ -1261,8 +1258,15 @@
             font-weight: 500;
         }
 
+        #frame-viewer-test-info {
+            width: 100%;
+        }
+
         /* Arcade-styled close button with X icon */
         .close-modal {
+            position: absolute;
+            top: 0;
+            right: 0;
             background: #1F2937;
             color: white;
             border: 2px solid #374151;
@@ -1276,6 +1280,7 @@
             transition: all 0.2s ease-out;
             flex-shrink: 0;
             padding: 0;
+            z-index: 10;
         }
 
         .close-modal:hover {
@@ -1299,8 +1304,7 @@
         /* GIF container in modal */
         .modal-gif-container {
             position: relative;
-            max-width: 100%;
-            max-height: calc(90vh - 120px);
+            width: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1314,7 +1318,7 @@
             box-shadow: 
                 0 0 0 3px #000,
                 0 20px 60px rgba(0, 0, 0, 0.5);
-            max-height: calc(90vh - 120px);
+            max-height: 70vh;
         }
 
         .modal-iphone-screen {
@@ -1323,13 +1327,21 @@
             background: #000;
             border-radius: 44px;
             overflow: hidden;
-            max-height: calc(90vh - 128px);
+            max-height: calc(70vh - 8px);
+        }
+
+        .modal-iphone-screen img {
+            transition: opacity 0.15s ease-in-out;
+        }
+
+        .modal-iphone-screen img.loading {
+            opacity: 0.5;
         }
 
         .modal-iphone-screen img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain;
             display: block;
         }
 
@@ -1554,19 +1566,24 @@
     <!-- GIF Viewer Modal -->
     <div class="frame-viewer-modal" id="frame-viewer-modal" onclick="closeFrameViewer()">
         <div class="frame-viewer-content" onclick="event.stopPropagation()">
+            <button class="close-modal" onclick="closeFrameViewer()" title="Close (Esc)">
+                <svg viewBox="0 0 24 24">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+            
             <div class="frame-viewer-header">
                 <div class="frame-viewer-title">
                     <div id="frame-viewer-badges"></div>
-                    <h2 id="frame-viewer-test-name">Test Name</h2>
+                    <div id="frame-viewer-test-class" style="font-size: 13px; font-weight: 600; color: var(--arcade-text-tertiary); margin-bottom: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"></div>
+                    <h2 id="frame-viewer-test-name" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Test Name</h2>
                     <div class="frame-viewer-subtitle" id="frame-viewer-test-info">Module • Team</div>
                 </div>
-                <button class="close-modal" onclick="closeFrameViewer()" title="Close (Esc)">
-                    <svg viewBox="0 0 24 24">
-                        <line x1="18" y1="6" x2="6" y2="18"></line>
-                        <line x1="6" y1="6" x2="18" y2="18"></line>
-                    </svg>
-                </button>
             </div>
+            
+            <!-- Error message (if failed) -->
+            <div id="frame-viewer-error" style="width: 100%;"></div>
             
             <!-- Enlarged GIF -->
             <div class="modal-gif-container" id="modal-gif-container">
@@ -1654,8 +1671,8 @@
             const uniqueTestCases = [...new Set(tests.map(t => t.testClass))].length;
             
             // UI vs E2E breakdown
-            const uiTests = tests.filter(t => t.category === 'UI Tests').length;
-            const e2eTests = tests.filter(t => t.category === 'E2E Tests').length;
+            const uiTests = tests.filter(t => t.testType === 'UI Tests').length;
+            const e2eTests = tests.filter(t => t.testType === 'E2E Tests').length;
             
             // Get build info from manifest
             const buildInfo = manifestData?.buildkite || {};
@@ -2179,7 +2196,7 @@
                             ` : ''}
                         </div>
                         ${test.attachmentCount > 1 ? `
-                            <span class="metadata-pill" style="background: #E0E7FF; color: #3730A3;">🔄 ${test.attachmentCount} recordings</span>
+                            <span class="metadata-pill" style="background: #E0E7FF; color: #3730A3;">🎥 ${test.attachmentCount} recordings</span>
                         ` : ''}
                     </div>
                     
@@ -2265,12 +2282,16 @@
             
             const modal = document.getElementById('frame-viewer-modal');
             const badgesEl = document.getElementById('frame-viewer-badges');
+            const testClassEl = document.getElementById('frame-viewer-test-class');
             const testNameEl = document.getElementById('frame-viewer-test-name');
             const testInfoEl = document.getElementById('frame-viewer-test-info');
             const gifContainer = document.getElementById('modal-gif-container');
+            const errorEl = document.getElementById('frame-viewer-error');
             
             // Update modal header
+            testClassEl.textContent = test.testClass || '';
             testNameEl.textContent = test.testMethod || 'Unknown Test';
+            testNameEl.title = test.testMethod || 'Unknown Test'; // Tooltip for long names
             
             // Format device info with iOS version
             const deviceText = attachment.deviceName ? attachment.deviceName.replace('BAZEL_TEST_', '').replace(/_(\d+\.\d+)$/, ' (iOS $1)') : null;
@@ -2312,14 +2333,13 @@
                 </div>
             `;
             
-            // Build compact metadata line: recording count (if multiple) + device + duration
+            // Build compact metadata line: recording count (if multiple) + duration
             let metadataParts = [];
             if (attachments.length > 1) {
                 const recordingNum = currentAttachmentIndex + 1;
                 metadataParts.push(`${recordingNum} of ${attachments.length}`);
             }
-            if (deviceText) metadataParts.push(deviceText);
-            if (executionDuration) metadataParts.push(executionDuration);
+            if (executionDuration) metadataParts.push(`⏱️ ${executionDuration}`);
             
             // Set badges above test name
             badgesEl.innerHTML = badgesHTML;
@@ -2328,30 +2348,64 @@
             testInfoEl.innerHTML = `
                 <div style="font-size: 13px; color: var(--arcade-text-secondary); line-height: 1.6; text-align: left;">
                     <!-- Module, team -->
-                    <div style="font-size: 16px; font-weight: 600; color: var(--arcade-text-primary); margin-bottom: var(--arcade-space-sm);">${subtitleParts.join(' • ')}</div>
+                    <div style="font-size: 16px; font-weight: 600; color: var(--arcade-text-primary); margin-bottom: var(--arcade-space-xs);">${subtitleParts.join(' • ')}</div>
                     
-                    <!-- Recording count + duration + size -->
-                    ${metadataParts.length > 0 || gifSizeMB ? `
+                    <!-- Recording count + duration -->
+                    ${metadataParts.length > 0 ? `
                         <div style="font-size: 13px; color: var(--arcade-text-tertiary);">
-                            ${metadataParts.join(' • ')}${gifSizeMB && metadataParts.length > 0 ? ' • ' : ''}${gifSizeMB ? gifSizeMB + ' MB' : ''}
+                            ${metadataParts.join(' • ')}
                         </div>
                     ` : ''}
                 </div>
-                <div style="margin-top: var(--arcade-space-lg);"></div>
-                
-                ${test.failed && test.failureText ? `
-                    <div style="padding: var(--arcade-space-md); background: #FFF5F5; border: 1px solid #FED7D7; border-radius: var(--arcade-radius-sm);">
-                        <div style="font-size: 11px; font-weight: 600; color: var(--arcade-error); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: var(--arcade-space-xs);">Error Message</div>
-                        <div style="font-size: 13px; color: #C53030; line-height: 1.5; font-family: 'SF Mono', Monaco, monospace; word-break: break-word; white-space: pre-wrap;">${test.failureText}</div>
-                    </div>
-                ` : ''}
             `;
             
-            // Force GIF to reload
-            const cacheBuster = `?_t=${Date.now()}`;
-            const gifUrlWithCacheBuster = attachment.gifUrl.includes('?') 
-                ? `${attachment.gifUrl}&_t=${Date.now()}`
-                : `${attachment.gifUrl}${cacheBuster}`;
+            // Set failure analysis (if this recording failed)
+            const failureAnalysis = attachment.failureAnalysis;
+            if (executionResult === 'Failed' && failureAnalysis) {
+                const failurePhase = failureAnalysis.failurePhase || 'Unknown';
+                const failureTime = failureAnalysis.failureTime;
+                const rootCause = failureAnalysis.rootCause || 'No error details available';
+                
+                // Calculate how long into the test it failed
+                let timeIntoTest = '';
+                if (failureTime && attachment.executionStartTime) {
+                    const seconds = Math.round(failureTime - attachment.executionStartTime);
+                    if (seconds < 60) {
+                        timeIntoTest = `${seconds}s`;
+                    } else {
+                        const mins = Math.floor(seconds / 60);
+                        const secs = seconds % 60;
+                        timeIntoTest = `${mins}min ${secs}s`;
+                    }
+                }
+                
+                errorEl.innerHTML = `
+                    <div style="padding: var(--arcade-space-xl); background: #FFF5F5; border: 1px solid #FED7D7; border-radius: var(--arcade-radius-md);">
+                        <div style="font-size: 13px; font-weight: 600; color: #991B1B; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: var(--arcade-space-lg);">Failure Analysis</div>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(${timeIntoTest ? '2' : '1'}, 1fr); gap: var(--arcade-space-xl);">
+                            <div>
+                                <div style="font-size: 11px; font-weight: 600; color: #991B1B; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: var(--arcade-space-xs);">PHASE</div>
+                                <div style="font-size: 18px; color: #C53030; font-weight: 700;">${failurePhase.charAt(0).toUpperCase() + failurePhase.slice(1)}</div>
+                            </div>
+                            
+                            ${timeIntoTest ? `
+                                <div>
+                                    <div style="font-size: 11px; font-weight: 600; color: #991B1B; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: var(--arcade-space-xs);">FAILED AFTER</div>
+                                    <div style="font-size: 18px; color: #C53030; font-weight: 700;">${timeIntoTest}</div>
+                                </div>
+                            ` : ''}
+                        </div>
+                        
+                        <div style="margin-top: var(--arcade-space-lg); padding-top: var(--arcade-space-lg); border-top: 1px solid #FED7D7;">
+                            <div style="font-size: 11px; font-weight: 600; color: #991B1B; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: var(--arcade-space-sm);">ROOT CAUSE</div>
+                            <div style="font-size: 14px; color: #991B1B; line-height: 1.6; font-family: 'SF Mono', Monaco, monospace; word-break: break-word; white-space: pre-wrap; background: white; padding: var(--arcade-space-md); border-radius: var(--arcade-radius-sm); border: 1px solid #FED7D7;">${rootCause}</div>
+                        </div>
+                    </div>
+                `;
+            } else {
+                errorEl.innerHTML = '';
+            }
             
             // Create content with navigation if multiple attachments
             const hasMultiple = attachments.length > 1;
@@ -2382,7 +2436,7 @@
                     
                     <div class="modal-iphone-frame">
                         <div class="modal-iphone-screen">
-                            <img src="${gifUrlWithCacheBuster}" alt="${test.testMethod}" id="modal-gif-img" />
+                            <img src="${attachment.gifUrl}" alt="${test.testMethod}" id="modal-gif-img" onload="this.classList.remove('loading')" />
                         </div>
                     </div>
                     
@@ -2416,6 +2470,10 @@
             const newIndex = currentAttachmentIndex + direction;
             
             if (newIndex >= 0 && newIndex < attachments.length) {
+                // Add loading class for smooth transition
+                const img = document.getElementById('modal-gif-img');
+                if (img) img.classList.add('loading');
+                
                 currentAttachmentIndex = newIndex;
                 updateModalContent();
             }
@@ -2992,7 +3050,9 @@ test_coldLaunch_supportPage,,Support,Trust - Support,,,UI,Q4`;
                         executionResult: attachment.executionResult || 'Unknown',
                         executionNumber: attachment.executionNumber || 1,
                         executionDuration: attachment.executionDuration || 0,
-                        executionDurationString: attachment.executionDurationString || ''
+                        executionDurationString: attachment.executionDurationString || '',
+                        executionStartTime: attachment.executionStartTime || null,
+                        failureAnalysis: attachment.failureAnalysis || null
                     });
                 }
                 
