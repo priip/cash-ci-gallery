@@ -67,10 +67,10 @@
             background: #F3E5F5;
             color: #4A148C;
             text-align: center;
-            padding: var(--arcade-space-lg) var(--arcade-space-xl);
+            padding: var(--arcade-space-xl) var(--arcade-space-xl);
             font-size: 17px;
             font-weight: 600;
-            box-shadow: var(--arcade-elevation-2);
+            border-bottom: 2px solid #6A1B9A;
             line-height: 1.4;
         }
 
@@ -78,6 +78,17 @@
             font-size: 24px;
             display: inline-block;
             vertical-align: middle;
+        }
+
+        .build-link {
+            color: var(--arcade-green-primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: opacity 0.2s ease;
+        }
+
+        .build-link:hover {
+            opacity: 0.7;
         }
 
         /* Container */
@@ -914,7 +925,6 @@
             align-items: center;
             justify-content: center;
             padding: var(--arcade-space-xl) var(--arcade-space-lg);
-            background: var(--arcade-bg-tertiary);
             flex-shrink: 0;
         }
 
@@ -1192,7 +1202,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.95);
+            background: rgba(255, 255, 255, 0.98);
             z-index: 1000;
             backdrop-filter: blur(10px);
             align-items: flex-start;
@@ -1233,25 +1243,29 @@
             text-align: left;
         }
 
+        #frame-viewer-badges {
+            margin-bottom: var(--arcade-space-md);
+        }
+
         .frame-viewer-title h2 {
             font-size: 24px;
             font-weight: 700;
-            color: white;
+            color: var(--arcade-text-primary);
             margin-bottom: var(--arcade-space-sm);
             letter-spacing: -0.5px;
         }
 
         .frame-viewer-subtitle {
             font-size: 15px;
-            color: rgba(255, 255, 255, 0.7);
+            color: var(--arcade-text-secondary);
             font-weight: 500;
         }
 
         /* Arcade-styled close button with X icon */
         .close-modal {
-            background: rgba(255, 255, 255, 0.1);
+            background: #1F2937;
             color: white;
-            border: 2px solid rgba(255, 255, 255, 0.2);
+            border: 2px solid #374151;
             width: 44px;
             height: 44px;
             border-radius: 50%;
@@ -1265,8 +1279,8 @@
         }
 
         .close-modal:hover {
-            background: rgba(255, 255, 255, 0.2);
-            border-color: rgba(255, 255, 255, 0.4);
+            background: #111827;
+            border-color: #4B5563;
             transform: scale(1.05);
         }
 
@@ -1420,7 +1434,17 @@
 <body>
     <!-- Experimental Banner -->
     <div class="experimental-banner">
-        <span class="banner-icon">🧪</span> Experimental — This gallery is in active development and may have bugs or incomplete features <span class="banner-icon">🧪</span>
+        <div>
+            <span class="banner-icon">🧪</span> Experimental — This gallery is in active development and may have bugs or incomplete features <span class="banner-icon">🧪</span>
+        </div>
+        <div style="margin-top: var(--arcade-space-sm); font-size: 15px;">
+            <a href="https://github.com/priip/cash-ci-gallery" target="_blank" style="display: inline-flex; align-items: center; gap: 6px; color: #6A1B9A; text-decoration: none; font-weight: 600; transition: opacity 0.2s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                </svg>
+                <span>View on GitHub →</span>
+            </a>
+        </div>
     </div>
     
     <div class="container">
@@ -1498,6 +1522,7 @@
                             <option value="all">All</option>
                             <option value="pass">Passed</option>
                             <option value="fail">Failed</option>
+                            <option value="flaky">Flaky</option>
                         </select>
                     </div>
                 </div>
@@ -1515,9 +1540,9 @@
                 <circle cx="11" cy="11" r="8"></circle>
                 <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
             </svg>
-            <h3>No test videos match your filters</h3>
-            <p>Try adjusting your search or removing some filters.</p>
-            <button class="btn btn-secondary" onclick="clearAllFilters()" style="margin-top: var(--arcade-space-lg);">Clear all filters</button>
+            <h3>No results found</h3>
+            <p>Try adjusting your search or filters.</p>
+            <button class="btn btn-secondary" onclick="clearAllFilters()" style="margin-top: var(--arcade-space-lg);">Reset</button>
         </div>
 
         <!-- Gallery Section -->
@@ -1531,6 +1556,7 @@
         <div class="frame-viewer-content" onclick="event.stopPropagation()">
             <div class="frame-viewer-header">
                 <div class="frame-viewer-title">
+                    <div id="frame-viewer-badges"></div>
                     <h2 id="frame-viewer-test-name">Test Name</h2>
                     <div class="frame-viewer-subtitle" id="frame-viewer-test-info">Module • Team</div>
                 </div>
@@ -1634,17 +1660,20 @@
             // Get build info from manifest
             const buildInfo = manifestData?.buildkite || {};
             const summary = manifestData?.summary || {};
-            const branch = buildInfo.branch || 'Unknown';
-            const buildNumbers = buildInfo.buildNumbers || [];
             const buildURLs = buildInfo.buildURLs || [];
-            const totalBuilds = summary.totalBuilds || buildNumbers.length;
             const generatedAt = manifestData?.generatedAt || '';
+            
+            // Extract build numbers from URLs
+            const buildNumbers = buildURLs.map(url => {
+                const match = url.match(/\/builds\/(\d+)/);
+                return match ? match[1] : null;
+            }).filter(Boolean);
             
             // Format build links
             const buildLinksHTML = buildNumbers.map((num, idx) => {
                 const url = buildURLs[idx];
                 if (url) {
-                    return `<a href="${url}" target="_blank">#${num}</a>`;
+                    return `<a href="${url}" target="_blank" class="build-link">#${num}</a>`;
                 }
                 return `#${num}`;
             }).join(', ');
@@ -1662,30 +1691,68 @@
             // Build the stats HTML with Build as hero
             statsContainer.innerHTML = `
                 ${buildNumbers.length > 0 ? `
-                    <!-- Build Information Card -->
+                    <!-- Combined Build & Test Summary Card -->
                     <div style="background: var(--arcade-bg-secondary); border: 1px solid var(--arcade-border-secondary); border-radius: var(--arcade-radius-lg); padding: var(--arcade-space-xxl); margin-bottom: var(--arcade-space-xxl); box-shadow: var(--arcade-elevation-2);">
-                        <div style="font-size: 13px; font-weight: 600; color: var(--arcade-text-secondary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: var(--arcade-space-md);">Build</div>
-                        <div style="font-size: 42px; font-weight: 700; letter-spacing: -1.5px; margin-bottom: var(--arcade-space-xl);">
-                            ${buildLinksHTML || 'N/A'}
-                        </div>
-                        <!-- Build Metadata Stack -->
-                        <div style="font-size: 14px; font-weight: 500; color: var(--arcade-text-secondary); line-height: 1.8;">
-                            ${buildInfo.organization ? `<div><span style="text-transform: uppercase; font-size: 11px; font-weight: 600; color: var(--arcade-text-tertiary); letter-spacing: 0.5px;">Organization:</span> ${buildInfo.organization}</div>` : ''}
-                            ${buildInfo.pipeline ? `<div><span style="text-transform: uppercase; font-size: 11px; font-weight: 600; color: var(--arcade-text-tertiary); letter-spacing: 0.5px;">Pipeline:</span> ${buildInfo.pipeline}</div>` : ''}
-                            ${generatedAt ? `<div><span style="text-transform: uppercase; font-size: 11px; font-weight: 600; color: var(--arcade-text-tertiary); letter-spacing: 0.5px;">Generated:</span> ${formattedDate}</div>` : ''}
+                        <div style="display: grid; grid-template-columns: 1fr 2fr; gap: var(--arcade-space-xxxl); align-items: stretch;">
+                            <!-- Left: Build Info -->
+                            <div style="display: flex; flex-direction: column;">
+                                <div style="font-size: 13px; font-weight: 600; color: var(--arcade-text-secondary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: var(--arcade-space-md);">Build</div>
+                                <div style="font-size: 42px; font-weight: 700; letter-spacing: -1.5px; margin-bottom: var(--arcade-space-xl);">
+                                    ${buildLinksHTML || 'N/A'}
+                                </div>
+                                <!-- Build Metadata Stack -->
+                                <div style="display: grid; grid-template-columns: 1fr; gap: var(--arcade-space-lg);">
+                                    ${buildInfo.organization ? `
+                                    <div>
+                                        <div style="font-size: 11px; font-weight: 600; color: var(--arcade-text-tertiary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: var(--arcade-space-xs);">Organization</div>
+                                        <div style="font-size: 16px; font-weight: 600; color: var(--arcade-text-primary);">${buildInfo.organization}</div>
+                                    </div>
+                                    ` : ''}
+                                    ${buildInfo.pipeline ? `
+                                    <div>
+                                        <div style="font-size: 11px; font-weight: 600; color: var(--arcade-text-tertiary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: var(--arcade-space-xs);">Pipeline</div>
+                                        <div style="font-size: 16px; font-weight: 600; color: var(--arcade-text-primary);">${buildInfo.pipeline}</div>
+                                    </div>
+                                    ` : ''}
+                                </div>
+                            </div>
+                            
+                            <!-- Right: Test Summary -->
+                            <div style="display: flex; flex-direction: column;">
+                                <div style="font-size: 13px; font-weight: 600; color: var(--arcade-text-secondary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: var(--arcade-space-md);">Test Summary</div>
+                                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--arcade-space-lg); margin-bottom: var(--arcade-space-xl);">
+                                    <div>
+                                        <div style="font-size: 11px; font-weight: 600; color: var(--arcade-text-tertiary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: var(--arcade-space-xs);">Total</div>
+                                        <div style="font-size: 24px; font-weight: 700; color: var(--arcade-text-primary);">${totalTests}</div>
+                                    </div>
+                                    <div>
+                                        <div style="font-size: 11px; font-weight: 600; color: var(--arcade-text-tertiary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: var(--arcade-space-xs);">Passed</div>
+                                        <div style="font-size: 24px; font-weight: 700; color: var(--arcade-success);">${passedTests}</div>
+                                    </div>
+                                    <div>
+                                        <div style="font-size: 11px; font-weight: 600; color: var(--arcade-text-tertiary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: var(--arcade-space-xs);">Failed</div>
+                                        <div style="font-size: 24px; font-weight: 700; color: ${failedTests > 0 ? 'var(--arcade-error)' : 'var(--arcade-text-tertiary)'};">${failedTests}</div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Horizontal Divider -->
+                                <div style="border-top: 1px solid var(--arcade-border-secondary); margin-bottom: var(--arcade-space-xl);"></div>
+                                
+                                <!-- Test Type Breakdown -->
+                                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--arcade-space-lg);">
+                                    <div>
+                                        <div style="font-size: 11px; font-weight: 600; color: var(--arcade-text-tertiary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: var(--arcade-space-xs);">UI Tests</div>
+                                        <div style="font-size: 24px; font-weight: 700; color: var(--arcade-text-primary);">${uiTests}</div>
+                                    </div>
+                                    <div>
+                                        <div style="font-size: 11px; font-weight: 600; color: var(--arcade-text-tertiary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: var(--arcade-space-xs);">E2E Tests</div>
+                                        <div style="font-size: 24px; font-weight: 700; color: var(--arcade-text-primary);">${e2eTests}</div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 ` : ''}
-                
-                <!-- Test Results Card -->
-                <div style="background: var(--arcade-bg-secondary); border: 1px solid var(--arcade-border-secondary); border-radius: var(--arcade-radius-lg); padding: var(--arcade-space-xl); box-shadow: var(--arcade-elevation-2);">
-                    <div style="font-size: 13px; font-weight: 600; color: var(--arcade-text-secondary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: var(--arcade-space-md);">Test Results</div>
-                    <div style="font-size: 24px; font-weight: 600; color: var(--arcade-text-primary);">
-                        <span style="color: var(--arcade-success);">${passedTests} passed</span>
-                        <span style="color: var(--arcade-text-tertiary); margin: 0 var(--arcade-space-sm);">•</span>
-                        <span style="color: ${failedTests > 0 ? 'var(--arcade-error)' : 'var(--arcade-text-tertiary)'};">${failedTests} failed</span>
-                    </div>
-                </div>
             `;
             
             statsContainer.classList.add('active');
@@ -1735,12 +1802,13 @@
                     test.testClass || '',
                     test.module || '',
                     test.team || '',
-                    test.category || ''
+                    test.testType || ''
                 ].join(' ').toLowerCase(),
                 team: test.team,
                 module: test.module,
-                category: test.category,
-                failed: test.failed
+                testType: test.testType,
+                failed: test.failed,
+                wasRetried: test.wasRetried
             }));
             
             console.log('🔍 Search index built:', searchIndex.length, 'tests');
@@ -1822,7 +1890,7 @@
                 }
                 
                 // Test type filter
-                if (visible && currentTypeFilter !== 'all' && indexed.category !== currentTypeFilter) {
+                if (visible && currentTypeFilter !== 'all' && indexed.testType !== currentTypeFilter) {
                     visible = false;
                 }
                 
@@ -1840,6 +1908,7 @@
                 if (visible && statusFilter !== 'all') {
                     if (statusFilter === 'pass' && indexed.failed) visible = false;
                     if (statusFilter === 'fail' && !indexed.failed) visible = false;
+                    if (statusFilter === 'flaky' && !indexed.wasRetried) visible = false;
                 }
                 
                 // Toggle card visibility using cached DOM reference
@@ -1948,7 +2017,9 @@
                 activeFilters.type = filters.type === 'E2E Tests' ? 'E2E' : 'UI';
             }
             if (filters.status && filters.status !== 'all') {
-                activeFilters.status = filters.status === 'pass' ? 'Passed' : 'Failed';
+                if (filters.status === 'pass') activeFilters.status = 'Passed';
+                else if (filters.status === 'fail') activeFilters.status = 'Failed';
+                else if (filters.status === 'flaky') activeFilters.status = 'Flaky';
             }
             
             // Only show counter if there are results or filters applied
@@ -2074,8 +2145,8 @@
             const statusText = test.failed ? 'Failed' : 'Passed';
             
             // Determine type class
-            const typeClass = test.category === 'E2E Tests' ? 'type-e2e' : 'type-ui';
-            const typeText = test.category === 'E2E Tests' ? 'E2E' : 'UI';
+            const typeClass = test.testType === 'E2E Tests' ? 'type-e2e' : 'type-ui';
+            const typeText = test.testType === 'E2E Tests' ? 'E2E' : 'UI';
             
             // Store test index for onclick (avoids large data in HTML)
             const testIndex = allTests.indexOf(test);
@@ -2098,12 +2169,21 @@
             
             return `
                 <div class="test-card" onclick='openFrameViewer(${testIndex})'>
-                    <div class="gif-container">
+                    <!-- Metadata Pills -->
+                    <div class="metadata-pills" style="padding: var(--arcade-space-md); padding-bottom: 0; display: flex; justify-content: space-between; align-items: center;">
+                        <div style="display: flex; gap: var(--arcade-space-xs);">
+                            <span class="metadata-pill ${typeClass}">${typeText}</span>
+                            <span class="metadata-pill ${statusClass}">${statusText}</span>
+                            ${test.wasRetried ? `
+                                <span class="metadata-pill" style="background: #FED7AA; color: #92400E;">Flaky</span>
+                            ` : ''}
+                        </div>
                         ${test.attachmentCount > 1 ? `
-                            <div class="video-count-badge">
-                                ${test.attachmentCount}
-                            </div>
+                            <span class="metadata-pill" style="background: #E0E7FF; color: #3730A3;">🔄 ${test.attachmentCount} recordings</span>
                         ` : ''}
+                    </div>
+                    
+                    <div class="gif-container">
                         <div class="iphone-frame">
                             <div class="iphone-screen">
                                 <img src="${test.gifUrl}" alt="${test.testMethod}" loading="lazy">
@@ -2146,13 +2226,6 @@
                                 </button>
                             </div>
                         </div>
-                        
-                        <!-- Metadata Pills -->
-                        <div class="metadata-pills">
-                            <span class="metadata-pill ${typeClass}">${typeText}</span>
-                            <span class="metadata-pill ${statusClass}">${statusText}</span>
-                            ${test.testStatus && test.testStatus !== 'unknown' ? `<span class="metadata-pill">${test.testStatus.toUpperCase()}</span>` : ''}
-                        </div>
                     </div>
                 </div>
             `;
@@ -2191,6 +2264,7 @@
             const attachment = attachments[currentAttachmentIndex] || attachments[0];
             
             const modal = document.getElementById('frame-viewer-modal');
+            const badgesEl = document.getElementById('frame-viewer-badges');
             const testNameEl = document.getElementById('frame-viewer-test-name');
             const testInfoEl = document.getElementById('frame-viewer-test-info');
             const gifContainer = document.getElementById('modal-gif-container');
@@ -2201,15 +2275,77 @@
             // Format device info with iOS version
             const deviceText = attachment.deviceName ? attachment.deviceName.replace('BAZEL_TEST_', '').replace(/_(\d+\.\d+)$/, ' (iOS $1)') : null;
             
+            // Format timestamp
+            let timestampText = '';
+            if (attachment.timestamp) {
+                const date = new Date(attachment.timestamp * 1000);
+                timestampText = date.toLocaleString('en-US', {
+                    month: 'short',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit'
+                });
+            }
+            
             // Format file size
             const gifSizeMB = attachment.gifSizeBytes ? (attachment.gifSizeBytes / (1024 * 1024)).toFixed(2) : null;
             
-            // Build subtitle with all info (device + size only)
+            // Build subtitle with module and team
             let subtitleParts = [test.module || 'Unknown', test.team || 'Unknown'];
-            if (deviceText) subtitleParts.push(deviceText);
-            if (gifSizeMB) subtitleParts.push(`${gifSizeMB} MB`);
             
-            testInfoEl.textContent = subtitleParts.join(' • ');
+            // Get execution result and duration for this recording
+            const executionResult = attachment.executionResult || test.finalResult || 'Unknown';
+            const executionDuration = attachment.executionDurationString || '';
+            
+            // Build badges matching card pill style (test type + execution result)
+            const typeText = test.testType === 'UI Tests' ? 'UI' : test.testType === 'E2E Tests' ? 'E2E' : test.testType;
+            const typeClass = test.testType === 'UI Tests' ? 'type-ui' : test.testType === 'E2E Tests' ? 'type-e2e' : '';
+            
+            const statusText = executionResult === 'Passed' ? 'Passed' : executionResult === 'Failed' ? 'Failed' : executionResult;
+            const statusClass = executionResult === 'Passed' ? 'status-pass' : executionResult === 'Failed' ? 'status-fail' : '';
+            
+            const badgesHTML = `
+                <div style="display: flex; gap: var(--arcade-space-xs); margin-bottom: var(--arcade-space-md);">
+                    <span class="metadata-pill ${typeClass}">${typeText}</span>
+                    <span class="metadata-pill ${statusClass}">${statusText}</span>
+                </div>
+            `;
+            
+            // Build compact metadata line: recording count (if multiple) + device + duration
+            let metadataParts = [];
+            if (attachments.length > 1) {
+                const recordingNum = currentAttachmentIndex + 1;
+                metadataParts.push(`${recordingNum} of ${attachments.length}`);
+            }
+            if (deviceText) metadataParts.push(deviceText);
+            if (executionDuration) metadataParts.push(executionDuration);
+            
+            // Set badges above test name
+            badgesEl.innerHTML = badgesHTML;
+            
+            // Set module/team and metadata below test name
+            testInfoEl.innerHTML = `
+                <div style="font-size: 13px; color: var(--arcade-text-secondary); line-height: 1.6; text-align: left;">
+                    <!-- Module, team -->
+                    <div style="font-size: 16px; font-weight: 600; color: var(--arcade-text-primary); margin-bottom: var(--arcade-space-sm);">${subtitleParts.join(' • ')}</div>
+                    
+                    <!-- Recording count + duration + size -->
+                    ${metadataParts.length > 0 || gifSizeMB ? `
+                        <div style="font-size: 13px; color: var(--arcade-text-tertiary);">
+                            ${metadataParts.join(' • ')}${gifSizeMB && metadataParts.length > 0 ? ' • ' : ''}${gifSizeMB ? gifSizeMB + ' MB' : ''}
+                        </div>
+                    ` : ''}
+                </div>
+                <div style="margin-top: var(--arcade-space-lg);"></div>
+                
+                ${test.failed && test.failureText ? `
+                    <div style="padding: var(--arcade-space-md); background: #FFF5F5; border: 1px solid #FED7D7; border-radius: var(--arcade-radius-sm);">
+                        <div style="font-size: 11px; font-weight: 600; color: var(--arcade-error); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: var(--arcade-space-xs);">Error Message</div>
+                        <div style="font-size: 13px; color: #C53030; line-height: 1.5; font-family: 'SF Mono', Monaco, monospace; word-break: break-word; white-space: pre-wrap;">${test.failureText}</div>
+                    </div>
+                ` : ''}
+            `;
             
             // Force GIF to reload
             const cacheBuster = `?_t=${Date.now()}`;
@@ -2226,8 +2362,8 @@
                 <div style="position: relative; display: flex; align-items: center; gap: var(--arcade-space-xl);">
                     ${hasPrev ? `
                         <button onclick="navigateAttachment(-1)" style="
-                            background: var(--arcade-bg-secondary);
-                            border: 1px solid var(--arcade-border-primary);
+                            background: #1F2937;
+                            border: 2px solid #374151;
                             border-radius: var(--arcade-radius-lg);
                             width: 48px;
                             height: 48px;
@@ -2236,8 +2372,8 @@
                             justify-content: center;
                             cursor: pointer;
                             transition: all 0.15s ease;
-                            box-shadow: var(--arcade-elevation-1);
-                        " onmouseover="this.style.background='var(--arcade-bg-tertiary)'; this.style.boxShadow='var(--arcade-elevation-2)'" onmouseout="this.style.background='var(--arcade-bg-secondary)'; this.style.boxShadow='var(--arcade-elevation-1)'">
+                            color: white;
+                        " onmouseover="this.style.background='#111827'; this.style.borderColor='#4B5563'" onmouseout="this.style.background='#1F2937'; this.style.borderColor='#374151'">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <polyline points="15 18 9 12 15 6"></polyline>
                             </svg>
@@ -2252,8 +2388,8 @@
                     
                     ${hasNext ? `
                         <button onclick="navigateAttachment(1)" style="
-                            background: var(--arcade-bg-secondary);
-                            border: 1px solid var(--arcade-border-primary);
+                            background: #1F2937;
+                            border: 2px solid #374151;
                             border-radius: var(--arcade-radius-lg);
                             width: 48px;
                             height: 48px;
@@ -2262,8 +2398,8 @@
                             justify-content: center;
                             cursor: pointer;
                             transition: all 0.15s ease;
-                            box-shadow: var(--arcade-elevation-1);
-                        " onmouseover="this.style.background='var(--arcade-bg-tertiary)'; this.style.boxShadow='var(--arcade-elevation-2)'" onmouseout="this.style.background='var(--arcade-bg-secondary)'; this.style.boxShadow='var(--arcade-elevation-1)'">
+                            color: white;
+                        " onmouseover="this.style.background='#111827'; this.style.borderColor='#4B5563'" onmouseout="this.style.background='#1F2937'; this.style.borderColor='#374151'">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <polyline points="9 18 15 12 9 6"></polyline>
                             </svg>
@@ -2851,7 +2987,12 @@ test_coldLaunch_supportPage,,Support,Trust - Support,,,UI,Q4`;
                         deviceId: attachment.deviceId || 'unknown',
                         timestamp: attachment.timestamp || '',
                         isAssociatedWithFailure: attachment.isAssociatedWithFailure || false,
-                        suggestedHumanReadableName: attachment.suggestedHumanReadableName || exportedFile
+                        suggestedHumanReadableName: attachment.suggestedHumanReadableName || exportedFile,
+                        // New fields
+                        executionResult: attachment.executionResult || 'Unknown',
+                        executionNumber: attachment.executionNumber || 1,
+                        executionDuration: attachment.executionDuration || 0,
+                        executionDurationString: attachment.executionDurationString || ''
                     });
                 }
                 
@@ -2866,11 +3007,27 @@ test_coldLaunch_supportPage,,Support,Trust - Support,,,UI,Q4`;
                     console.log(`⚠️  No CSV match for test: ${testMethod}`);
                 }
                 
-                // Determine category from test class name
-                const category = testClass.includes('E2E') ? 'E2E Tests' : 'UI Tests';
-                
                 // Use first attachment for primary display
                 const primaryAttachment = gifAttachments[0];
+                
+                // Determine if test was retried (mixed execution results)
+                // Only flag as retried if we have valid execution data for all recordings
+                const executionResults = gifAttachments.map(a => a.executionResult);
+                const hasCompleteData = executionResults.every(r => r && r !== 'Unknown');
+                const uniqueResults = [...new Set(executionResults)];
+                const wasRetried = hasCompleteData && gifAttachments.length > 1 && uniqueResults.length > 1;
+                
+                // Use finalResult for overall test status
+                const finalResult = testResult.finalResult || 'Unknown';
+                const failed = finalResult === 'Failed';
+                
+                // Normalize test type
+                const rawTestType = testResult.testType || 'unknown';
+                const testType = rawTestType.toLowerCase() === 'ui' ? 'UI Tests' : 
+                                rawTestType.toLowerCase() === 'e2e' ? 'E2E Tests' : 
+                                rawTestType === 'UI Tests' ? 'UI Tests' : 
+                                rawTestType === 'E2E Tests' ? 'E2E Tests' : 
+                                'Unknown';
                 
                 const testInfo = {
                     // Display fields
@@ -2880,7 +3037,7 @@ test_coldLaunch_supportPage,,Support,Trust - Support,,,UI,Q4`;
                     testMethod: testMethod,
                     module: module,
                     team: team,
-                    category: category,
+                    testType: testType,
                     
                     // Device info (from primary attachment)
                     device: primaryAttachment.deviceName,
@@ -2889,7 +3046,10 @@ test_coldLaunch_supportPage,,Support,Trust - Support,,,UI,Q4`;
                     // Test metadata
                     configuration: testResult.configuration || 'unknown',
                     timestamp: primaryAttachment.timestamp,
-                    failed: primaryAttachment.isAssociatedWithFailure,
+                    finalResult: finalResult,
+                    failed: failed,
+                    wasRetried: wasRetried,
+                    failureText: testResult.failureText || null,
                     
                     // Build info
                     buildIndex: testResult.buildIndex,
