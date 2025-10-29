@@ -62,6 +62,24 @@
             -moz-osx-font-smoothing: grayscale;
         }
 
+        /* Experimental Banner */
+        .experimental-banner {
+            background: #F3E5F5;
+            color: #4A148C;
+            text-align: center;
+            padding: var(--arcade-space-lg) var(--arcade-space-xl);
+            font-size: 17px;
+            font-weight: 600;
+            box-shadow: var(--arcade-elevation-2);
+            line-height: 1.4;
+        }
+
+        .banner-icon {
+            font-size: 24px;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
         /* Container */
         .container {
             max-width: 1400px;
@@ -133,6 +151,25 @@
             background: var(--arcade-border-primary);
             color: var(--arcade-text-tertiary);
             cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        /* Arcade Secondary Button - Grey */
+        .btn-secondary {
+            background: var(--arcade-bg-tertiary);
+            color: var(--arcade-text-primary);
+            border: 2px solid var(--arcade-border-primary);
+            box-shadow: var(--arcade-elevation-1);
+        }
+
+        .btn-secondary:hover {
+            background: var(--arcade-bg-secondary);
+            border-color: var(--arcade-text-tertiary);
+            box-shadow: var(--arcade-elevation-2);
+        }
+
+        .btn-secondary:active {
+            transform: scale(0.98);
             box-shadow: none;
         }
 
@@ -363,12 +400,7 @@
 
         /* Arcade Statistics Dashboard */
         .stats-dashboard {
-            background: var(--arcade-bg-secondary);
-            border-radius: var(--arcade-radius-lg);
-            padding: var(--arcade-space-xl) var(--arcade-space-xxl);
             margin-bottom: var(--arcade-space-xxl);
-            box-shadow: var(--arcade-elevation-2);
-            border: 1px solid var(--arcade-border-secondary);
             display: none;
         }
 
@@ -489,9 +521,25 @@
             position: relative;
         }
 
+        .search-icon {
+            position: absolute;
+            left: var(--arcade-space-lg);
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            stroke: var(--arcade-text-tertiary);
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            fill: none;
+            pointer-events: none;
+        }
+
         .search-container input {
             width: 100%;
             padding: var(--arcade-space-lg) var(--arcade-space-xl);
+            padding-left: 52px; /* Make room for search icon */
             padding-right: 48px; /* Make room for clear button */
             border: 2px solid var(--arcade-border-primary);
             border-radius: var(--arcade-radius-md);
@@ -660,6 +708,89 @@
             box-shadow: 0 0 0 3px rgba(0, 214, 50, 0.1);
         }
 
+        /* Results Counter */
+        .results-counter {
+            display: none;
+            margin-bottom: var(--arcade-space-lg);
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--arcade-text-secondary);
+            align-items: center;
+            gap: var(--arcade-space-sm);
+            flex-wrap: wrap;
+        }
+
+        .results-counter.active {
+            display: flex;
+        }
+        
+        #results-counter-text {
+            display: flex;
+            align-items: center;
+            gap: var(--arcade-space-sm);
+            flex-wrap: wrap;
+            min-height: 32px;
+        }
+        
+        .results-counter-count {
+            color: var(--arcade-text-primary);
+            font-size: 17px;
+            font-weight: 600;
+        }
+        
+        .results-counter .search-term-display {
+            color: var(--arcade-text-primary);
+            font-weight: 600;
+        }
+        
+        .results-counter .search-term-display .dismiss-filter {
+            margin-left: var(--arcade-space-xs);
+            padding: 0;
+            background: none;
+            border: none;
+            color: var(--arcade-text-tertiary);
+            cursor: pointer;
+            font-size: 16px;
+            line-height: 1;
+            transition: color 0.15s ease;
+            font-weight: 400;
+        }
+        
+        .results-counter .search-term-display .dismiss-filter:hover {
+            color: var(--arcade-text-primary);
+        }
+        
+        .results-counter .filter-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--arcade-space-xs);
+            padding: var(--arcade-space-xs) var(--arcade-space-md);
+            border: 1px solid var(--arcade-border-primary);
+            border-radius: var(--arcade-radius-md);
+            background: var(--arcade-bg-secondary);
+            color: var(--arcade-text-secondary);
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 0.2px;
+        }
+        
+        .results-counter .filter-tag .dismiss-filter {
+            margin-left: var(--arcade-space-xs);
+            padding: 0;
+            background: none;
+            border: none;
+            color: var(--arcade-text-tertiary);
+            cursor: pointer;
+            font-size: 16px;
+            line-height: 1;
+            transition: color 0.15s ease;
+            font-weight: 400;
+        }
+        
+        .results-counter .filter-tag .dismiss-filter:hover {
+            color: var(--arcade-text-primary);
+        }
+
         /* Gallery */
         .gallery-section {
             display: none;
@@ -785,6 +916,22 @@
             padding: var(--arcade-space-xl) var(--arcade-space-lg);
             background: var(--arcade-bg-tertiary);
             flex-shrink: 0;
+        }
+
+        /* Video Count Badge */
+        .video-count-badge {
+            position: absolute;
+            top: var(--arcade-space-md);
+            right: var(--arcade-space-md);
+            background: rgba(0, 0, 0, 0.75);
+            color: white;
+            padding: var(--arcade-space-xs) var(--arcade-space-sm);
+            border-radius: var(--arcade-radius-md);
+            font-size: 13px;
+            font-weight: 600;
+            z-index: 10;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
         }
 
         /* iPhone Frame */
@@ -978,6 +1125,16 @@
             color: white;
         }
 
+        /* Video Metadata Text */
+        .video-metadata-single {
+            padding-bottom: var(--arcade-space-md);
+            border-bottom: 1px solid var(--arcade-border-secondary);
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--arcade-text-tertiary);
+            text-align: left;
+        }
+
         /* Divider */
         .card-divider {
             height: 1px;
@@ -992,10 +1149,23 @@
         }
 
         .empty-state svg {
-            width: 100px;
-            height: 100px;
+            width: 80px;
+            height: 80px;
             margin-bottom: var(--arcade-space-lg);
             opacity: 0.3;
+            color: var(--arcade-text-tertiary);
+        }
+        
+        .empty-state h3 {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--arcade-text-primary);
+            margin-bottom: var(--arcade-space-sm);
+        }
+        
+        .empty-state p {
+            font-size: 15px;
+            color: var(--arcade-text-secondary);
         }
 
         /* Arcade Inline Message - Error */
@@ -1025,9 +1195,10 @@
             background: rgba(0, 0, 0, 0.95);
             z-index: 1000;
             backdrop-filter: blur(10px);
-            align-items: center;
+            align-items: flex-start;
             justify-content: center;
             padding: var(--arcade-space-xxl);
+            overflow-y: auto;
         }
 
         .frame-viewer-modal.active {
@@ -1247,11 +1418,16 @@
     </style>
 </head>
 <body>
+    <!-- Experimental Banner -->
+    <div class="experimental-banner">
+        <span class="banner-icon">🧪</span> Experimental — This gallery is in active development and may have bugs or incomplete features <span class="banner-icon">🧪</span>
+    </div>
+    
     <div class="container">
         <!-- Page Header -->
         <div class="page-header">
             <h1>Cash CI Gallery</h1>
-            <p>A web viewer for UI and E2E test artifacts generated by Cash iOS Buildkite builds.</p>
+            <p>Visual test gallery for UI and E2E test recordings from Cash iOS Buildkite builds.</p>
         </div>
         
         <!-- Loading State -->
@@ -1274,6 +1450,10 @@
             <div class="filters-container">
                 <!-- Search Bar - Full Width -->
                 <div class="search-container">
+                    <svg class="search-icon" viewBox="0 0 24 24">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
                     <input type="text" id="search-input" placeholder="Search tests, modules, teams..." oninput="handleSearchInput()">
                     <button class="search-clear-btn" id="search-clear-btn" onclick="clearSearch()" title="Clear search">
                         <svg viewBox="0 0 24 24">
@@ -1298,7 +1478,7 @@
                     <!-- Module Dropdown -->
                     <div class="filter-group">
                         <label>Module</label>
-                        <select id="module-filter" onchange="applyFilters()">
+                        <select id="module-filter" onchange="if(this.value !== 'all') trackFilter('module'); applyFilters();">
                             <option value="all">All</option>
                         </select>
                     </div>
@@ -1306,7 +1486,7 @@
                     <!-- Team Dropdown -->
                     <div class="filter-group">
                         <label>Team</label>
-                        <select id="team-filter" onchange="applyFilters()">
+                        <select id="team-filter" onchange="if(this.value !== 'all') trackFilter('team'); applyFilters();">
                             <option value="all">All</option>
                         </select>
                     </div>
@@ -1314,7 +1494,7 @@
                     <!-- Status Dropdown -->
                     <div class="filter-group">
                         <label>Status</label>
-                        <select id="status-filter" onchange="applyFilters()">
+                        <select id="status-filter" onchange="if(this.value !== 'all') trackFilter('status'); applyFilters();">
                             <option value="all">All</option>
                             <option value="pass">Passed</option>
                             <option value="fail">Failed</option>
@@ -1322,6 +1502,22 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+        <!-- Results Counter -->
+        <div class="results-counter" id="results-counter">
+            <span id="results-counter-text"></span>
+        </div>
+
+        <!-- Empty State -->
+        <div class="empty-state" id="empty-state" style="display: none;">
+            <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <h3>No test videos match your filters</h3>
+            <p>Try adjusting your search or removing some filters.</p>
+            <button class="btn btn-secondary" onclick="clearAllFilters()" style="margin-top: var(--arcade-space-lg);">Clear all filters</button>
         </div>
 
         <!-- Gallery Section -->
@@ -1357,6 +1553,9 @@
         // Global state
         let allTests = [];
         let filteredTests = [];
+        
+        // Track filter application order
+        let filterApplicationOrder = [];
 
         // Load BuildKite results
         async function loadBuildKiteResults() {
@@ -1460,64 +1659,33 @@
                 timeZoneName: 'short'
             }) : 'Unknown';
             
-            // Build the stats HTML with lowkey styling
+            // Build the stats HTML with Build as hero
             statsContainer.innerHTML = `
-                <!-- Test Statistics -->
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: var(--arcade-space-lg); margin-bottom: var(--arcade-space-xl);">
-                    <div>
-                        <div style="font-size: 11px; font-weight: 600; color: var(--arcade-text-tertiary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: var(--arcade-space-xs);">Test Videos</div>
-                        <div style="font-size: 28px; font-weight: 600; color: var(--arcade-text-primary); letter-spacing: -0.5px;">${totalTests}</div>
-                    </div>
-                    
-                    <div>
-                        <div style="font-size: 11px; font-weight: 600; color: var(--arcade-text-tertiary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: var(--arcade-space-xs);">Passed</div>
-                        <div style="font-size: 28px; font-weight: 600; color: var(--arcade-success); letter-spacing: -0.5px;">${passedTests}</div>
-                    </div>
-                    
-                    <div>
-                        <div style="font-size: 11px; font-weight: 600; color: var(--arcade-text-tertiary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: var(--arcade-space-xs);">Failed</div>
-                        <div style="font-size: 28px; font-weight: 600; color: ${failedTests > 0 ? 'var(--arcade-error)' : 'var(--arcade-text-tertiary)'}; letter-spacing: -0.5px;">${failedTests}</div>
-                    </div>
-                    
-                    <div>
-                        <div style="font-size: 11px; font-weight: 600; color: var(--arcade-text-tertiary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: var(--arcade-space-xs);">E2E Tests</div>
-                        <div style="font-size: 28px; font-weight: 600; color: var(--arcade-text-primary); letter-spacing: -0.5px;">${e2eTests}</div>
-                    </div>
-                    
-                    <div>
-                        <div style="font-size: 11px; font-weight: 600; color: var(--arcade-text-tertiary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: var(--arcade-space-xs);">UI Tests</div>
-                        <div style="font-size: 28px; font-weight: 600; color: var(--arcade-text-primary); letter-spacing: -0.5px;">${uiTests}</div>
-                    </div>
-                </div>
-                
-                ${branch !== 'Unknown' || buildNumbers.length > 0 || generatedAt ? `
-                    <!-- Divider -->
-                    <div style="height: 1px; background: var(--arcade-border-secondary); margin: var(--arcade-space-xl) 0;"></div>
-                    
-                    <!-- BuildKite Information -->
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: var(--arcade-space-lg);">
-                        ${branch && branch !== 'Unknown' ? `
-                            <div>
-                                <div style="font-size: 11px; font-weight: 600; color: var(--arcade-text-tertiary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: var(--arcade-space-xs);">Branch</div>
-                                <div style="font-size: 13px; font-weight: 500; color: var(--arcade-text-primary); font-family: 'SF Mono', Monaco, monospace;">${branch}</div>
-                            </div>
-                        ` : ''}
-                        
-                        ${buildNumbers.length > 0 ? `
-                            <div>
-                                <div style="font-size: 11px; font-weight: 600; color: var(--arcade-text-tertiary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: var(--arcade-space-xs);">Build</div>
-                                <div style="font-size: 13px; font-weight: 500; color: var(--arcade-text-primary);">${buildLinksHTML || 'N/A'}</div>
-                            </div>
-                        ` : ''}
-                        
-                        ${generatedAt ? `
-                            <div>
-                                <div style="font-size: 11px; font-weight: 600; color: var(--arcade-text-tertiary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: var(--arcade-space-xs);">Generated</div>
-                                <div style="font-size: 13px; font-weight: 500; color: var(--arcade-text-primary);">${formattedDate}</div>
-                            </div>
-                        ` : ''}
+                ${buildNumbers.length > 0 ? `
+                    <!-- Build Information Card -->
+                    <div style="background: var(--arcade-bg-secondary); border: 1px solid var(--arcade-border-secondary); border-radius: var(--arcade-radius-lg); padding: var(--arcade-space-xxl); margin-bottom: var(--arcade-space-xxl); box-shadow: var(--arcade-elevation-2);">
+                        <div style="font-size: 13px; font-weight: 600; color: var(--arcade-text-secondary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: var(--arcade-space-md);">Build</div>
+                        <div style="font-size: 42px; font-weight: 700; letter-spacing: -1.5px; margin-bottom: var(--arcade-space-xl);">
+                            ${buildLinksHTML || 'N/A'}
+                        </div>
+                        <!-- Build Metadata Stack -->
+                        <div style="font-size: 14px; font-weight: 500; color: var(--arcade-text-secondary); line-height: 1.8;">
+                            ${buildInfo.organization ? `<div><span style="text-transform: uppercase; font-size: 11px; font-weight: 600; color: var(--arcade-text-tertiary); letter-spacing: 0.5px;">Organization:</span> ${buildInfo.organization}</div>` : ''}
+                            ${buildInfo.pipeline ? `<div><span style="text-transform: uppercase; font-size: 11px; font-weight: 600; color: var(--arcade-text-tertiary); letter-spacing: 0.5px;">Pipeline:</span> ${buildInfo.pipeline}</div>` : ''}
+                            ${generatedAt ? `<div><span style="text-transform: uppercase; font-size: 11px; font-weight: 600; color: var(--arcade-text-tertiary); letter-spacing: 0.5px;">Generated:</span> ${formattedDate}</div>` : ''}
+                        </div>
                     </div>
                 ` : ''}
+                
+                <!-- Test Results Card -->
+                <div style="background: var(--arcade-bg-secondary); border: 1px solid var(--arcade-border-secondary); border-radius: var(--arcade-radius-lg); padding: var(--arcade-space-xl); box-shadow: var(--arcade-elevation-2);">
+                    <div style="font-size: 13px; font-weight: 600; color: var(--arcade-text-secondary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: var(--arcade-space-md);">Test Results</div>
+                    <div style="font-size: 24px; font-weight: 600; color: var(--arcade-text-primary);">
+                        <span style="color: var(--arcade-success);">${passedTests} passed</span>
+                        <span style="color: var(--arcade-text-tertiary); margin: 0 var(--arcade-space-sm);">•</span>
+                        <span style="color: ${failedTests > 0 ? 'var(--arcade-error)' : 'var(--arcade-text-tertiary)'};">${failedTests} failed</span>
+                    </div>
+                </div>
             `;
             
             statsContainer.classList.add('active');
@@ -1587,6 +1755,7 @@
             // Show/hide clear button instantly
             if (searchInput.value.trim().length > 0) {
                 clearBtn.classList.add('visible');
+                trackFilter('search');
             } else {
                 clearBtn.classList.remove('visible');
             }
@@ -1612,6 +1781,11 @@
         function setTypeFilter(type) {
             currentTypeFilter = type;
             
+            // Track if not 'all'
+            if (type !== 'all') {
+                trackFilter('type');
+            }
+            
             // Update button states
             document.querySelectorAll('.type-btn').forEach(btn => {
                 btn.classList.remove('active');
@@ -1635,8 +1809,7 @@
             const moduleFilter = document.getElementById('module-filter').value;
             const statusFilter = document.getElementById('status-filter').value;
             
-            // Track visible cards per category
-            const categoryCounts = {};
+            let visibleCount = 0;
             
             // Fast filtering using pre-built search index
             for (let i = 0; i < searchIndex.length; i++) {
@@ -1672,36 +1845,29 @@
                 // Toggle card visibility using cached DOM reference
                 if (allCards[i]) {
                     allCards[i].style.display = visible ? '' : 'none';
-                    
-                    // Track visible count per category
-                    if (visible) {
-                        const category = indexed.category || 'Other';
-                        categoryCounts[category] = (categoryCounts[category] || 0) + 1;
-                    }
+                    if (visible) visibleCount++;
                 }
             }
             
-            // Hide/show category sections based on whether they have visible cards
-            const categorySections = document.querySelectorAll('.category-section');
-            categorySections.forEach(section => {
-                const header = section.querySelector('.category-header h2');
-                if (header) {
-                    const categoryName = header.textContent;
-                    const visibleCount = categoryCounts[categoryName] || 0;
-                    
-                    if (visibleCount === 0) {
-                        // Hide entire section if no visible cards
-                        section.style.display = 'none';
-                    } else {
-                        // Show section and update count badge
-                        section.style.display = '';
-                        const countBadge = section.querySelector('.category-count');
-                        if (countBadge) {
-                            countBadge.textContent = `${visibleCount} test${visibleCount !== 1 ? 's' : ''}`;
-                        }
-                    }
-                }
+            // Update results counter with all active filters
+            updateResultsCounter(visibleCount, {
+                search: searchTerm,
+                module: moduleFilter,
+                team: teamFilter,
+                type: currentTypeFilter,
+                status: statusFilter
             });
+            
+            // Show/hide empty state
+            const emptyState = document.getElementById('empty-state');
+            const gallerySection = document.getElementById('gallery-section');
+            if (visibleCount === 0) {
+                emptyState.style.display = 'block';
+                gallerySection.style.display = 'none';
+            } else {
+                emptyState.style.display = 'none';
+                gallerySection.style.display = '';
+            }
         }
         
         // Legacy function for compatibility - redirects to optimized version
@@ -1709,35 +1875,110 @@
             applyFiltersOptimized();
         }
 
-        // Global state for collapsed categories
-        const collapsedCategories = new Set();
+        // Track filter application
+        function trackFilter(filterType) {
+            // Remove if already exists
+            filterApplicationOrder = filterApplicationOrder.filter(f => f !== filterType);
+            // Add to end (most recent)
+            filterApplicationOrder.push(filterType);
+        }
         
-        // Toggle category collapse/expand
-        function toggleCategory(category, event) {
-            // Prevent event bubbling
-            event.stopPropagation();
+        // Clear specific filter
+        function clearFilter(filterType) {
+            // Remove from tracking
+            filterApplicationOrder = filterApplicationOrder.filter(f => f !== filterType);
             
-            const categorySection = event.target.closest('.category-section');
-            if (!categorySection) return;
-            
-            if (collapsedCategories.has(category)) {
-                collapsedCategories.delete(category);
-                categorySection.classList.remove('collapsed');
-            } else {
-                collapsedCategories.add(category);
-                categorySection.classList.add('collapsed');
-            }
-            
-            // Toggle test grid visibility with smooth transition
-            const testGrid = categorySection.querySelector('.test-grid');
-            if (testGrid) {
-                if (collapsedCategories.has(category)) {
-                    testGrid.style.display = 'none';
-                } else {
-                    testGrid.style.display = 'grid';
-                }
+            if (filterType === 'search') {
+                const searchInput = document.getElementById('search-input');
+                searchInput.value = '';
+                clearSearch();
+            } else if (filterType === 'module') {
+                document.getElementById('module-filter').value = 'all';
+                applyFilters();
+            } else if (filterType === 'team') {
+                document.getElementById('team-filter').value = 'all';
+                applyFilters();
+            } else if (filterType === 'type') {
+                setTypeFilter('all');
+            } else if (filterType === 'status') {
+                document.getElementById('status-filter').value = 'all';
+                applyFilters();
             }
         }
+        
+        // Clear all filters at once
+        function clearAllFilters() {
+            // Clear search
+            const searchInput = document.getElementById('search-input');
+            searchInput.value = '';
+            document.getElementById('search-clear-btn').classList.remove('visible');
+            
+            // Reset all dropdowns
+            document.getElementById('module-filter').value = 'all';
+            document.getElementById('team-filter').value = 'all';
+            document.getElementById('status-filter').value = 'all';
+            
+            // Reset type filter
+            setTypeFilter('all');
+            
+            // Clear tracking
+            filterApplicationOrder = [];
+            
+            // Apply filters to show all tests
+            applyFiltersOptimized();
+        }
+        
+        // Update results counter with all active filters
+        function updateResultsCounter(count, filters = {}) {
+            const counter = document.getElementById('results-counter');
+            const counterText = document.getElementById('results-counter-text');
+            
+            // Build filter map for easy lookup
+            const activeFilters = {};
+            if (filters.search && filters.search.trim()) {
+                activeFilters.search = `"${filters.search.trim()}"`;
+            }
+            if (filters.module && filters.module !== 'all') {
+                activeFilters.module = filters.module;
+            }
+            if (filters.team && filters.team !== 'all') {
+                activeFilters.team = filters.team;
+            }
+            if (filters.type && filters.type !== 'all') {
+                activeFilters.type = filters.type === 'E2E Tests' ? 'E2E' : 'UI';
+            }
+            if (filters.status && filters.status !== 'all') {
+                activeFilters.status = filters.status === 'pass' ? 'Passed' : 'Failed';
+            }
+            
+            // Only show counter if there are results or filters applied
+            const hasFilters = Object.keys(activeFilters).length > 0;
+            if (count === 0 && !hasFilters) {
+                counter.classList.remove('active');
+                return;
+            }
+            
+            let html = `<span class="results-counter-count">${count} result${count !== 1 ? 's' : ''}</span>`;
+            
+            // Add search first if present
+            if (activeFilters.search) {
+                html = `<span class="results-counter-count">${count} result${count !== 1 ? 's' : ''}</span><span style="color: var(--arcade-text-secondary); font-weight: 500;"> for</span>`;
+                html += `<span class="filter-tag">${activeFilters.search} <button class="dismiss-filter" onclick="clearFilter('search')" title="Clear search">×</button></span>`;
+            }
+            
+            // Then add other filters in order they were applied
+            filterApplicationOrder.forEach(filterType => {
+                if (filterType !== 'search' && activeFilters[filterType]) {
+                    html += `<span class="filter-tag">${activeFilters[filterType]} <button class="dismiss-filter" onclick="clearFilter('${filterType}')" title="Remove filter">×</button></span>`;
+                }
+            });
+            
+            counterText.innerHTML = html;
+            counter.classList.add('active');
+        }
+
+        // All tests displayed in single grid, sorted alphabetically by:
+        // module -> team -> test class -> test method
         
         // Render gallery - optimized to avoid full innerHTML replacement
         function renderGallery(tests) {
@@ -1762,79 +2003,41 @@
             
             if (existingCards.length === allTests.length) {
                 // We have all cards rendered, just show/hide them
+                let visibleCount = 0;
                 existingCards.forEach((card, index) => {
                     if (testIndexSet.has(index)) {
                         card.style.display = '';
+                        visibleCount++;
                     } else {
                         card.style.display = 'none';
                     }
                 });
                 gallerySection.classList.add('active');
+                updateResultsCounter(visibleCount);
                 return;
             }
             
             // First render - build all cards once
-            const showCategoryHeaders = currentTypeFilter === 'all';
+            // Sort tests by module -> team -> test class -> test method (natural alphabetical)
+            const sortedTests = [...allTests].sort((a, b) => {
+                // Sort by module first
+                if (a.module !== b.module) return (a.module || '').localeCompare(b.module || '');
+                // Then by team
+                if (a.team !== b.team) return (a.team || '').localeCompare(b.team || '');
+                // Then by test class
+                if (a.testClass !== b.testClass) return (a.testClass || '').localeCompare(b.testClass || '');
+                // Finally by test method
+                return (a.testMethod || '').localeCompare(b.testMethod || '');
+            });
             
-            if (showCategoryHeaders) {
-                // Group by category
-                const categories = {};
-                allTests.forEach(test => {
-                    const category = test.category || 'Other';
-                    if (!categories[category]) {
-                        categories[category] = [];
-                    }
-                    categories[category].push(test);
-                });
-                
-                const categoryOrder = ['E2E Tests', 'UI Tests'];
-                const sortedCategories = Object.keys(categories).sort((a, b) => {
-                    const indexA = categoryOrder.indexOf(a);
-                    const indexB = categoryOrder.indexOf(b);
-                    if (indexA !== -1 && indexB !== -1) return indexA - indexB;
-                    if (indexA !== -1) return -1;
-                    if (indexB !== -1) return 1;
-                    return a.localeCompare(b);
-                });
-                
-                let html = '';
-                sortedCategories.forEach(category => {
-                    const categoryTests = categories[category];
-                    const isCollapsed = collapsedCategories.has(category);
-                    const collapsedClass = isCollapsed ? 'collapsed' : '';
-                    const gridDisplay = isCollapsed ? 'display: none;' : '';
-                    
-                    html += `
-                        <div class="category-section ${collapsedClass}">
-                            <div class="category-header" onclick="toggleCategory('${category}', event)">
-                                <div class="category-header-content">
-                                    <h2>${category}</h2>
-                                    <span class="category-count">${categoryTests.length} tests</span>
-                                </div>
-                                <div class="category-chevron">
-                                    <svg viewBox="0 0 24 24">
-                                        <polyline points="6 9 12 15 18 9"></polyline>
-                                    </svg>
-                                </div>
-                            </div>
-                            <div class="test-grid" style="${gridDisplay}">
-                                ${categoryTests.map(test => renderTestCard(test)).join('')}
-                            </div>
-                        </div>
-                    `;
-                });
-                gallerySection.innerHTML = html;
-            } else {
-                // Single grid with all tests
-                gallerySection.innerHTML = `
-                    <div class="test-grid">
-                        ${allTests.map(test => renderTestCard(test)).join('')}
-                    </div>
-                `;
-            }
+            // Single grid with all tests (no category headers)
+            gallerySection.innerHTML = `
+                <div class="test-grid">
+                    ${sortedTests.map(test => renderTestCard(test)).join('')}
+                </div>
+            `;
             
             // Cache all card DOM elements for fast filtering
-            // IMPORTANT: Cards are rendered grouped by category, but we need them in allTests order
             const cardElements = Array.from(gallerySection.querySelectorAll('.test-card'));
             
             // Build a map from test index to card element
@@ -1859,7 +2062,9 @@
             // Build search index now that cards are rendered
             buildSearchIndex();
             
+            // Show gallery and update results counter
             gallerySection.classList.add('active');
+            updateResultsCounter(tests.length);
         }
 
         // Render individual test card
@@ -1875,9 +2080,30 @@
             // Store test index for onclick (avoids large data in HTML)
             const testIndex = allTests.indexOf(test);
             
+            // Format GIF size
+            const gifSizeMB = test.gifSizeBytes ? (test.gifSizeBytes / (1024 * 1024)).toFixed(2) : 'N/A';
+            
+            // Format timestamp
+            let timestampFormatted = 'N/A';
+            if (test.timestamp) {
+                const date = new Date(test.timestamp * 1000); // Unix timestamp to JS Date
+                timestampFormatted = date.toLocaleString('en-US', {
+                    month: 'short',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit'
+                });
+            }
+            
             return `
                 <div class="test-card" onclick='openFrameViewer(${testIndex})'>
                     <div class="gif-container">
+                        ${test.attachmentCount > 1 ? `
+                            <div class="video-count-badge">
+                                ${test.attachmentCount}
+                            </div>
+                        ` : ''}
                         <div class="iphone-frame">
                             <div class="iphone-screen">
                                 <img src="${test.gifUrl}" alt="${test.testMethod}" loading="lazy">
@@ -1925,6 +2151,7 @@
                         <div class="metadata-pills">
                             <span class="metadata-pill ${typeClass}">${typeText}</span>
                             <span class="metadata-pill ${statusClass}">${statusText}</span>
+                            ${test.testStatus && test.testStatus !== 'unknown' ? `<span class="metadata-pill">${test.testStatus.toUpperCase()}</span>` : ''}
                         </div>
                     </div>
                 </div>
@@ -1932,9 +2159,36 @@
         }
 
         // Open GIF viewer modal
-        function openFrameViewer(testIndex) {
+        let currentModalTest = null;
+        let currentAttachmentIndex = 0;
+        
+        function openFrameViewer(testIndex, attachmentIndex = 0) {
             const test = allTests[testIndex];
             if (!test) return;
+            
+            currentModalTest = test;
+            currentAttachmentIndex = attachmentIndex;
+            
+            updateModalContent();
+            
+            const modal = document.getElementById('frame-viewer-modal');
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function updateModalContent() {
+            if (!currentModalTest) return;
+            
+            const test = currentModalTest;
+            const attachments = test.attachments || [{
+                gifUrl: test.gifUrl,
+                gifSizeBytes: test.gifSizeBytes,
+                deviceName: test.device,
+                deviceId: test.deviceId,
+                timestamp: test.timestamp
+            }];
+            
+            const attachment = attachments[currentAttachmentIndex] || attachments[0];
             
             const modal = document.getElementById('frame-viewer-modal');
             const testNameEl = document.getElementById('frame-viewer-test-name');
@@ -1943,29 +2197,92 @@
             
             // Update modal header
             testNameEl.textContent = test.testMethod || 'Unknown Test';
-            testInfoEl.textContent = `${test.module || 'Unknown'} • ${test.team || 'Unknown'}`;
             
-            // Force GIF to reload from scratch by adding cache-busting timestamp
-            // This ensures the GIF starts from frame 0 and plays according to its embedded loop settings
+            // Format device info with iOS version
+            const deviceText = attachment.deviceName ? attachment.deviceName.replace('BAZEL_TEST_', '').replace(/_(\d+\.\d+)$/, ' (iOS $1)') : null;
+            
+            // Format file size
+            const gifSizeMB = attachment.gifSizeBytes ? (attachment.gifSizeBytes / (1024 * 1024)).toFixed(2) : null;
+            
+            // Build subtitle with all info (device + size only)
+            let subtitleParts = [test.module || 'Unknown', test.team || 'Unknown'];
+            if (deviceText) subtitleParts.push(deviceText);
+            if (gifSizeMB) subtitleParts.push(`${gifSizeMB} MB`);
+            
+            testInfoEl.textContent = subtitleParts.join(' • ');
+            
+            // Force GIF to reload
             const cacheBuster = `?_t=${Date.now()}`;
-            const gifUrlWithCacheBuster = test.gifUrl.includes('?') 
-                ? `${test.gifUrl}&_t=${Date.now()}`
-                : `${test.gifUrl}${cacheBuster}`;
+            const gifUrlWithCacheBuster = attachment.gifUrl.includes('?') 
+                ? `${attachment.gifUrl}&_t=${Date.now()}`
+                : `${attachment.gifUrl}${cacheBuster}`;
             
-            // Create enlarged GIF with iPhone frame
+            // Create content with navigation if multiple attachments
+            const hasMultiple = attachments.length > 1;
+            const hasPrev = hasMultiple && currentAttachmentIndex > 0;
+            const hasNext = hasMultiple && currentAttachmentIndex < attachments.length - 1;
+            
             gifContainer.innerHTML = `
-                <div class="modal-iphone-frame">
-                    <div class="modal-iphone-screen">
-                        <img src="${gifUrlWithCacheBuster}" alt="${test.testMethod}" id="modal-gif-img" />
+                <div style="position: relative; display: flex; align-items: center; gap: var(--arcade-space-xl);">
+                    ${hasPrev ? `
+                        <button onclick="navigateAttachment(-1)" style="
+                            background: var(--arcade-bg-secondary);
+                            border: 1px solid var(--arcade-border-primary);
+                            border-radius: var(--arcade-radius-lg);
+                            width: 48px;
+                            height: 48px;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            cursor: pointer;
+                            transition: all 0.15s ease;
+                            box-shadow: var(--arcade-elevation-1);
+                        " onmouseover="this.style.background='var(--arcade-bg-tertiary)'; this.style.boxShadow='var(--arcade-elevation-2)'" onmouseout="this.style.background='var(--arcade-bg-secondary)'; this.style.boxShadow='var(--arcade-elevation-1)'">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="15 18 9 12 15 6"></polyline>
+                            </svg>
+                        </button>
+                    ` : hasMultiple ? `<div style="width: 48px;"></div>` : ''}
+                    
+                    <div class="modal-iphone-frame">
+                        <div class="modal-iphone-screen">
+                            <img src="${gifUrlWithCacheBuster}" alt="${test.testMethod}" id="modal-gif-img" />
+                        </div>
                     </div>
+                    
+                    ${hasNext ? `
+                        <button onclick="navigateAttachment(1)" style="
+                            background: var(--arcade-bg-secondary);
+                            border: 1px solid var(--arcade-border-primary);
+                            border-radius: var(--arcade-radius-lg);
+                            width: 48px;
+                            height: 48px;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            cursor: pointer;
+                            transition: all 0.15s ease;
+                            box-shadow: var(--arcade-elevation-1);
+                        " onmouseover="this.style.background='var(--arcade-bg-tertiary)'; this.style.boxShadow='var(--arcade-elevation-2)'" onmouseout="this.style.background='var(--arcade-bg-secondary)'; this.style.boxShadow='var(--arcade-elevation-1)'">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="9 18 15 12 9 6"></polyline>
+                            </svg>
+                        </button>
+                    ` : hasMultiple ? `<div style="width: 48px;"></div>` : ''}
                 </div>
             `;
+        }
+        
+        function navigateAttachment(direction) {
+            if (!currentModalTest) return;
             
-            // Show modal
-            modal.classList.add('active');
+            const attachments = currentModalTest.attachments || [];
+            const newIndex = currentAttachmentIndex + direction;
             
-            // Prevent body scroll
-            document.body.style.overflow = 'hidden';
+            if (newIndex >= 0 && newIndex < attachments.length) {
+                currentAttachmentIndex = newIndex;
+                updateModalContent();
+            }
         }
 
         // Close frame viewer modal
@@ -1977,10 +2294,21 @@
             document.body.style.overflow = '';
         }
 
-        // Close modal on escape key
+        // Handle keyboard navigation in modal
         document.addEventListener('keydown', function(e) {
+            const modal = document.getElementById('frame-viewer-modal');
+            const isModalOpen = modal && modal.classList.contains('active');
+            
+            if (!isModalOpen) return;
+            
             if (e.key === 'Escape') {
                 closeFrameViewer();
+            } else if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                navigateAttachment(-1);
+            } else if (e.key === 'ArrowRight') {
+                e.preventDefault();
+                navigateAttachment(1);
             }
         });
 
@@ -2005,8 +2333,8 @@
                 
                 updateLoadingStatus('Fetching sample manifest...');
                 
-                // Fetch the sample manifest
-                const response = await fetch('test-data.json');
+                // Fetch the sample manifest with cache busting
+                const response = await fetch('test-data.json?t=' + Date.now());
                 if (!response.ok) {
                     throw new Error('Sample data not found. Make sure test-data.json is in the same directory.');
                 }
@@ -2484,10 +2812,22 @@ test_coldLaunch_supportPage,,Support,Trust - Support,,,UI,Q4`;
                 testResults = [manifestData];
             }
             
+            // First pass: group attachments by test
+            const testMap = new Map();
+            
             for (const testResult of testResults) {
                 const testId = testResult.testIdentifier || 'Unknown';
                 const attachments = testResult.attachments || [];
                 
+                // Extract test class and method from identifier
+                const testClass = testResult.testClass || testId.split('/')[0] || 'Unknown';
+                const testMethodRaw = testResult.testMethod || testId.split('/')[1] || 'Unknown';
+                const testMethod = testMethodRaw.replace('()', ''); // Remove () if present
+                
+                const testKey = `${testClass}::${testMethod}`;
+                
+                // Process GIF attachments for this test
+                const gifAttachments = [];
                 for (const attachment of attachments) {
                     const exportedFile = attachment.exportedFileName || '';
                     
@@ -2496,79 +2836,84 @@ test_coldLaunch_supportPage,,Support,Trust - Support,,,UI,Q4`;
                         continue;
                     }
                     
-                    // Extract test class and method from identifier
-                    // Format: "TestClassName/test_methodName()"
-                    const testClass = testResult.testClass || testId.split('/')[0] || 'Unknown';
-                    const testMethodRaw = testResult.testMethod || testId.split('/')[1] || 'Unknown';
-                    const testMethod = testMethodRaw.replace('()', ''); // Remove () if present
-                    
-                    // Look up ownership data from CSV using test method name
-                    const ownershipInfo = ownershipMap[testMethod] || {};
-                    const module = ownershipInfo.module || 'Unknown';
-                    const team = ownershipInfo.team || 'Unknown';
-                    
-                    // Log mapping for debugging
-                    if (!ownershipInfo.module) {
-                        console.log(`⚠️  No CSV match for test: ${testMethod}`);
-                    }
-                    
-                    // Determine category from test class name (not from CSV)
-                    // E2E tests typically have "E2E" in their class name
-                    const category = testClass.includes('E2E') ? 'E2E Tests' : 'UI Tests';
-                    
-                    // Check if GIF is a file path or embedded base64
                     let gifUrl = attachment.gifUrl || attachment.gifData || attachment.exportedFileName;
-                    
-                    console.log(`🖼️  Processing GIF for ${testMethod}:`, {
-                        gifUrl: attachment.gifUrl,
-                        gifData: attachment.gifData ? 'present' : 'missing',
-                        exportedFileName: attachment.exportedFileName,
-                        finalUrl: gifUrl
-                    });
                     
                     // If it's just a filename without path, assume it's in the same directory
                     if (!gifUrl.startsWith('data:') && !gifUrl.includes('/')) {
-                        // Just a filename, use as-is (relative path)
                         gifUrl = attachment.exportedFileName;
                     }
                     
-                    const testInfo = {
-                        // Display fields
-                        name: attachment.suggestedHumanReadableName || exportedFile,
-                        testId: testId,
-                        testClass: testClass,
-                        testMethod: testMethod,
-                        module: module,
-                        team: team,
-                        category: category,
-                        
-                        // Device info
-                        device: attachment.deviceName || 'Unknown',
-                        deviceId: attachment.deviceId || 'unknown',
-                        
-                        // Test metadata
-                        configuration: attachment.configurationName || 'unknown',
-                        timestamp: attachment.timestamp || '',
-                        failed: attachment.isAssociatedWithFailure || false,
-                        
-                        // Build info
-                        buildIndex: testResult.buildIndex,
-                        buildName: attachment.buildName || 'Build',
-                        xcresultSource: testResult.xcresultSource || attachment.xcresultSource,
-                        
-                        // Processing metadata
-                        processingTimestamp: testResult.processingTimestamp || attachment.processingTimestamp,
-                        
-                        // GIF data
+                    gifAttachments.push({
                         gifUrl: gifUrl,
                         gifSizeBytes: attachment.gifSizeBytes || 0,
                         exportedFileName: exportedFile,
-                        
-                        // BuildKite info (from test result)
-                        buildkite: testResult.buildkite
-                    };
+                        deviceName: attachment.deviceName || 'Unknown',
+                        deviceId: attachment.deviceId || 'unknown',
+                        timestamp: attachment.timestamp || '',
+                        isAssociatedWithFailure: attachment.isAssociatedWithFailure || false,
+                        suggestedHumanReadableName: attachment.suggestedHumanReadableName || exportedFile
+                    });
+                }
+                
+                if (gifAttachments.length === 0) continue;
+                
+                // Look up ownership data
+                const ownershipInfo = ownershipMap[testMethod] || {};
+                const module = ownershipInfo.module || 'Unknown';
+                const team = ownershipInfo.team || 'Unknown';
+                
+                if (!ownershipInfo.module) {
+                    console.log(`⚠️  No CSV match for test: ${testMethod}`);
+                }
+                
+                // Determine category from test class name
+                const category = testClass.includes('E2E') ? 'E2E Tests' : 'UI Tests';
+                
+                // Use first attachment for primary display
+                const primaryAttachment = gifAttachments[0];
+                
+                const testInfo = {
+                    // Display fields
+                    name: primaryAttachment.suggestedHumanReadableName,
+                    testId: testId,
+                    testClass: testClass,
+                    testMethod: testMethod,
+                    module: module,
+                    team: team,
+                    category: category,
                     
-                    tests.push(testInfo);
+                    // Device info (from primary attachment)
+                    device: primaryAttachment.deviceName,
+                    deviceId: primaryAttachment.deviceId,
+                    
+                    // Test metadata
+                    configuration: testResult.configuration || 'unknown',
+                    timestamp: primaryAttachment.timestamp,
+                    failed: primaryAttachment.isAssociatedWithFailure,
+                    
+                    // Build info
+                    buildIndex: testResult.buildIndex,
+                    buildName: testResult.buildName || 'Build',
+                    xcresultSource: testResult.xcresultSource,
+                    processingTimestamp: testResult.processingTimestamp,
+                    
+                    // Primary GIF data (for backwards compatibility)
+                    gifUrl: primaryAttachment.gifUrl,
+                    gifSizeBytes: primaryAttachment.gifSizeBytes,
+                    exportedFileName: primaryAttachment.exportedFileName,
+                    
+                    // All attachments array
+                    attachments: gifAttachments,
+                    attachmentCount: gifAttachments.length,
+                    
+                    // BuildKite info
+                    buildkite: testResult.buildkite
+                };
+                
+                tests.push(testInfo);
+                
+                if (gifAttachments.length > 1) {
+                    console.log(`📹 Test ${testMethod} has ${gifAttachments.length} videos`);
                 }
             }
             
