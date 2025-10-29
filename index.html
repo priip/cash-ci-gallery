@@ -729,6 +729,15 @@
             align-items: center;
             gap: var(--arcade-space-sm);
             flex-wrap: wrap;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--arcade-bg-primary);
+            padding: var(--arcade-space-lg) 0;
+            margin-left: calc(var(--arcade-space-xl) * -1);
+            margin-right: calc(var(--arcade-space-xl) * -1);
+            padding-left: var(--arcade-space-xl);
+            padding-right: var(--arcade-space-xl);
         }
 
         .results-counter.active {
@@ -1202,9 +1211,10 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(255, 255, 255, 0.98);
+            background: rgba(240, 240, 240, 0.95);
             z-index: 1000;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             align-items: flex-start;
             justify-content: center;
             padding: var(--arcade-space-xxl);
@@ -1262,17 +1272,14 @@
             width: 100%;
         }
 
-        /* Arcade-styled close button with X icon */
+        /* Modal buttons - dark semi-transparent with white icons for excellent contrast */
         .close-modal {
-            position: absolute;
-            top: 0;
-            right: 0;
-            background: #1F2937;
+            background: rgba(0, 0, 0, 0.75);
             color: white;
-            border: 2px solid #374151;
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
+            border: 1px solid rgba(0, 0, 0, 0.85);
+            border-radius: var(--arcade-radius-md);
+            width: 40px;
+            height: 40px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1280,24 +1287,28 @@
             transition: all 0.2s ease-out;
             flex-shrink: 0;
             padding: 0;
-            z-index: 10;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
         }
 
         .close-modal:hover {
-            background: #111827;
-            border-color: #4B5563;
-            transform: scale(1.05);
+            background: rgba(0, 0, 0, 0.85);
+            border-color: rgba(0, 0, 0, 0.95);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transform: translateY(-1px);
         }
 
         .close-modal:active {
-            transform: scale(0.95);
+            transform: scale(0.95) translateY(0);
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
         }
 
         .close-modal svg {
             width: 20px;
             height: 20px;
             stroke: white;
-            stroke-width: 2.5;
+            stroke-width: 2;
             stroke-linecap: round;
         }
 
@@ -1566,18 +1577,11 @@
     <!-- GIF Viewer Modal -->
     <div class="frame-viewer-modal" id="frame-viewer-modal" onclick="closeFrameViewer()">
         <div class="frame-viewer-content" onclick="event.stopPropagation()">
-            <button class="close-modal" onclick="closeFrameViewer()" title="Close (Esc)">
-                <svg viewBox="0 0 24 24">
-                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                </svg>
-            </button>
-            
             <div class="frame-viewer-header">
                 <div class="frame-viewer-title">
                     <div id="frame-viewer-badges"></div>
-                    <div id="frame-viewer-test-class" style="font-size: 13px; font-weight: 600; color: var(--arcade-text-tertiary); margin-bottom: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"></div>
-                    <h2 id="frame-viewer-test-name" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Test Name</h2>
+                    <div id="frame-viewer-test-class" style="font-size: 12px; font-weight: 600; color: var(--arcade-text-tertiary); margin-bottom: var(--arcade-space-xs); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"></div>
+                    <h2 id="frame-viewer-test-name" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-bottom: var(--arcade-space-md);">Test Name</h2>
                     <div class="frame-viewer-subtitle" id="frame-viewer-test-info">Module • Team</div>
                 </div>
             </div>
@@ -2184,6 +2188,13 @@
                 });
             }
             
+            // Calculate pass rate for multiple recordings
+            let passRateText = '';
+            if (test.attachmentCount > 1 && test.attachments) {
+                const passedCount = test.attachments.filter(a => a.executionResult === 'Passed').length;
+                passRateText = `${passedCount}/${test.attachmentCount} passed`;
+            }
+            
             return `
                 <div class="test-card" onclick='openFrameViewer(${testIndex})'>
                     <!-- Metadata Pills -->
@@ -2196,7 +2207,7 @@
                             ` : ''}
                         </div>
                         ${test.attachmentCount > 1 ? `
-                            <span class="metadata-pill" style="background: #E0E7FF; color: #3730A3;">🎥 ${test.attachmentCount} recordings</span>
+                            <span class="metadata-pill" style="background: #E0E7FF; color: #3730A3;">${passRateText}</span>
                         ` : ''}
                     </div>
                     
@@ -2313,7 +2324,8 @@
             const gifSizeMB = attachment.gifSizeBytes ? (attachment.gifSizeBytes / (1024 * 1024)).toFixed(2) : null;
             
             // Build subtitle with module and team
-            let subtitleParts = [test.module || 'Unknown', test.team || 'Unknown'];
+            const moduleName = test.module || 'Unknown';
+            const teamName = test.team || 'Unknown';
             
             // Get execution result and duration for this recording
             const executionResult = attachment.executionResult || test.finalResult || 'Unknown';
@@ -2327,35 +2339,33 @@
             const statusClass = executionResult === 'Passed' ? 'status-pass' : executionResult === 'Failed' ? 'status-fail' : '';
             
             const badgesHTML = `
-                <div style="display: flex; gap: var(--arcade-space-xs); margin-bottom: var(--arcade-space-md);">
-                    <span class="metadata-pill ${typeClass}">${typeText}</span>
-                    <span class="metadata-pill ${statusClass}">${statusText}</span>
+                <div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: ${attachments.length > 1 ? 'var(--arcade-space-xs)' : 'var(--arcade-space-md)'};">
+                        <div style="display: flex; gap: var(--arcade-space-xs); align-items: center;">
+                            <span class="metadata-pill ${typeClass}">${typeText}</span>
+                            <span class="metadata-pill ${statusClass}">${statusText}</span>
+                        </div>
+                        <button class="close-modal" onclick="closeFrameViewer()">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M18 6L6 18M6 6l12 12" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </button>
+                    </div>
+                    ${attachments.length > 1 ? `
+                        <div style="font-size: 15px; font-weight: 700; color: var(--arcade-text-primary); margin-bottom: var(--arcade-space-md);">
+                            ${currentAttachmentIndex + 1} of ${attachments.length}
+                        </div>
+                    ` : ''}
                 </div>
             `;
-            
-            // Build compact metadata line: recording count (if multiple) + duration
-            let metadataParts = [];
-            if (attachments.length > 1) {
-                const recordingNum = currentAttachmentIndex + 1;
-                metadataParts.push(`${recordingNum} of ${attachments.length}`);
-            }
-            if (executionDuration) metadataParts.push(`⏱️ ${executionDuration}`);
             
             // Set badges above test name
             badgesEl.innerHTML = badgesHTML;
             
-            // Set module/team and metadata below test name
+            // Set module/team/duration below test name (single line)
             testInfoEl.innerHTML = `
-                <div style="font-size: 13px; color: var(--arcade-text-secondary); line-height: 1.6; text-align: left;">
-                    <!-- Module, team -->
-                    <div style="font-size: 16px; font-weight: 600; color: var(--arcade-text-primary); margin-bottom: var(--arcade-space-xs);">${subtitleParts.join(' • ')}</div>
-                    
-                    <!-- Recording count + duration -->
-                    ${metadataParts.length > 0 ? `
-                        <div style="font-size: 13px; color: var(--arcade-text-tertiary);">
-                            ${metadataParts.join(' • ')}
-                        </div>
-                    ` : ''}
+                <div style="font-size: 16px; font-weight: 600; color: var(--arcade-text-primary); text-align: left;">
+                    ${moduleName} • ${teamName}${executionDuration ? ` • <span style="color: var(--arcade-text-tertiary); font-weight: normal;">⏱️ ${executionDuration}</span>` : ''}
                 </div>
             `;
             
@@ -2411,54 +2421,34 @@
             const hasMultiple = attachments.length > 1;
             const hasPrev = hasMultiple && currentAttachmentIndex > 0;
             const hasNext = hasMultiple && currentAttachmentIndex < attachments.length - 1;
+            const recordingNum = currentAttachmentIndex + 1;
             
             gifContainer.innerHTML = `
-                <div style="position: relative; display: flex; align-items: center; gap: var(--arcade-space-xl);">
-                    ${hasPrev ? `
-                        <button onclick="navigateAttachment(-1)" style="
-                            background: #1F2937;
-                            border: 2px solid #374151;
-                            border-radius: var(--arcade-radius-lg);
-                            width: 48px;
-                            height: 48px;
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;
-                            cursor: pointer;
-                            transition: all 0.15s ease;
-                            color: white;
-                        " onmouseover="this.style.background='#111827'; this.style.borderColor='#4B5563'" onmouseout="this.style.background='#1F2937'; this.style.borderColor='#374151'">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="15 18 9 12 15 6"></polyline>
-                            </svg>
-                        </button>
-                    ` : hasMultiple ? `<div style="width: 48px;"></div>` : ''}
-                    
-                    <div class="modal-iphone-frame">
-                        <div class="modal-iphone-screen">
-                            <img src="${attachment.gifUrl}" alt="${test.testMethod}" id="modal-gif-img" onload="this.classList.remove('loading')" />
+                <div>
+                    <div style="position: relative; display: flex; align-items: center; gap: var(--arcade-space-xl);">
+                        ${hasPrev ? `
+                            <button onclick="navigateAttachment(-1)" class="close-modal" style="border-radius: 50%;">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="15 18 9 12 15 6"></polyline>
+                                </svg>
+                            </button>
+                        ` : hasMultiple ? `<div style="width: 40px;"></div>` : ''}
+                        
+                        <div class="modal-iphone-frame">
+                            <div class="modal-iphone-screen">
+                                <img src="${attachment.gifUrl}" alt="${test.testMethod}" id="modal-gif-img" onload="this.classList.remove('loading')" />
+                            </div>
                         </div>
+                        
+                        ${hasNext ? `
+                            <button onclick="navigateAttachment(1)" class="close-modal" style="border-radius: 50%;">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="9 18 15 12 9 6"></polyline>
+                                </svg>
+                            </button>
+                        ` : hasMultiple ? `<div style="width: 40px;"></div>` : ''}
                     </div>
                     
-                    ${hasNext ? `
-                        <button onclick="navigateAttachment(1)" style="
-                            background: #1F2937;
-                            border: 2px solid #374151;
-                            border-radius: var(--arcade-radius-lg);
-                            width: 48px;
-                            height: 48px;
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;
-                            cursor: pointer;
-                            transition: all 0.15s ease;
-                            color: white;
-                        " onmouseover="this.style.background='#111827'; this.style.borderColor='#4B5563'" onmouseout="this.style.background='#1F2937'; this.style.borderColor='#374151'">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="9 18 15 12 9 6"></polyline>
-                            </svg>
-                        </button>
-                    ` : hasMultiple ? `<div style="width: 48px;"></div>` : ''}
                 </div>
             `;
         }
