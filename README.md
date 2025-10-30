@@ -9,7 +9,7 @@ Visual test gallery for UI and E2E test recordings from Cash iOS Buildkite build
 - Search and filter by name, module, team, type, or status ([ownership mapping](https://docs.google.com/spreadsheets/d/1u3hNvS6JQiBt9_ORCuZaR8IdUxvO-5-AV9utG_cyD9Y/edit?gid=457260210#gid=457260210))
 - View test cards with GIF previews, failure analysis, and navigation between recordings
 
-## 🧪 Current Process (Experimental)
+## 🚀 Current Process (Proof of Concept)
 
 This is a **proof of concept** to validate whether a visual test gallery is useful. The workflow is intentionally simple and mostly manual. The goal is to gather feedback.
 
